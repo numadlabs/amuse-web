@@ -1,118 +1,210 @@
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import Image from "next/image";
-import { Inter } from "next/font/google";
+import { Eye, EyeOff } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { toast } from "sonner";
 
-const inter = Inter({ subsets: ["latin"] });
+import { useAuth } from "@/lib/context/auth-context";
 
-export default function Home() {
+export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showWelcomeMessage, setShowWelcomeMessage] = useState(false);
+  const router = useRouter();
+  const { onLogin } = useAuth();
+  // const { toast } = useToast()
+
+  useEffect(() => {
+    checkWelcomeMessageStatus();
+  }, []);
+
+  const checkWelcomeMessageStatus = async () => {
+    try {
+      const hasSeenWelcome = localStorage.getItem("hasSeenWelcomeMessage");
+      if (hasSeenWelcome !== "true") {
+        setShowWelcomeMessage(true);
+      }
+    } catch (error) {
+      console.error("Error checking welcome message status:", error);
+    }
+  };
+
+  const dismissWelcomeMessage = async () => {
+    try {
+      localStorage.setItem("hasSeenWelcomeMessage", "true");
+      setShowWelcomeMessage(false);
+    } catch (error) {
+      console.error("Error saving welcome message status:", error);
+    }
+  };
+
+  const handleLogin = async () => {
+    try {
+      setLoading(true);
+      setError("");
+
+      const response = await onLogin(email, password);
+      if (response.success) {
+        router.push("/home");
+        toast.success("Welcome");
+      } else {
+        setError("Email and/or password do not match our records");
+      }
+    } catch (err) {
+      console.error("Error during login:", err);
+      setError("Login Error. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/pages/index.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
+      <Card className="w-full max-w-md bg-gradient-to-br from-gray-800 to-gray-900 border-gray-700">
+        <CardHeader className="text-center">
+          <Image
+            src="/images/LogoDark.png"
+            alt="Logo"
+            width={96}
+            height={96}
+            className="mx-auto mb-6"
+          />
+          <CardTitle className="text-white text-2xl">Welcome</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleLogin();
+            }}
+            className="space-y-4"
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
+            <div>
+              <Input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="bg-gray-800 border-gray-700 text-white"
+              />
+            </div>
+            <div className="relative">
+              <Input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="bg-gray-800 border-gray-700 text-white pr-10"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center"
+              >
+                {showPassword ? (
+                  <EyeOff className="h-5 w-5 text-gray-400" />
+                ) : (
+                  <Eye className="h-5 w-5 text-gray-400" />
+                )}
+              </button>
+            </div>
+            {error && (
+              <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? "Loading..." : "Log in"}
+            </Button>
+          </form>
+          <div className="mt-4">
+            <Button
+              variant="ghost"
+              className="text-white w-full"
+              onClick={() => router.push("/auth/forgot-password")}
+            >
+              Forgot password?
+            </Button>
+          </div>
+          <div className="mt-4 border-t border-gray-700 pt-4">
+            <Button
+              variant="secondary"
+              className="w-full text-white border-gray-700 hover:bg-gray-800"
+              onClick={() => router.push("/auth/sign-up")}
+            >
+              Sign up
+            </Button>
+          </div>
+          <p className="mt-6 text-center text-sm text-gray-400">
+            By continuing, I agree with Amuse-Bouche&apos;s{" "}
+            <Button
+              variant="ghost"
+              className="text-white p-0"
+              onClick={() => router.push("/terms")}
+            >
+              Terms and Conditions.
+            </Button>
           </p>
-        </a>
+        </CardContent>
+      </Card>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      <Dialog open={showWelcomeMessage} onOpenChange={setShowWelcomeMessage}>
+        <DialogContent className="bg-gray-900 text-white max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold">
+              Welcome to Amuse Bouche!
+            </DialogTitle>
+          </DialogHeader>
+          <DialogDescription className="space-y-4 text-gray-300">
+            <p>
+              Welcome to Amuse Bouche! We are excited to welcome you to our
+              growing community!
+            </p>
+            <p>
+              Here at Amuse Bouche, we value transparency with our users. So,
+              please note that while using the Amuse Bouche Application, certain
+              user data will be collected. To enable account creation and
+              continued user access, it is necessary that user email data is
+              collected. Additionally, user experience is unique to each
+              location, which requires user location data to also be collected.
+            </p>
+            <p>
+              Aside from user email and location data collection, the rest is up
+              to you! You can opt to allow the collection of data such as your
+              birthday and profile picture. Opting-in allows us here at Amuse
+              Bouche to continue to improve the application so we can provide a
+              more seamless and tailored user experience for you.
+            </p>
+            <p>
+              Your privacy is important, and what data you choose to disclose is
+              totally up to you! To change your data collection preferences, you
+              can go to the privacy section of the settings menu and view the
+              data collection options.
+            </p>
+            <p className="font-semibold">
+              Thank you for choosing Amuse Bouche!
+            </p>
+          </DialogDescription>
+          <Button onClick={dismissWelcomeMessage} className="w-full mt-4">
+            I understand
+          </Button>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 }
