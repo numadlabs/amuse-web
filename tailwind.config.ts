@@ -33,7 +33,7 @@ module.exports = {
       logoSize: ["40px", "44px"],
       logoMobile: ["20px", "28px"],
       cartDesktop: ["28px", "40px"],
-      faq: ["24px", "36px"],
+      faq: ["24px", "32px"],
       aboutUs: ["24px", "36px"],
       faqExtended: ["20px", "28px"],
       featured: ["32px", "44px"],
