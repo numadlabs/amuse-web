@@ -1,25 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import Image from 'next/image';
-import { useQuery } from '@tanstack/react-query';
-import { Info } from 'lucide-react';
-import moment from 'moment';
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
+import { Info } from "lucide-react";
+import moment from "moment";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { getUserById,getUserCard, getRestaurants } from '@/lib/service/queryHelper';
-import { useAuth } from "@/lib/context/auth-context";
-import { useSession } from 'next-auth/react';
+import {
+  getUserById,
+  getUserCard,
+  getRestaurants,
+} from "@/lib/service/queryHelper";
+import { useSession } from "next-auth/react";
 
 import { RestaurantType } from "@/lib/types";
 
 // You'll need to create these custom components
-import Balance from '@/components/sections/balance';
-import QuickInfo from "@/components/QuickInfo";
-import StackedCard from "@/components/StackedCard";
-import HomeRestList from "@/components/HomeRestList";
-import DiscoverFloatRestCard from "@/components/DiscoverFloatRestCard";
+import Balance from "@/components/sections/balance";
+import QuickInfo from "@/components/sections/quick-info";
+// import QuickInfo from "@/components/QuickInfo";
+import StackedCard from "@/components/sections/stacked-cards";
+import FeaturedListCard from "@/components/atom/featured-list-card";
+// import HomeRestList from "@/components/HomeRestList";
+// import DiscoverFloatRestCard from "@/components/DiscoverFloatRestCard";
 
 export default function HomePage() {
   const router = useRouter();
@@ -34,36 +45,40 @@ export default function HomePage() {
 
   useEffect(() => {
     const loadSettings = async () => {
-      setShowProfilePicture(localStorage.getItem('showProfilePicture') === 'true');
-      setShowDateOfBirth(localStorage.getItem('showDateOfBirth') === 'true');
-      setShowArea(localStorage.getItem('showArea') === 'true');
+      setShowProfilePicture(
+        localStorage.getItem("showProfilePicture") === "true"
+      );
+      setShowDateOfBirth(localStorage.getItem("showDateOfBirth") === "true");
+      setShowArea(localStorage.getItem("showArea") === "true");
     };
     loadSettings();
   }, []);
 
   const { data: user } = useQuery({
-    queryKey: ['user'],
+    queryKey: ["user"],
     queryFn: () => getUserById(session.userId),
     enabled: !!session?.userId,
   });
 
   const { data: cards = [] } = useQuery({
-    queryKey: ['userCards'],
-    queryFn: () => getUserCard({
-      latitude: 0, // Replace with actual location
-      longitude: 0, // Replace with actual location
-    }),
+    queryKey: ["userCards"],
+    queryFn: () =>
+      getUserCard({
+        latitude: 0, // Replace with actual location
+        longitude: 0, // Replace with actual location
+      }),
     enabled: true, // Replace with actual condition
   });
 
   const { data: restaurantsData } = useQuery({
-    queryKey: ['restaurants'],
-    queryFn: () => getRestaurants({
-      page: 1,
-      limit: 10,
-      time: currentTime,
-      dayNoOfTheWeek: currentDayOfWeek,
-    }),
+    queryKey: ["restaurants"],
+    queryFn: () =>
+      getRestaurants({
+        page: 1,
+        limit: 10,
+        time: currentTime,
+        dayNoOfTheWeek: currentDayOfWeek,
+      }),
     enabled: true, // Replace with actual condition
   });
 
@@ -80,7 +95,10 @@ export default function HomePage() {
     <div className="bg-gray-900 min-h-screen p-4">
       <ScrollArea className="h-[calc(100vh-2rem)]">
         {user && (
-          <div onClick={() => router.push('/wallet')} className="cursor-pointer">
+          <div
+            onClick={() => router.push("/wallet")}
+            className="cursor-pointer"
+          >
             <Balance
               amount={user?.user?.balance}
               convertedAmount={user?.convertedBalance}
@@ -93,26 +111,23 @@ export default function HomePage() {
           <h2 className="text-gray-300 font-medium">Featured</h2>
           <div className="flex space-x-4 overflow-x-auto pb-4">
             {user?.user?.dateOfBirth &&
-              user?.user?.location &&
-              showProfilePicture
+            user?.user?.location &&
+            showProfilePicture
               ? null
               : isQuickInfoVisible && (
-                <QuickInfo
-                  onClose={() => setIsQuickInfoVisible(false)}
-                  user={user?.user}
-                />
-              )}
+                  <QuickInfo
+                    onClose={() => setIsQuickInfoVisible(false)}
+                    user={user?.user}
+                  />
+                )}
 
             {filteredRestaurantsArray.map((restaurant) => (
-              <HomeRestList
+              <FeaturedListCard
                 key={restaurant.id}
                 restaurant={restaurant}
                 onClick={() => handleNavigation(restaurant)}
               />
             ))}
-            <DiscoverFloatRestCard
-              onClick={() => setIsQuickInfoVisible(false)}
-            />
           </div>
         </div>
 
@@ -148,9 +163,7 @@ export default function HomePage() {
 
         {cards?.data?.cards.length > 0 && (
           <div className="flex justify-center mt-8 mb-16">
-            <Button onClick={() => router.push("/my-cards")}>
-              See all
-            </Button>
+            <Button onClick={() => router.push("/my-cards")}>See all</Button>
           </div>
         )}
       </ScrollArea>
