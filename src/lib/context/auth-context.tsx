@@ -22,12 +22,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         email,
         password,
       });
+      console.log("🚀 ~ onLogin ~ result:", result);
 
       if (result?.error) {
-        return { error: true, msg: result.error };
+        return { success: false, error: result.error };
       }
 
-      router.push("/dashboard");
       return { error: false };
     } catch (error) {
       console.error("Login error:", error);
