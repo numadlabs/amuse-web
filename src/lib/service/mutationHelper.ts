@@ -107,17 +107,19 @@ export async function forgotPassword({
   password,
 }: {
   email: string;
-  verificationCode: number;
+  verificationCode: string;
   password: string;
 }) {
+  const numericCode = parseInt(verificationCode);
+
   return axiosClient
     .put("/auth/forgotPassword", {
       email,
-      verificationCode,
+      verificationCode: numericCode,
       password,
     })
     .then((response) => {
-      return response;
+      return response.data;
     });
 }
 export async function deleteUser() {
