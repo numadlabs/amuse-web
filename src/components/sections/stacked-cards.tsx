@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { getUserCard } from "@/lib/service/queryHelper";
 import { userKeys } from "@/lib/service/keysHelper";
-import { SearchIcon } from "lucide-react";
+import Search from "../icons/search";
 
 const StackedCard = () => {
   const [cardPositions, setCardPositions] = useState(-400);
@@ -47,21 +47,22 @@ const StackedCard = () => {
   return (
     <div className="relative pb-60">
       {cards?.data?.cards.length === 0 ? (
-        <Card className="bg-gradient-to-br from-brand-card-start to-brand-card-end rounded-3xl mb-30">
-          <CardContent className="flex flex-col items-center justify-center h-58 p-8 gap-3">
-            <SearchIcon className="w-12 h-12 text-gray-50" />
-            <p className="text-center text-gray-50 text-sm">
-              Discover restaurants, add a membership card, and start earning
-              rewards every time you check-in at a participating restaurant!
+        <div className="bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-[20px]">
+          <div className="flex flex-col items-center justify-center p-8 gap-6">
+            <div className="flex flex-col justify-center items-center gap-4">
+            <Search />
+            <p className="text-center text-gray50 text-sm">
+            Discover restaurants, add membership cards, and earn rewards when you check-in!
             </p>
+            </div>
             <Button
+            variant={"secondary"}
               onClick={() => router.push("/Acards")}
-              className="mt-6 bg-gray-600 text-white rounded-full px-5 py-3"
             >
               Explore
             </Button>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       ) : (
         <AnimatePresence>
           {latestCards?.map((card, index) => (
