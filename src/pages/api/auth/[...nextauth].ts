@@ -17,11 +17,12 @@ export default NextAuth({
       },
       async authorize(credentials) {
         try {
-          const res = await axios.post(`${BACKEND_URL}/api/login`, {
+          const res = await axios.post(`${BACKEND_URL}/auth/login`, {
             email: credentials?.email,
             password: credentials?.password,
           });
 
+          console.log("🚀 ~ authorize ~ res:", res.data.data);
           if (res.data && res.data.data && res.data.data.auth && credentials) {
             return {
               id: res.data.data.user.id,
@@ -30,12 +31,22 @@ export default NextAuth({
               refreshToken: res.data.data.auth.refreshToken,
               // restaurantId: res.data.data.user.restaurantId,
             };
-
           }
-          return null;
+          // If the response doesn't contain the expected data
+          throw new Error("Invalid credentials");
         } catch (error) {
           console.error("Authentication error:", error);
-          return null;
+
+          // If it's an axios error with a response from the server
+          if (axios.isAxiosError(error) && error.response) {
+            // Use the error message from the API if available
+            throw new Error(
+              error.response.data.error || "Authentication failed"
+            );
+          }
+
+          // For other types of errors
+          throw new Error("An unexpected error occurred");
         }
       },
     }),

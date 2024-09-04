@@ -59,15 +59,16 @@ export default function Login() {
       setError("");
 
       const response = await onLogin(email, password);
-      if (response.success) {
+      console.log("🚀 ~ handleLogin ~ response:", response);
+      if (!response.error) {
         router.push("/home");
         toast.success("Welcome");
       } else {
-        setError("Email and/or password do not match our records");
+        setError(response.error ?? "Unknown error happened");
       }
     } catch (err) {
       console.error("Error during login:", err);
-      setError("Login Error. Please try again later.");
+      setError("An unexpected error occurred. Please try again later.");
     } finally {
       setLoading(false);
     }
