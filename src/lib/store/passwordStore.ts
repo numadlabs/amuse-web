@@ -1,27 +1,12 @@
 import { create } from "zustand";
-
-export interface PasswordStore {
-  email: string;
-  verificationCode: number;
-  password: string;
-
-  setEmail: (email: string) => void;
-  setVerificationCode: (verificationCode: number) => void;
-  setPassword: (password: string) => void;
-  reset: () => void;
-}
+import { PasswordStore } from "../types/forgot-password-flow-types";
 
 export const usePasswordStore = create<PasswordStore>((set) => ({
   email: "",
-  verificationCode: 0,
+  verificationCode: "",
   password: "",
-  setEmail: (email: string) => set({ email }),
+  setEmail: (email) => set({ email }),
   setVerificationCode: (verificationCode) => set({ verificationCode }),
   setPassword: (password) => set({ password }),
-  reset: () =>
-    set({
-      email: "",
-      verificationCode: 0,
-      password: "",
-    }),
+  reset: () => set({ email: "", verificationCode: "", password: "" }),
 }));

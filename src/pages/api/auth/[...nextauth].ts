@@ -17,7 +17,7 @@ export default NextAuth({
       },
       async authorize(credentials) {
         try {
-          const res = await axios.post(`${BACKEND_URL}/auth/login`, {
+          const res = await axios.post(`${BACKEND_URL}//login`, {
             email: credentials?.email,
             password: credentials?.password,
           });
