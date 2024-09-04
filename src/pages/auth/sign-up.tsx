@@ -19,9 +19,9 @@ const SignUp: React.FC = () => {
   const nextStep = () => setStep((prevStep) => (prevStep + 1) as Step);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 p-4">
-      <Card className="w-full max-w-md bg-gradient-to-b from-purple-700 to-purple-900 border border-gray-700">
-        <CardContent className="p-6">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-background gap-6">
+      <Card className="border-none bg-transparent text-center">
+        <CardContent className="">
           <Steps activeStep={step} />
           {step === 1 && <EmailInput onNext={nextStep} />}
           {step === 2 && <OTPVerification onNext={nextStep} />}
@@ -52,9 +52,12 @@ const EmailInput: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2 className="text-2xl font-bold text-white mb-4">Email</h2>
-      <p className="text-gray-300 mb-4">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col justify-center max-w-[960px] gap-4 pt-6 pr-4 pb-4 pl-4 w-[343px] h-[180px] items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
+    >
+      <h2 className="text-faq font-bold text-white">Email</h2>
+      <p className="text-gray100 text-sm font-normal">
         We will send an email verification code.
       </p>
       <Input
@@ -65,7 +68,11 @@ const EmailInput: React.FC<{ onNext: () => void }> = ({ onNext }) => {
         className="mb-4"
       />
       {error && <p className="text-red-500 mb-4">{error}</p>}
-      <Button type="submit" className="w-full" disabled={!email || isLoading}>
+      <Button
+        type="submit"
+        className="w-[343px] h-12 absolute bottom-32"
+        disabled={!email || isLoading}
+      >
         {isLoading ? "Sending..." : "Send code"}
       </Button>
     </form>
@@ -88,9 +95,14 @@ const OTPVerification: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2 className="text-2xl font-bold text-white mb-4">Verification code</h2>
-      <p className="text-gray-300 mb-4">Enter the code sent to your email.</p>
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col justify-center max-w-[960px] gap-4 pt-6 pr-4 pb-4 pl-4 w-[343px] h-[200px] items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
+    >
+      <h2 className="text-faq font-bold text-white">Verification code</h2>
+      <p className="text-gray100 text-sm font-normal">
+        Enter the code sent to your email.
+      </p>
       <Input
         type="number"
         placeholder="Enter verification code"
@@ -101,7 +113,7 @@ const OTPVerification: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"
-        className="w-full"
+        className="w-[343px] h-12 absolute bottom-32"
         disabled={!verificationCode || isLoading}
       >
         {isLoading ? "Verifying..." : "Verify Code"}
@@ -127,15 +139,18 @@ const Password: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2 className="text-2xl font-bold text-white mb-4">Create password</h2>
-      <div className="mb-4 relative">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col justify-center h-[382px] max-w-[960px] gap-6 pt-4 pr-4 pb-4 pl-4 w-[343px] items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
+    >
+      <h2 className="text-faq font-bold text-white">Create password</h2>
+      <div className="relative w-full">
         <Input
           type={showPassword ? "text" : "password"}
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="pr-10"
+          className=""
         />
         <button
           type="button"
@@ -157,14 +172,14 @@ const Password: React.FC<{ onNext: () => void }> = ({ onNext }) => {
         className="mb-4"
       />
       {!doPasswordsMatch && (
-        <p className="text-red-500 mb-4">Passwords do not match</p>
+        <p className="text-red-500 h-4">Passwords do not match</p>
       )}
-      <div className="mb-4">
+      <div className="relative right-[69px]">
         {Object.entries(passwordValidationRules).map(([key, rule]) => (
           <p
             key={key}
-            className={`flex items-center ${
-              rule(password) ? "text-green-500" : "text-gray-400"
+            className={`flex items-center text-start ${
+              rule(password) ? "text-systemSuccess" : "text-gray-400"
             }`}
           >
             <Check size={16} className="mr-2" />
@@ -176,7 +191,7 @@ const Password: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       </div>
       <Button
         type="submit"
-        className="w-full"
+        className="w-[343px] h-12 absolute bottom-32"
         disabled={!isPasswordValid(password) || !doPasswordsMatch}
       >
         Continue
@@ -203,10 +218,13 @@ const Nickname: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2 className="text-2xl font-bold text-white mb-4">Nickname</h2>
-      <p className="text-gray-300 mb-4">
-        This will be shared with others. We want exclusive invites to feel
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col justify-center max-w-[960px] gap-4 pt-6 pr-4 pb-4 pl-4 w-[343px] h-[210px] items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
+    >
+      <h2 className="text-faq font-bold text-white">Nickname</h2>
+      <p className="text-gray100 text-sm font-normal">
+        This will be shared with others. We want exclusive <br /> invites to feel
         special.
       </p>
       <Input
@@ -219,7 +237,7 @@ const Nickname: React.FC = () => {
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"
-        className="w-full"
+        className="w-[343px] h-12 absolute bottom-32"
         disabled={!nickname || isLoading}
       >
         {isLoading ? "Finishing..." : "Finish"}

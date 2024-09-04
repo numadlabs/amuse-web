@@ -123,3 +123,8 @@ input[type=number]::-webkit-inner-spin-button {
 .appearance-none {
   -moz-appearance: textfield;
 }
+
+
+.custom-gradient {
+  @apply bg-gradient-to-r from-[#FDAD32] to-[#F187FB];
+}

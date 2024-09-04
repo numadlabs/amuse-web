@@ -6,15 +6,15 @@ interface StepsProps {
 
 const Steps: React.FC<StepsProps> = ({ activeStep }) => {
   return (
-    <div className="flex justify-center items-center py-2 px-0.5 h-6 bg-gray-800">
-      <div className="flex rounded-full overflow-hidden bg-gray-600">
+    <div className="flex justify-center items-center py-2 h-2 rounded-[4px]">
+      <div className="flex justify-center mb-10 rounded-full overflow-hidden bg-gray400">
         {[1, 2, 3, 4].map((step) => (
           <div
             key={step}
-            className={`w-16 h-2 ${
+            className={`w-16 h-2 rounded-full ${
               activeStep === step
-                ? "bg-gradient-to-r from-purple-500 to-pink-500"
-                : "bg-transparent"
+                ? "custom-gradient"
+                : "bg-gray400"
             }`}
           />
         ))}

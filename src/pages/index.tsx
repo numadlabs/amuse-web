@@ -75,8 +75,8 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md bg-gradient-to-br from-gray-800 to-gray-900 border-gray-700">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
+      <Card className="h-[544px] w-[343px] bg-gray500 border border-gray400 rounded-[32px]">
         <CardHeader className="text-center">
           <Image
             src="/images/LogoDark.png"
@@ -85,9 +85,11 @@ export default function Login() {
             height={96}
             className="mx-auto mb-6"
           />
-          <CardTitle className="text-white text-2xl">Welcome</CardTitle>
+          <CardTitle className="font-bold text-white font-aboutUs">
+            Welcome
+          </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="flex flex-col gap-1">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -101,7 +103,7 @@ export default function Login() {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="bg-gray-800 border-gray-700 text-white"
+                className="bg-transparent border-gray300 text-gray100 pt-[14px] pr-4 pb-[14px] pl-4"
               />
             </div>
             <div className="relative">
@@ -110,7 +112,7 @@ export default function Login() {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="bg-gray-800 border-gray-700 text-white pr-10"
+                className="bg-transparent border-gray300 text-white pt-[14px] pr-4 pb-[14px] pl-4"
               />
               <button
                 type="button"
@@ -129,40 +131,49 @@ export default function Login() {
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full h-12" disabled={loading}>
               {loading ? "Loading..." : "Log in"}
             </Button>
           </form>
           <div className="mt-4">
             <Button
               variant="ghost"
-              className="text-white w-full"
+              className="text-white w-full font-semibold font-md2"
               onClick={() => router.push("/auth/forgot-password")}
             >
               Forgot password?
             </Button>
           </div>
-          <div className="mt-4 border-t border-gray-700 pt-4">
+          <div className="flex items-center gap-3">
+            <div className="w-[136.5px] h-[1px] bg-gray400" />
+            <div className="flex items-center font-normal text-sm text-gray50">
+              or
+            </div>
+            <div className="w-[136.5px] h-[1px] bg-gray400" />
+          </div>
+          <div className="pt-4">
             <Button
               variant="secondary"
-              className="w-full text-white border-gray-700 hover:bg-gray-800"
+              className="w-full text-white h-12"
               onClick={() => router.push("/auth/sign-up")}
             >
               Sign up
             </Button>
           </div>
-          <p className="mt-6 text-center text-sm text-gray-400">
-            By continuing, I agree with Amuse-Bouche&apos;s{" "}
-            <Button
-              variant="ghost"
-              className="text-white p-0"
-              onClick={() => router.push("/terms")}
-            >
-              Terms and Conditions.
-            </Button>
-          </p>
         </CardContent>
       </Card>
+      <div className="relative top-14 text-center">
+        <p className="text-center text-sm text-gray-400">
+          By continuing, I agree with Amuse-Bouche&apos;s{" "}
+        </p>
+        <Button
+          variant="ghost"
+          className="text-white font-normal text-md"
+          onClick={() => router.push("/terms")}
+        >
+          Terms and Conditions.
+        </Button>
+      </div>
 
       <Dialog open={showWelcomeMessage} onOpenChange={setShowWelcomeMessage}>
         <DialogContent className="bg-gray-900 text-white max-w-md">
