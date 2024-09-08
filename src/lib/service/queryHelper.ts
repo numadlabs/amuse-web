@@ -36,7 +36,7 @@ export async function getRestaurants({
     });
 }
 
-export async function getUserCard({ latitude, longitude }) {
+export async function getUserCard({ latitude, longitude } : { latitude: number; longitude: number }) {
   return axiosClient
     .get(`/users/cards?latitude=${latitude}&longitude=${longitude}`)
     .then((response) => {
@@ -117,7 +117,7 @@ export async function getUserById(userID: string) {
   });
 }
 
-export async function getTimeTable(id) {
+export async function getTimeTable(id: string) {
   return axiosClient.get(`/timetables/${id}/restaurant`).then((response) => {
     if (response.data.success) {
       return response.data.data;
@@ -127,7 +127,7 @@ export async function getTimeTable(id) {
   });
 }
 
-export async function getRestaurantId(id, time, dayNoOfTheWeek) {
+export async function getRestaurantId(id: string, time: string, dayNoOfTheWeek: number) {
   return axiosClient
     .get(`/restaurants/${id}?dayNoOfTheWeek=${dayNoOfTheWeek}&time=${time}`)
     .then((response) => {

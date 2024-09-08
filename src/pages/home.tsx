@@ -37,6 +37,7 @@ export default function HomePage() {
   const [showInfo, setShowInfo] = useState(false);
   const [showMembershipInfo, setShowMembershipInfo] = useState(false);
   const { data: session } = useSession();
+  const id = session?.userId
 
   const currentTime = moment().format("HH:mm:ss");
   const currentDayOfWeek = moment().isoWeekday();
@@ -54,7 +55,7 @@ export default function HomePage() {
 
   const { data: user } = useQuery({
     queryKey: ["user"],
-    queryFn: () => getUserById(session.userId),
+    queryFn: () => getUserById(id as string),
     enabled: !!session?.userId,
   });
 
@@ -94,7 +95,7 @@ export default function HomePage() {
 
   const restaurantsArray = restaurantsData?.data?.restaurants || [];
   const filteredRestaurantsArray = restaurantsArray.filter(
-    (restaurant) => !restaurant.isOwned
+    (restaurant: any) => !restaurant.isOwned
   );
 
   return (
@@ -112,31 +113,30 @@ export default function HomePage() {
 
           <div className="flex flex-col gap-3">
             <p className="text-gray100 text-md font-semibold">Featured</p>  
-            <div className="flex flex-row gap-4">
-              <Carousel className="flex w-full overflow-hidden">
-                <CarouselContent className="">
-              {user?.user?.dateOfBirth &&
-              user?.user?.location &&
-              showProfilePicture
-                ? null
-                : isQuickInfoVisible && (
-                    <QuickInfo
-                      onPress={() => setIsQuickInfoVisible(false)}
-                      user={user?.user}
-                    />
-                  )}
-              </CarouselContent>
+            <Carousel className="w-full">
               <CarouselContent>
-              {filteredRestaurantsArray.map((restaurant) => (
-                <FeaturedListCard
-                  key={restaurant.id}
-                  restaurant={restaurant}
-                  onClick={() => handleNavigation(restaurant)}
-                />
-              ))}
+                {user?.user?.dateOfBirth &&
+                user?.user?.location &&
+                showProfilePicture
+                  ? null
+                  : isQuickInfoVisible && (
+                      <CarouselItem className="basis-auto w-[90%]">
+                        <QuickInfo
+                          onPress={() => setIsQuickInfoVisible(false)}
+                          user={user?.user}
+                        />
+                      </CarouselItem>
+                    )}
+                {filteredRestaurantsArray.map((restaurant: any) => (
+                  <CarouselItem key={restaurant.id} className="basis-auto w-[90%]">
+                    <FeaturedListCard
+                      restaurant={restaurant}
+                      onClick={() => handleNavigation(restaurant)}
+                    />
+                  </CarouselItem>
+                ))}
               </CarouselContent>
-              </Carousel>
-            </div>
+            </Carousel>
           </div>
         </div>
 
