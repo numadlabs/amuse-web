@@ -4,9 +4,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { X } from "lucide-react";
-import { div } from "framer-motion/client";
 
-const QuickInfo = ({ user, onPress }) => {
+interface infoProps {
+  user: any;
+  onPress: () => void;
+}
+
+const QuickInfo: React.FC<infoProps> = ({ user, onPress }) => {
   const [progress, setProgress] = useState(0);
   const router = useRouter();
 
@@ -34,7 +38,7 @@ const QuickInfo = ({ user, onPress }) => {
 
   return (
     <Card
-      className="w-[90%] relative bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-[20px] h-fit"
+      className="w-full relative bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-[20px] h-fit"
       onClick={handleNavigation}
     >
       <div className="pt-6 pb-4 px-4 flex flex-col gap-5">

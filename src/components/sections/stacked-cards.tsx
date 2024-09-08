@@ -40,7 +40,7 @@ const StackedCard = () => {
 
   const latestCards = cards?.data?.cards.slice(0, 5);
 
-  const handleNavigation = (restaurant) => {
+  const handleNavigation = (restaurant: any) => {
     router.push(`/restaurants/${restaurant.restaurantId}`);
   };
 
@@ -65,7 +65,7 @@ const StackedCard = () => {
         </div>
       ) : (
         <AnimatePresence>
-          {latestCards?.map((card, index) => (
+          {latestCards?.map((card: any, index: any) => (
             <motion.div
               key={index}
               initial={{ y: -400 }}

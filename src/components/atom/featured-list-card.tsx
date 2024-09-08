@@ -29,7 +29,7 @@ const FeaturedListCard: React.FC<HomeRestListProps> = ({
     currentTime.getTime() <= closesAt?.getTime();
 
   return (
-    <div className="p-3 bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-[20px] w-[600px]">
+    <div className="p-3 bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-[20px] w-full">
       <div className="flex flex-row gap-4">
         <Image
           src={`${SERVER_SETTINGS.IMAGE_CDN}/${restaurant?.logo}`}

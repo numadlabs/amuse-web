@@ -75,7 +75,7 @@ export async function updateUserEmail({
     console.log(response.data.error);
   }
 }
-export async function updateUserInfo({ userId, data }) {
+export async function updateUserInfo({ userId, data } : {userId: string | null, data: any}) {
   const formData = new FormData();
 
   Object.keys(data).forEach((key) => {
