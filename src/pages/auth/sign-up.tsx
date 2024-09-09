@@ -11,15 +11,23 @@ import { Input } from "@/components/ui/input";
 import { Eye, EyeOff, Check } from "lucide-react";
 import Steps from "@/components/atom/steps";
 import { useSignUpStore } from "@/lib/store/signUpStore";
+import { ArrowLeft } from "iconsax-react";
 
 // Main SignUp component
 const SignUp: React.FC = () => {
-  const [step, setStep] = useState<Step>(1);
+  // const [step, setStep] = useState<Step>(1);
+  const [step, setStep] = useState(1);
 
   const nextStep = () => setStep((prevStep) => (prevStep + 1) as Step);
+  const prevStep = () => setStep((prevStep) => prevStep - 1);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-background gap-6">
+      {step > 1 && step < 4 && (
+        <div onClick={prevStep} className="relative right-40 top-0">
+          <ArrowLeft size="24" color="#d7dadc" />
+        </div>
+      )}
       <Card className="border-none bg-transparent text-center">
         <CardContent className="">
           <Steps activeStep={step} />
@@ -224,8 +232,8 @@ const Nickname: React.FC = () => {
     >
       <h2 className="text-faq font-bold text-white">Nickname</h2>
       <p className="text-gray100 text-sm font-normal">
-        This will be shared with others. We want exclusive <br /> invites to feel
-        special.
+        This will be shared with others. We want exclusive <br /> invites to
+        feel special.
       </p>
       <Input
         type="text"
