@@ -15,6 +15,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 import { useAuth } from "@/lib/context/auth-context";
 
@@ -176,16 +177,23 @@ export default function Login() {
       </div>
 
       <Dialog open={showWelcomeMessage} onOpenChange={setShowWelcomeMessage}>
-        <DialogContent className="bg-gray-900 text-white max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-bold">
-              Welcome to Amuse Bouche!
+        <DialogContent className="bg-background w-[343px] h-[598px] flex flex-col justify-around p-4 rounded-xl border-hidden">
+        <ScrollArea className="h-[478px] w-[290px] rounded-md border-hidden">
+        <DialogHeader>
+            <DialogTitle className="text-faq font-bold pb-4 text-start text-white">
+              Welcome to <br /> Amuse Bouche!
             </DialogTitle>
           </DialogHeader>
-          <DialogDescription className="space-y-4 text-gray-300">
+          <DialogDescription className="space-y-4 font-normal text-gray100">
             <p>
               Welcome to Amuse Bouche! We are excited to welcome you to our
               growing community!
+            </p>
+            <p>
+              We’re thrilled to have you join our Pilot Program, and we greatly
+              appreciate your participation. This program allows us to refine
+              Amuse Bouche’s features, ensuring it becomes the best experience
+              possible for our entire community, including you!
             </p>
             <p>
               Here at Amuse Bouche, we value transparency with our users. So,
@@ -208,11 +216,24 @@ export default function Login() {
               can go to the privacy section of the settings menu and view the
               data collection options.
             </p>
+            <p>
+              One final note, to ensure security and smooth operations during
+              the Pilot Program, some features will be limited. Specifically,
+              you won’t be able to withdraw or transfer any bitcoin earned until
+              the Pilot Program ends. We’ll notify all users via email and app
+              notification as soon as the Pilot Program is completed.
+            </p>
             <p className="font-semibold">
-              Thank you for choosing Amuse Bouche!
+              We are excited to have you as a part of our growing community!
             </p>
           </DialogDescription>
-          <Button onClick={dismissWelcomeMessage} className="w-full mt-4">
+</ScrollArea>
+
+          <Button
+            onClick={dismissWelcomeMessage}
+            variant={"primary"}
+            className="w-full mt-4"
+          >
             I understand
           </Button>
         </DialogContent>
