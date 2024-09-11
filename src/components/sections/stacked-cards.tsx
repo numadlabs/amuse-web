@@ -70,7 +70,7 @@ const StackedCard = () => {
               }}
             >
               <Card className="relative w-[343px] h-[264px] overflow-hidden bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-[20px] flex items-center">
-                <div className="flex flex-col gap-5 items-start p-5 z-50 w-full">
+                <div className="flex flex-col gap-5 items-start p-5 w-full">
                   <div className="flex justify-start gap-5">
                     <div>
                       <Image
