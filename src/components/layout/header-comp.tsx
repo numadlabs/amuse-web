@@ -8,7 +8,7 @@ const Header = () => {
   const currentPath = router.pathname;
 
   return (
-    <header className="flex justify-between items-center p-4 w-full">
+    <header className="max-w-[600px] mx-auto flex justify-between items-center p-4 w-full top-0 left-0 right-0 fixed bg-background">
       {currentPath !== "/home" && (
         <Link href="/home" passHref>
           <Button variant="ghost" size="icon">

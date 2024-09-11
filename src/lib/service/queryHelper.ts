@@ -36,16 +36,14 @@ export async function getRestaurants({
     });
 }
 
-export async function getUserCard({ latitude, longitude } : { latitude: number; longitude: number }) {
-  return axiosClient
-    .get(`/users/cards?latitude=${latitude}&longitude=${longitude}`)
-    .then((response) => {
-      if (response.data.success) {
-        return response?.data;
-      } else {
-        throw new Error(response.data.error);
-      }
-    });
+export async function getUserCard() {
+  return axiosClient.get(`/users/cards`).then((response) => {
+    if (response.data.success) {
+      return response?.data;
+    } else {
+      throw new Error(response.data.error);
+    }
+  });
 }
 
 export async function getUserNotification() {
@@ -55,7 +53,7 @@ export async function getUserNotification() {
   }
 }
 
-export async function getUserPowerUps(id:string) {
+export async function getUserPowerUps(id: string) {
   return axiosClient.get(`/userBonus/${id}/userCard`).then((response) => {
     if (response.data.success) {
       return response?.data.data;
@@ -65,7 +63,7 @@ export async function getUserPowerUps(id:string) {
   });
 }
 
-export async function getUserTransaction(id:string) {
+export async function getUserTransaction(id: string) {
   return axiosClient.get(`/transactions/${id}/user`).then((response) => {
     if (response.data.success) {
       return response?.data.data.transaction;
@@ -75,7 +73,7 @@ export async function getUserTransaction(id:string) {
   });
 }
 
-export async function getPerksByRestaurant(id:string) {
+export async function getPerksByRestaurant(id: string) {
   return axiosClient.get(`/userBonus/${id}/restaurant`).then((response) => {
     if (response.data.success) {
       return response?.data.data;
@@ -85,7 +83,7 @@ export async function getPerksByRestaurant(id:string) {
   });
 }
 
-export async function getPurchaseablePerks(id:string) {
+export async function getPurchaseablePerks(id: string) {
   return axiosClient
     .get(`/bonus/${id}/restaurant?type=REDEEMABLE`)
     .then((response) => {
@@ -127,7 +125,11 @@ export async function getTimeTable(id: string) {
   });
 }
 
-export async function getRestaurantId(id: string, time: string, dayNoOfTheWeek: number) {
+export async function getRestaurantId(
+  id: string,
+  time: string,
+  dayNoOfTheWeek: number
+) {
   return axiosClient
     .get(`/restaurants/${id}?dayNoOfTheWeek=${dayNoOfTheWeek}&time=${time}`)
     .then((response) => {

@@ -26,8 +26,8 @@ const Search = () => {
           y2="19.1663"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FDAD32" />
-          <stop offset="1" stop-color="#F187FB" />
+          <stop stopColor="#FDAD32" />
+          <stop offset="1" stopColor="#F187FB" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_6202_8434"
@@ -37,8 +37,8 @@ const Search = () => {
           y2="35.0044"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FDAD32" />
-          <stop offset="1" stop-color="#F187FB" />
+          <stop stopColor="#FDAD32" />
+          <stop offset="1" stopColor="#F187FB" />
         </linearGradient>
       </defs>
     </svg>

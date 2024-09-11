@@ -2,12 +2,12 @@ import React from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-const domain = "https://amusebouche.io";
+const domain = "https://web.amusebouche.io";
 
 export default function SEOHead({
   title = "Amuse Bouche",
   description = "Earn  and redeem tokens for exclusive culinary experiences.",
-  logo = `${domain}/Images/og.png`,
+  logo = `${domain}/img/og.png`,
 }) {
   const router = useRouter();
   const currentUrl = `${domain}${router.asPath}`;
