@@ -25,7 +25,11 @@ export default function AuthenticatedLayout({
   // Determine header type based on route if not explicitly provided
   const determineHeaderType = () => {
     if (headerType) return headerType;
-    
+
+    if (router.pathname === '/restaurants' && router.query.id) {
+      return 'blank';
+    }
+
     switch (router.pathname) {
       case '/home':
         return 'default';
@@ -44,7 +48,7 @@ export default function AuthenticatedLayout({
   // Determine header title based on route if not explicitly provided
   const determineHeaderTitle = () => {
     if (headerTitle) return headerTitle;
-    
+
     switch (router.pathname) {
       case '/profile':
         return 'Profile';
@@ -57,17 +61,23 @@ export default function AuthenticatedLayout({
     }
   };
 
+  const headerTypeToUse = determineHeaderType();
+
   return (
     <div className="bg-background">
       <div
         className={`flex flex-col w-full h-full min-h-screen max-w-[480px] mx-auto items-center overflow-hidden ${subClass}`}
       >
-        <Header 
-          type={determineHeaderType()} 
-          title={determineHeaderTitle()} 
-        />
+        {headerTypeToUse !== 'blank' && (
+          <div className="z-50">
+            <Header
+              type={headerTypeToUse}
+              title={determineHeaderTitle()}
+            />
+          </div>
+        )}
 
-        <div className="w-full flex-grow overflow-y-auto">
+        <div className={`w-full flex-grow overflow-y-auto ${headerTypeToUse === 'blank' ? 'pt-0' : 'pt-16'}`}>
           <div className="hidden lg:block">{/* <OnlyMobileWarning /> */}</div>
           <AnimatePresence mode="wait">
             <motion.div
