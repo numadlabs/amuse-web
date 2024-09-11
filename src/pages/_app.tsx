@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { AuthProvider } from "../lib/context/auth-context";
-import SEOHead from "@/components/layout/seo-head";
+import AmuseWebAppSEO from "@/components/layout/seo-head";
 import { SessionProvider } from "next-auth/react";
 
 const queryClient = new QueryClient({
@@ -25,7 +25,7 @@ export default function MyApp({
   return (
     <SessionProvider session={session}>
       <QueryClientProvider client={queryClient}>
-        <SEOHead />
+        <AmuseWebAppSEO />
         <AuthProvider>
           <Component {...pageProps} />
         </AuthProvider>
