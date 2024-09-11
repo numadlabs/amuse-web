@@ -3,12 +3,15 @@ import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 
 const BACKEND_URL = `${publicRuntimeConfig.apiUrl}/api`;
-const IMAGE_CDN = publicRuntimeConfig.imageCdn;
+
+const PROFILE_PIC_LINK = `${publicRuntimeConfig.cdnUrl}/restaurant`;
+const RESTAURANT_PIC_LINK = `${publicRuntimeConfig.cdnUrl}/user`;
 console.log("🚀 ~ BACKEND_URL:", BACKEND_URL);
 
 const SERVER_SETTINGS = {
   BACKEND_URL,
-  IMAGE_CDN,
+  PROFILE_PIC_LINK,
+  RESTAURANT_PIC_LINK,
 };
 
 export default SERVER_SETTINGS;

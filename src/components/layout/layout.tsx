@@ -1,23 +1,26 @@
 import { ReactNode } from "react";
-// import Header from "@/components/layout/header-comp";
-import { Sora } from "next/font/google";
-// import Sidebar from "@/components/layout/side-bar";
 import { Toaster } from "../ui/sonner";
+import Header from "./header-comp";
 import BottomNavigation from "./bottom-navigation";
 
-const sora = Sora({ subsets: ["latin"], weight: ["400", "700"] });
-const subClass = sora.className;
-
-export default function Layout({ children }: { children: ReactNode }) {
+export default function AuthenticatedLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
   return (
-    <div
-      className={`flex flex-col w-full h-full bg-background min-h-screen items-center ${subClass}`}
-    >
-      {/* <Header /> */}
-      <div className="w-full max-w-[1440px]">
-        <div className="hidden lg:block">{/* <Sidebar /> */}</div>
-        {children}
-        <Toaster />
+    <div className="bg-background">
+      <div
+        className={`flex flex-col w-full h-full  min-h-screen max-w-[600px] mx-auto items-center`}
+      >
+        <Header />
+
+        <div className="w-full">
+          <div className="hidden lg:block">{/* <OnlyMobileWarning /> */}</div>
+          {children}
+          <Toaster />
+        </div>
+        <BottomNavigation />
       </div>
     </div>
   );

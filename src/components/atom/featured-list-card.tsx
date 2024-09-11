@@ -36,7 +36,7 @@ const FeaturedListCard: React.FC<HomeRestListProps> = ({
     <div className="p-3 bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-[20px] w-full">
       <div className="flex flex-row gap-4">
         <Image
-          src={`${SERVER_SETTINGS.IMAGE_CDN}/${restaurant?.logo}`}
+          src={`${SERVER_SETTINGS.RESTAURANT_PIC_LINK}/${restaurant?.logo}`}
           alt={restaurant?.name}
           width={92}
           height={92}
