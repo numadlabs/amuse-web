@@ -112,7 +112,7 @@ const Profile = () => {
         <Button
           variant="ghost"
           className="w-full justify-between"
-          onClick={() => router.push("profile/profile-edit")}
+          onClick={() => router.push("profile/edit")}
         >
           <span className="flex items-center">
             <User className="mr-2" /> Account
