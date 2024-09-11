@@ -168,10 +168,10 @@ const MyQrPage: React.FC = () => {
               </div>
             ) : (
               <>
-                <div className="bg-gradient-to-br from-qrGradientStart to-qrGradientEnd p-8 rounded-lg">
+                <div className="bg-gradient-to-br from-qrGradientStart to-qrGradientEnd p-8 flex justify-center items-center rounded-lg max-w-[480px] w-screen">
                   <QRCodeCanvas
                     value={`data:image/png;base64,${qrData}`}
-                    size={250}
+                    size={400}
                     bgColor="transparent"
                     fgColor="#ffffff"
                     level="H"

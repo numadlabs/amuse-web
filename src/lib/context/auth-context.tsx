@@ -28,6 +28,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         return { success: false, error: result.error };
       }
 
+      await fetch("/api/auth/session", { method: "GET" });
+
       return { error: false };
     } catch (error) {
       console.error("Login error:", error);

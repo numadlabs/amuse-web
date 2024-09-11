@@ -28,12 +28,19 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(false);
   const router = useRouter();
-  const { onLogin } = useAuth();
+  const { onLogin, status } = useAuth();
+
   // const { toast } = useToast()
 
   useEffect(() => {
     checkWelcomeMessageStatus();
   }, []);
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.replace("/home");
+    }
+  }, [status, router]);
 
   const checkWelcomeMessageStatus = async () => {
     try {
@@ -63,7 +70,7 @@ export default function Login() {
       const response = await onLogin(email, password);
       console.log("🚀 ~ handleLogin ~ response:", response);
       if (!response.error) {
-        router.push("/home");
+        // router.push("/home");
         toast.success("Welcome");
       } else {
         setError(response.error ?? "Unknown error happened");
@@ -78,7 +85,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
-      <Card className="max-w-[640px] w-full bg-gray500 border border-gray400 rounded-[32px]">
+      <Card className="max-w-[480px] w-full bg-gray500 border border-gray400 rounded-[32px]">
         <CardHeader className="text-center">
           <Image
             src="/img/LogoDark.png"
@@ -147,11 +154,11 @@ export default function Login() {
             </Button>
           </div>
           <div className="flex items-center gap-3">
-            <div className="w-[136.5px] h-[1px] bg-gray400" />
+            <div className="w-full h-[1px] bg-gray400" />
             <div className="flex items-center font-normal text-sm text-gray50">
               or
             </div>
-            <div className="w-[136.5px] h-[1px] bg-gray400" />
+            <div className="w-full h-[1px] bg-gray400" />
           </div>
           <div className="pt-4">
             <Button
@@ -189,8 +196,8 @@ export default function Login() {
       </div>
 
       <Dialog open={showWelcomeMessage} onOpenChange={setShowWelcomeMessage}>
-        <DialogContent className="bg-background w-[343px] h-[598px] flex flex-col justify-around p-4 rounded-xl border-hidden">
-          <ScrollArea className="h-[478px] w-[640px] rounded-md border-hidden">
+        <DialogContent className="bg-background max-w-[480px] w-screen h-[598px] flex flex-col justify-around p-4 rounded-xl border-hidden">
+          <ScrollArea className="h-[478px] rounded-md border-hidden">
             <DialogHeader>
               <DialogTitle className="text-faq font-bold pb-4 text-start text-white">
                 Welcome to <br /> Amuse Bouche!

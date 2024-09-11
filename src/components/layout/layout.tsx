@@ -66,7 +66,7 @@ export default function AuthenticatedLayout({
   return (
     <div className="bg-background">
       <div
-        className={`flex flex-col w-full h-full min-h-screen max-w-[600px] mx-auto items-center overflow-hidden ${subClass}`}
+        className={`flex flex-col w-full h-full min-h-screen max-w-[480px] mx-auto items-center overflow-hidden ${subClass}`}
       >
         {headerTypeToUse !== 'blank' && (
           <div className="z-50">

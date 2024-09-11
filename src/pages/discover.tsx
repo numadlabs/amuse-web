@@ -40,7 +40,7 @@ const Discover = () => {
   return (
     <AuthenticatedLayout>
       <div className="flex justify-center pt-[72px]">
-        <div className="flex flex-col pt-6 gap-6 max-w-[343px] w-full">
+        <div className="flex flex-col pt-6 gap-6 max-w-[480px] w-full">
           {restaurants.map((restaurant: any) => (
             <FeaturedListCard
               key={restaurant.id as string}
