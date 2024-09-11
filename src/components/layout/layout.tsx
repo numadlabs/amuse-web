@@ -13,23 +13,24 @@ interface AuthenticatedLayoutProps {
   children: ReactNode;
   headerType?: 'blank' | 'default' | 'page';
   headerTitle?: string;
+  bottomNavigationType?: 'Modal' | 'default';
 }
 
 export default function AuthenticatedLayout({
   children,
   headerType,
   headerTitle,
+  bottomNavigationType = 'default',
 }: AuthenticatedLayoutProps) {
   const router = useRouter();
 
-  // Determine header type based on route if not explicitly provided
   const determineHeaderType = () => {
     if (headerType) return headerType;
-
+    
     if (router.pathname === '/restaurants' && router.query.id) {
       return 'blank';
     }
-
+    
     switch (router.pathname) {
       case '/home':
         return 'default';
@@ -39,16 +40,14 @@ export default function AuthenticatedLayout({
         return 'page';
       case '/notifications':
         return 'page';
-      // Add more cases as needed
       default:
         return 'default';
     }
   };
 
-  // Determine header title based on route if not explicitly provided
   const determineHeaderTitle = () => {
     if (headerTitle) return headerTitle;
-
+    
     switch (router.pathname) {
       case '/profile':
         return 'Profile';
@@ -70,14 +69,15 @@ export default function AuthenticatedLayout({
       >
         {headerTypeToUse !== 'blank' && (
           <div className="z-50">
-            <Header
-              type={headerTypeToUse}
-              title={determineHeaderTitle()}
-            />
+
+          <Header 
+            type={headerTypeToUse} 
+            title={determineHeaderTitle()} 
+          />
           </div>
         )}
 
-        <div className={`w-full flex-grow overflow-y-auto ${headerTypeToUse === 'blank' ? 'pt-0' : 'pt-16'}`}>
+        <div className={`w-full flex-grow overflow-y-auto ${headerTypeToUse === 'blank' ? 'pt-0' : 'pt-16'} ${bottomNavigationType === 'default' ? 'pb-20' : ''}`}>
           <div className="hidden lg:block">{/* <OnlyMobileWarning /> */}</div>
           <AnimatePresence mode="wait">
             <motion.div
@@ -93,7 +93,7 @@ export default function AuthenticatedLayout({
           </AnimatePresence>
           <Toaster />
         </div>
-        <BottomNavigation />
+        <BottomNavigation type={bottomNavigationType} />
       </div>
     </div>
   );
