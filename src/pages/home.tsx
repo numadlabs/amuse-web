@@ -123,7 +123,7 @@ export default function HomePage() {
                   showProfilePicture
                     ? null
                     : isQuickInfoVisible && (
-                        <CarouselItem className="basis-auto w-[90%]">
+                        <CarouselItem className="basis-auto w-full">
                           <QuickInfo
                             onPress={() => setIsQuickInfoVisible(false)}
                             user={user?.user}
