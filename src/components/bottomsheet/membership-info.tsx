@@ -21,7 +21,7 @@ const MembershipInfo: React.FC<drawerProps> = ({ open, onClose }) => {
   return (
     <Drawer open={open} onClose={onClose}>
       <DrawerClose onClick={onClose}>
-        <DrawerContent className="bg-gray600 outline-0 outline-none rounded-t-[32px] max-w-[640px] w-full mx-auto">
+        <DrawerContent className="bg-gray600 outline-0 outline-none rounded-t-[32px] max-w-[480px] w-full mx-auto">
           <div className="w-full px-4 pt-4 pb-12 flex flex-col gap-6 items-center">
             <DrawerHeader className="flex relative justify-center w-full">
               <DrawerTitle className="py-2 text-xl text-gray00 font-bold">

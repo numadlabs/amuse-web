@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { getUserCard } from "@/lib/service/queryHelper";
 import { userKeys } from "@/lib/service/keysHelper";
 import Search from "../icons/search";
 import SERVER_SETTINGS from "@/lib/serverSettings";
 import Image from "next/image";
-import { TicketStar } from "iconsax-react";
 import APassStripes from "../icons/apass-stripes";
 
 const StackedCard = () => {
@@ -18,48 +17,53 @@ const StackedCard = () => {
 
   const { data: cards = [], isLoading } = useQuery({
     queryKey: userKeys.cards,
-    queryFn: () => {
-      return getUserCard();
-    },
+    queryFn: getUserCard,
   });
 
   useEffect(() => {
-    if (cards && cards.data && cards.data.cards) {
+    if (cards?.data?.cards) {
       setCardPositions(cards.data.cards.length * 1);
     }
   }, [cards]);
 
-  const latestCards = cards?.data?.cards.slice(0, 5);
+  const latestCards = cards?.data?.cards?.slice(0, 5) || [];
 
-  const handleNavigation = (restaurant: any) => {
-    router.push(`/restaurants/${restaurant.restaurantId}`);
+  const handleNavigation = (card: any) => {
+    router.push({
+      pathname: "/restaurants",
+      query: { id: card?.restaurantId },
+    });
   };
 
-  return (
-    <div className="relative pb-60">
-      {cards?.data?.cards.length === 0 ? (
-        <div className="bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-[20px]">
-          <div className="flex flex-col items-center justify-center p-8 gap-6">
-            <div className="flex flex-col justify-center items-center gap-4">
-              <Search />
-              <p className="text-center text-gray50 text-sm">
-                Discover restaurants, add membership cards, and earn rewards
-                when you check-in!
-              </p>
-            </div>
-            <Button
-              variant={"secondary"}
-              onClick={() => router.push("/Acards")}
-            >
-              Explore
-            </Button>
+  if (!cards?.data?.cards || cards.data.cards.length === 0) {
+    return (
+      <div className="bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-[20px]">
+        <div className="flex flex-col items-center justify-center p-8 gap-6">
+          <div className="flex flex-col justify-center items-center gap-4">
+            <Search />
+            <p className="text-center text-gray50 text-sm">
+              Discover restaurants, add membership cards, and earn rewards
+              when you check-in!
+            </p>
           </div>
+          <Button
+            variant="secondary"
+            onClick={() => router.push("/Acards")}
+          >
+            Explore
+          </Button>
         </div>
-      ) : (
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="relative" style={{ height: `${Math.max(latestCards.length * 10 + 300, 300)}px` }}>
         <AnimatePresence>
-          {latestCards?.map((card: any, index: any) => (
+          {latestCards.map((card: any, index: number) => (
             <motion.div
-              key={index}
+              key={card.id}
               initial={{ y: -400 }}
               animate={{ y: cardPositions }}
               transition={{ type: "spring", damping: 15 }}
@@ -68,44 +72,39 @@ const StackedCard = () => {
                 zIndex: latestCards.length - index,
                 top: `${index * 10}px`,
               }}
+              onClick={() => handleNavigation(card)}
             >
-              <Card className="relative w-[343px] h-[264px] overflow-hidden bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-[20px] flex items-center">
-                <div className="flex flex-col gap-5 items-start p-5 w-full">
-                  <div className="flex justify-start gap-5">
+              <Card className="relative w-full overflow-hidden bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-[20px] flex items-center">
+                <div className="flex flex-col gap-5 items-start p-5 z-20 w-full h-full">
+                  <div className="flex justify-start items-center gap-5">
+                    <Image
+                      src={`${SERVER_SETTINGS.RESTAURANT_PIC_LINK}/${card.logo}`}
+                      alt={card.name}
+                      width={40}
+                      height={40}
+                      className="rounded-lg object-cover"
+                    />
                     <div>
-                      <Image
-                        src={`${SERVER_SETTINGS.RESTAURANT_PIC_LINK}/${card.logo}`}
-                        alt="image"
-                        width={40}
-                        height={40}
-                        className="rounded-lg object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h1 className="font-bold text-lg text-white">
-                        {card.name}
-                      </h1>
+                      <h1 className="font-bold text-lg text-white">{card.name}</h1>
                       <h2 className="uppercase font-normal text-sm text-gray50">
                         {card.category}
                       </h2>
                     </div>
                   </div>
-                  <div className="flex gap-4">
-                    <div>
+                  <div className="flex gap-4 w-full">
+                    <div className="flex-grow">
                       <Image
                         src={`${SERVER_SETTINGS.RESTAURANT_PIC_LINK}/${card.nftImageUrl}`}
-                        alt="image"
-                        width={164}
-                        height={164}
-                        className="rounded-xl object-cover"
+                        alt={`${card.name} NFT`}
+                        width={1000}
+                        height={1000}
+                        className="rounded-xl w-full max-h-[300px] object-cover"
                       />
                     </div>
-                    <div className="w-[123px] h-[164px] rounded-xl bg-gray500 border border-gray400">
-                      <div className="flex flex-col justify-center items-center gap-1 h-[126px] border-b border-gray400">
+                    <div className="w-[123px] max-h-full rounded-xl bg-gray500 border border-gray400 flex flex-col justify-center items-center">
+                      <div className="flex flex-col justify-center items-center gap-1 h-full border-b border-gray400">
                         <h1 className="font-bold text-4xl text-white">
-                          {card.visitCount < 10
-                            ? `0${card.visitCount}`
-                            : card.visitCount}
+                          {card.visitCount < 10 ? `0${card.visitCount}` : card.visitCount}
                         </h1>
                         <h2 className="font-normal text-sm text-gray50">
                           Check-ins
@@ -121,7 +120,8 @@ const StackedCard = () => {
             </motion.div>
           ))}
         </AnimatePresence>
-      )}
+      </div>
+      <div className="flex justify-center mt-4 h-12"/>
     </div>
   );
 };

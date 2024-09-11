@@ -76,7 +76,7 @@ const EmailInput: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col justify-center max-w-[960px] gap-4 pt-6 pr-4 pb-4 pl-4 w-[343px] h-[180px] items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
+      className="flex flex-col justify-center max-w-[480px] w-screen gap-4 pt-6 pr-4 pb-4 pl-4 h-[180px] items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
     >
       <h2 className="text-faq font-bold text-white">Forgot Password?</h2>
       <p className="text-gray100 text-sm font-normal">
@@ -92,7 +92,7 @@ const EmailInput: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"
-        className="w-[343px] h-12 absolute bottom-32"
+        className="max-w-[480px] w-screen h-12 absolute bottom-32"
         disabled={!email || isLoading}
       >
         {isLoading ? "Sending..." : "Send Code"}
@@ -119,7 +119,7 @@ const OTPVerification: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col justify-center max-w-[960px] gap-4 pt-6 pr-4 pb-4 pl-4 w-[343px] h-[180px] items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
+      className="flex flex-col justify-center max-w-[480px] w-screen gap-4 pt-6 pr-4 pb-4 pl-4 h-[180px] items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
     >
       <h2 className="text-faq font-bold text-white">Verification Code</h2>
       <p className="text-gray100 text-sm font-normal">
@@ -135,7 +135,7 @@ const OTPVerification: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"
-        className="w-[343px] h-12 absolute bottom-32"
+        className="max-w-[480px] w-screen h-12 absolute bottom-32"
         disabled={!verificationCode || isLoading}
       >
         {isLoading ? "Verifying..." : "Verify Code"}
@@ -168,7 +168,7 @@ const NewPassword: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col justify-center h-[382px] max-w-[960px] gap-6 pt-4 pr-4 pb-4 pl-4 w-[343px] items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
+      className="flex flex-col justify-center h-[382px] max-w-[480px] w-screen gap-6 pt-4 pr-4 pb-4 pl-4 items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
     >
       <h2 className="text-faq font-bold text-white">Create New Password</h2>
       <div className="relative w-full">
@@ -219,7 +219,7 @@ const NewPassword: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"
-        className="w-[343px] h-12 absolute bottom-32"
+        className="max-w-[480px] w-screen h-12 absolute bottom-32"
         disabled={!isPasswordValid(password) || !doPasswordsMatch || isLoading}
       >
         {isLoading ? "Changing Password..." : "Change Password"}
@@ -241,7 +241,7 @@ const Success: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center max-w-[960px] gap-4 pt-6 pr-4 pb-4 pl-4 w-[343px] h-[190px] bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]">
+    <div className="flex flex-col items-center justify-center max-w-[480px] w-screen gap-4 pt-6 pr-4 pb-4 pl-4 h-[190px] bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]">
       {/* <CheckCircle className="w-16 h-16 text-green-500 mb-4" /> */}
       <Image
         src={"/images/success.png"}
@@ -258,7 +258,7 @@ const Success: React.FC = () => {
       <Button
         onClick={handleNavigation}
         variant="secondary"
-        className="w-[343px] h-12 absolute bottom-32"
+        className="max-w-[480px] w-screen h-12 absolute bottom-32"
       >
         Go to Login
       </Button>
