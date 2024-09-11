@@ -59,9 +59,7 @@ const Profile = () => {
 
   return (
     <AuthenticatedLayout>
-      <h1 className="text-2xl font-bold mb-6">Profile</h1>
-
-      <Card className="mb-6">
+      <Card className="mb-6 bg-gradient-to-b from-gray500 to-gray600/1">
         <CardContent className="p-6">
           <div className="flex items-center space-x-4">
             <Avatar className="w-20 h-20">
@@ -73,8 +71,8 @@ const Profile = () => {
               </AvatarFallback>
             </Avatar>
             <div>
-              <h2 className="text-xl font-semibold">{user?.user?.nickname}</h2>
-              <p className="text-gray-500">Tier: {userTierData?.name}</p>
+              <h2 className="text-xl font-semibold text-white">{user?.user?.nickname}</h2>
+              <p className="text-gray100">Tier: {userTierData?.name}</p>
             </div>
           </div>
         </CardContent>
@@ -84,14 +82,14 @@ const Profile = () => {
         <Card>
           <CardContent className="p-4 text-center">
             <p className="text-gray-500">Check-ins</p>
-            <p className="text-2xl font-bold">{taps?.data?.taps.length || 0}</p>
+            <p className="text-2xl font-bold text-white">{taps?.data?.taps.length || "00"}</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
             <p className="text-gray-500">Memberships</p>
-            <p className="text-2xl font-bold">
-              {cards?.data?.cards.length || 0}
+            <p className="text-2xl font-bold text-white">
+              {cards?.data?.cards.length || "00"}
             </p>
           </CardContent>
         </Card>
@@ -99,9 +97,9 @@ const Profile = () => {
 
       <div className="space-y-4">
         <Button
-          variant="outline"
+          variant="ghost"
           className="w-full justify-between"
-          onClick={() => router.push("/profile-edit")}
+          onClick={() => router.push("profile/profile-edit")}
         >
           <span className="flex items-center">
             <User className="mr-2" /> Account
@@ -109,7 +107,7 @@ const Profile = () => {
           <ChevronRight />
         </Button>
         <Button
-          variant="outline"
+          variant="ghost"
           className="w-full justify-between"
           onClick={() => (window.location.href = "mailto:info@amusebouche.io")}
         >
@@ -119,7 +117,7 @@ const Profile = () => {
           <ChevronRight />
         </Button>
         <Button
-          variant="outline"
+          variant="ghost"
           className="w-full justify-between"
           onClick={() => router.push("/faq")}
         >
@@ -129,7 +127,7 @@ const Profile = () => {
           <ChevronRight />
         </Button>
         <Button
-          variant="outline"
+          variant="ghost"
           className="w-full justify-between"
           onClick={() => router.push("/terms-and-conditions")}
         >
@@ -139,7 +137,7 @@ const Profile = () => {
           <ChevronRight />
         </Button>
         <Button
-          variant="outline"
+          variant="ghost"
           className="w-full justify-between"
           onClick={() => router.push("/privacy-policy")}
         >
@@ -148,7 +146,7 @@ const Profile = () => {
           </span>
           <ChevronRight />
         </Button>
-        <Button variant="destructive" className="w-full" onClick={onLogout}>
+        <Button variant="ghost" className="w-full" onClick={onLogout}>
           <LogOut className="mr-2" /> Log out
         </Button>
       </div>
