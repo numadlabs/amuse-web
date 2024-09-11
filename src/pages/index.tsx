@@ -37,11 +37,11 @@ export default function Login() {
     checkWelcomeMessageStatus();
   }, []);
 
-  // useEffect(() => {
-  //   if (status === "authenticated") {
-  //     router.replace("/home");
-  //   }
-  // }, [status, router]);
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.replace("/home");
+    }
+  }, [status, router]);
 
   const checkWelcomeMessageStatus = async () => {
     try {
@@ -68,14 +68,10 @@ export default function Login() {
       setLoading(true);
       setError("");
 
-      const response = await signIn("credentials", {
-        redirect: false,
-        email,
-        password,
-      });
+      const response = await onLogin(email, password);
       console.log("🚀 ~ handleLogin ~ response:", response);
-      if (!response?.error) {
-        router.push("/home");
+      if (!response.error) {
+        // router.push("/home");
         toast.success("Welcome");
       } else {
         setError(response.error ?? "Unknown error happened");
