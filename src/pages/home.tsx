@@ -103,7 +103,7 @@ export default function HomePage() {
   return (
     <AuthenticatedLayout>
       <div className=" flex justify-center pt-[72px]">
-        <div className="flex flex-col px-4 pt-6 gap-6 max-w-[600px] w-screen">
+        <div className="flex flex-col pt-6 gap-6 max-w-[343px] w-screen">
           <div className="flex flex-col gap-4">
             {user && (
               <Balance
@@ -158,7 +158,7 @@ export default function HomePage() {
 
           {cards?.data?.cards.length > 0 && (
             <div className="flex justify-center mt-8 mb-16">
-              <Button onClick={() => router.push("/my-cards")}>See all</Button>
+              <Button variant={"secondary"} onClick={() => router.push("/my-cards")}>See all</Button>
             </div>
           )}
         </div>
