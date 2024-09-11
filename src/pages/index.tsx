@@ -78,7 +78,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
-      <Card className="h-[544px] w-[343px] bg-gray500 border border-gray400 rounded-[32px]">
+      <Card className="max-w-[640px] w-full bg-gray500 border border-gray400 rounded-[32px]">
         <CardHeader className="text-center">
           <Image
             src="/img/LogoDark.png"
@@ -190,7 +190,7 @@ export default function Login() {
 
       <Dialog open={showWelcomeMessage} onOpenChange={setShowWelcomeMessage}>
         <DialogContent className="bg-background w-[343px] h-[598px] flex flex-col justify-around p-4 rounded-xl border-hidden">
-          <ScrollArea className="h-[478px] w-[290px] rounded-md border-hidden">
+          <ScrollArea className="h-[478px] w-[640px] rounded-md border-hidden">
             <DialogHeader>
               <DialogTitle className="text-faq font-bold pb-4 text-start text-white">
                 Welcome to <br /> Amuse Bouche!
