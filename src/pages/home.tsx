@@ -102,7 +102,7 @@ export default function HomePage() {
 
   return (
     <AuthenticatedLayout>
-      <div className=" flex justify-center pt-[72px]">
+      <div className=" flex justify-center">
         <div className="flex flex-col pt-6 gap-6 max-w-[480px] w-screen">
           <div className="flex flex-col gap-4">
             {user && (

@@ -44,6 +44,8 @@ const MyQrPage: React.FC = () => {
   const { data: session } = useSession();
   const userId = session?.userId as string | undefined;
   const socketRef = useRef<Socket | null>(null);
+  const [qrSize, setQrSize] = useState(400);
+  const qrContainerRef = useRef<HTMLDivElement>(null);
 
   const { data: cardsData } = useQuery({
     queryKey: userKeys.cards,
@@ -153,6 +155,23 @@ const MyQrPage: React.FC = () => {
     };
   }, [userId, handleTapScan, createTapMutation]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (qrContainerRef.current) {
+        const containerWidth = qrContainerRef.current.offsetWidth;
+        const newSize = Math.min(containerWidth - 64, 400); // 64px for padding
+        setQrSize(newSize);
+      }
+    };
+
+    handleResize(); // Initial size calculation
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <AuthenticatedLayout headerType="blank" bottomNavigationType="Modal">
       <div className="flex flex-col items-center justify-center min-h-screen p-4">
@@ -168,14 +187,16 @@ const MyQrPage: React.FC = () => {
               </div>
             ) : (
               <>
-                <div className="bg-gradient-to-br from-qrGradientStart to-qrGradientEnd p-8 flex justify-center items-center rounded-lg max-w-[480px] w-screen">
+              <div className="mx-4">
+                <div ref={qrContainerRef} className="bg-gradient-to-br from-qrGradientStart to-qrGradientEnd p-8 flex justify-center items-center rounded-[32px] max-w-[480px] w-screen">
                   <QRCodeCanvas
                     value={`data:image/png;base64,${qrData}`}
-                    size={400}
-                    bgColor="transparent"
+                    size={qrSize}
+                    bgColor="transparent "
                     fgColor="#ffffff"
                     level="H"
                   />
+                </div>
                 </div>
                 <p className="text-center text-gray100 text-md">
                   Show this to your waiter to check-in. Do not worry, they are

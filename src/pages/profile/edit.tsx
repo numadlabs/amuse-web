@@ -38,7 +38,7 @@ const ProfileEdit = () => {
 
   return (
     <AuthenticatedLayout>
-      <div className="pt-[72px] bg-gray600 py-12 overflow-hidden">
+      <div className="bg-gray600 py-12 overflow-hidden">
         <div className="max-w-md mx-auto bg-gradient-to-b from-gray500 to-transparent rounded-3xl shadow-md overflow-hidden md:max-w-2xl">
           <div className="p-8 border border-gray400 overflow-hidden">
             <div className="space-y-4">

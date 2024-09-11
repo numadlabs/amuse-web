@@ -67,39 +67,41 @@ const Profile = () => {
   );
 
   return (
-    <AuthenticatedLayout >
-      <Card className="mb-6 pt-[72px] bg-gradient-to-b from-gray500 to-gray600/1">
-        <CardContent className="p-6">
-          <div className="flex items-center space-x-4">
-            <Avatar className="w-20 h-20">
-              <AvatarImage
-                src={`${SERVER_SETTINGS.PROFILE_PIC_LINK}${user?.user?.profilePicture}`}
-              />
-              <AvatarFallback>
-                <User className="w-10 h-10" />
-              </AvatarFallback>
-            </Avatar>
-            <div>
-              <h2 className="text-xl font-semibold text-white">
-                {user?.user?.nickname}
-              </h2>
-              <p className="text-gray100">Tier: {userTierData?.name}</p>
+    <AuthenticatedLayout>
+      <div className="mt-6">
+        <Card className="mb-6 bg-gradient-to-b from-gray500 to-gray600/1 rounded-2xl">
+          <CardContent className="p-6">
+            <div className="flex items-center space-x-4">
+              <Avatar className="w-20 h-20">
+                <AvatarImage
+                  src={`${SERVER_SETTINGS.PROFILE_PIC_LINK}${user?.user?.profilePicture}`}
+                />
+                <AvatarFallback>
+                  <User className="w-10 h-10" />
+                </AvatarFallback>
+              </Avatar>
+              <div>
+                <h2 className="text-xl font-semibold text-white">
+                  {user?.user?.nickname}
+                </h2>
+                <p className="text-gray100">Tier: {userTierData?.name}</p>
+              </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
 
       <div className="grid grid-cols-2 gap-4 mb-6">
-        <Card>
-          <CardContent className="p-4 text-center">
+        <Card className="rounded-2xl">
+          <CardContent className="p-4 text-center bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-2xl">
             <p className="text-gray-500">Check-ins</p>
             <p className="text-2xl font-bold text-white">
               {taps?.data?.taps.length || "00"}
             </p>
           </CardContent>
         </Card>
-        <Card>
-          <CardContent className="p-4 text-center">
+        <Card className="rounded-2xl">
+          <CardContent className="p-4 text-center bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-2xl">
             <p className="text-gray-500">Memberships</p>
             <p className="text-2xl font-bold text-white">
               {cards?.data?.cards.length || "00"}
@@ -111,7 +113,7 @@ const Profile = () => {
       <div className="space-y-4">
         <Button
           variant="ghost"
-          className="w-full justify-between"
+          className="w-full justify-between bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-2xl h-14"
           onClick={() => router.push("profile/edit")}
         >
           <span className="flex items-center">
@@ -121,7 +123,7 @@ const Profile = () => {
         </Button>
         <Button
           variant="ghost"
-          className="w-full justify-between"
+          className="w-full justify-between bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-2xl h-14"
           onClick={() => (window.location.href = "mailto:info@amusebouche.io")}
         >
           <span className="flex items-center">
@@ -131,7 +133,7 @@ const Profile = () => {
         </Button>
         <Button
           variant="ghost"
-          className="w-full justify-between"
+          className="w-full justify-between bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-2xl h-14"
           onClick={() => router.push("/faq")}
         >
           <span className="flex items-center">
@@ -141,7 +143,7 @@ const Profile = () => {
         </Button>
         <Button
           variant="ghost"
-          className="w-full justify-between"
+          className="w-full justify-between bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-2xl h-14"
           onClick={() => router.push("/terms-and-conditions")}
         >
           <span className="flex items-center">
@@ -151,7 +153,7 @@ const Profile = () => {
         </Button>
         <Button
           variant="ghost"
-          className="w-full justify-between"
+          className="w-full justify-between bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-2xl h-14"
           onClick={() => router.push("/privacy-policy")}
         >
           <span className="flex items-center">
@@ -159,7 +161,12 @@ const Profile = () => {
           </span>
           <ChevronRight />
         </Button>
-        <Button variant="ghost" className="w-full" onClick={onLogout}>
+        <Button
+          variant="secondary"
+          size={"lg"}
+          className="w-full"
+          onClick={onLogout}
+        >
           <LogOut className="mr-2" /> Log out
         </Button>
       </div>

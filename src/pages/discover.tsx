@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getRestaurants } from "@/lib/service/queryHelper";
 import { RestaurantType } from "@/lib/types";
 import { useRouter } from "next/router";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Discover = () => {
   const router = useRouter();
@@ -39,8 +40,8 @@ const Discover = () => {
 
   return (
     <AuthenticatedLayout>
-      <div className="flex justify-center pt-[72px]">
-        <div className="flex flex-col pt-6 gap-6 max-w-[480px] w-full">
+      <div className="flex justify-center">
+        <ScrollArea className="flex flex-col pt-6 gap-6 max-w-[480px] w-full">
           {restaurants.map((restaurant: any) => (
             <FeaturedListCard
               key={restaurant.id as string}
@@ -48,7 +49,7 @@ const Discover = () => {
               onClick={() => handleNavigation(restaurant)}
             />
           ))}
-        </div>
+        </ScrollArea>
       </div>
     </AuthenticatedLayout>
   );
