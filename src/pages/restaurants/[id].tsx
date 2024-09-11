@@ -89,9 +89,9 @@ const Restaurants = () => {
 
   return (
     <AuthenticatedLayout bottomNavigationType="Modal">
-      <div className="flex w-full items-center justify-center min-h-screen ">
+      <div className="flex w-full items-center justify-center min-h-screen">
         <div className="flex flex-col items-center max-w-[480px] w-full justify-start relative h-full">
-          <div className="sticky top-0 z-10 w-full mb-4 mt-16">
+          <div className="sticky top-0 z-10 w-full mb-4">
             <div className="flex justify-end">
               <button
                 className="flex bg-gray400 justify-center items-center h-12 w-12 rounded-full"

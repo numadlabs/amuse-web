@@ -110,7 +110,7 @@ const Profile = () => {
         </Card>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 mb-16">
         <Button
           variant="ghost"
           className="w-full justify-between bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-2xl h-14"
