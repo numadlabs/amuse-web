@@ -154,7 +154,7 @@ const MyQrPage: React.FC = () => {
   }, [userId, handleTapScan, createTapMutation]);
 
   return (
-    <AuthenticatedLayout headerType="blank">
+    <AuthenticatedLayout headerType="blank" bottomNavigationType="Modal">
       <div className="flex flex-col items-center justify-center min-h-screen p-4">
         <div className="w-full max-w-md text-gray100">
           <div className="flex flex-col items-center p-6 space-y-6">
