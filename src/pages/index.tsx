@@ -15,9 +15,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { useAuth } from "@/lib/context/auth-context";
+import Link from "next/link";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -167,67 +168,79 @@ export default function Login() {
         <p className="text-center text-sm text-gray-400">
           By continuing, I agree with Amuse-Bouche&apos;s{" "}
         </p>
-        <Button
+        {/* <Button
           variant="ghost"
           className="text-white font-normal text-md"
           onClick={() => router.push("/terms")}
         >
           Terms and Conditions.
-        </Button>
+        </Button> */}
+        <Link
+          href="https://amuse-landing.vercel.app/terms-conditions"
+          passHref
+          legacyBehavior
+        >
+          <a target="_blank" rel="noopener noreferrer">
+            <Button variant="ghost" className="text-white font-normal text-md">
+              Terms and Conditions
+            </Button>
+          </a>
+        </Link>
       </div>
 
       <Dialog open={showWelcomeMessage} onOpenChange={setShowWelcomeMessage}>
         <DialogContent className="bg-background w-[343px] h-[598px] flex flex-col justify-around p-4 rounded-xl border-hidden">
-        <ScrollArea className="h-[478px] w-[290px] rounded-md border-hidden">
-        <DialogHeader>
-            <DialogTitle className="text-faq font-bold pb-4 text-start text-white">
-              Welcome to <br /> Amuse Bouche!
-            </DialogTitle>
-          </DialogHeader>
-          <DialogDescription className="space-y-4 font-normal text-gray100">
-            <p>
-              Welcome to Amuse Bouche! We are excited to welcome you to our
-              growing community!
-            </p>
-            <p>
-              We’re thrilled to have you join our Pilot Program, and we greatly
-              appreciate your participation. This program allows us to refine
-              Amuse Bouche’s features, ensuring it becomes the best experience
-              possible for our entire community, including you!
-            </p>
-            <p>
-              Here at Amuse Bouche, we value transparency with our users. So,
-              please note that while using the Amuse Bouche Application, certain
-              user data will be collected. To enable account creation and
-              continued user access, it is necessary that user email data is
-              collected. Additionally, user experience is unique to each
-              location, which requires user location data to also be collected.
-            </p>
-            <p>
-              Aside from user email and location data collection, the rest is up
-              to you! You can opt to allow the collection of data such as your
-              birthday and profile picture. Opting-in allows us here at Amuse
-              Bouche to continue to improve the application so we can provide a
-              more seamless and tailored user experience for you.
-            </p>
-            <p>
-              Your privacy is important, and what data you choose to disclose is
-              totally up to you! To change your data collection preferences, you
-              can go to the privacy section of the settings menu and view the
-              data collection options.
-            </p>
-            <p>
-              One final note, to ensure security and smooth operations during
-              the Pilot Program, some features will be limited. Specifically,
-              you won’t be able to withdraw or transfer any bitcoin earned until
-              the Pilot Program ends. We’ll notify all users via email and app
-              notification as soon as the Pilot Program is completed.
-            </p>
-            <p className="font-semibold">
-              We are excited to have you as a part of our growing community!
-            </p>
-          </DialogDescription>
-</ScrollArea>
+          <ScrollArea className="h-[478px] w-[290px] rounded-md border-hidden">
+            <DialogHeader>
+              <DialogTitle className="text-faq font-bold pb-4 text-start text-white">
+                Welcome to <br /> Amuse Bouche!
+              </DialogTitle>
+            </DialogHeader>
+            <DialogDescription className="space-y-4 font-normal text-gray100">
+              <p>
+                Welcome to Amuse Bouche! We are excited to welcome you to our
+                growing community!
+              </p>
+              <p>
+                We’re thrilled to have you join our Pilot Program, and we
+                greatly appreciate your participation. This program allows us to
+                refine Amuse Bouche’s features, ensuring it becomes the best
+                experience possible for our entire community, including you!
+              </p>
+              <p>
+                Here at Amuse Bouche, we value transparency with our users. So,
+                please note that while using the Amuse Bouche Application,
+                certain user data will be collected. To enable account creation
+                and continued user access, it is necessary that user email data
+                is collected. Additionally, user experience is unique to each
+                location, which requires user location data to also be
+                collected.
+              </p>
+              <p>
+                Aside from user email and location data collection, the rest is
+                up to you! You can opt to allow the collection of data such as
+                your birthday and profile picture. Opting-in allows us here at
+                Amuse Bouche to continue to improve the application so we can
+                provide a more seamless and tailored user experience for you.
+              </p>
+              <p>
+                Your privacy is important, and what data you choose to disclose
+                is totally up to you! To change your data collection
+                preferences, you can go to the privacy section of the settings
+                menu and view the data collection options.
+              </p>
+              <p>
+                One final note, to ensure security and smooth operations during
+                the Pilot Program, some features will be limited. Specifically,
+                you won’t be able to withdraw or transfer any bitcoin earned
+                until the Pilot Program ends. We’ll notify all users via email
+                and app notification as soon as the Pilot Program is completed.
+              </p>
+              <p className="font-semibold">
+                We are excited to have you as a part of our growing community!
+              </p>
+            </DialogDescription>
+          </ScrollArea>
 
           <Button
             onClick={dismissWelcomeMessage}
