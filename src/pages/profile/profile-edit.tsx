@@ -11,6 +11,14 @@ import { updateUserInfo } from "@/lib/service/mutationHelper";
 import AuthenticatedLayout from "@/components/layout/layout";
 import { Input } from "@/components/ui/input";
 
+interface FormData {
+  nickname: string;
+  email: string;
+  location: string;
+  dateOfBirth: string;
+  profilePicture: string | null;
+}
+
 const ProfileEdit = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -22,12 +30,15 @@ const ProfileEdit = () => {
     enabled: !!session?.userId,
   });
 
+  const [formData, setFormData] = useState<FormData>({
+    nickname: "",
+    email: "",
+    location: "",
+    dateOfBirth: "",
+    profilePicture: null,
+  });
+
   const [loading, setLoading] = useState(false);
-  const [nickname, setNickname] = useState("");
-  const [email, setEmail] = useState("");
-  const [location, setLocation] = useState("");
-  const [profilePicture, setProfilePicture] = useState<string | null>(null);
-  const [dateOfBirth, setDateOfBirth] = useState("");
   const [dataChanged, setDataChanged] = useState(false);
   const [error, setError] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -36,33 +47,54 @@ const ProfileEdit = () => {
   const isProfilePrefilled =
     user?.user?.email && user?.user?.location && user?.user?.dateOfBirth;
 
-  // useEffect(() => {
-  //   if (user) {
-  //     setNickname(user.user.nickname || '');
-  //     setEmail(user.user.email || '');
-  //     setLocation(user.user.location || '');
-  //     setDateOfBirth(user.user.dateOfBirth || '');
-  //   }
-  // }, [user]);
+  useEffect(() => {
+    if (user?.user) {
+      setFormData({
+        nickname: user.user.nickname || "",
+        email: user.user.email || "",
+        location: user.user.location || "",
+        dateOfBirth: user.user.dateOfBirth || "",
+        profilePicture: user.user.profilePicture || null,
+      });
+    }
+  }, [user]);
 
-  // useEffect(() => {
-  //   setDataChanged(
-  //     user?.user?.nickname !== nickname ||
-  //     user?.user?.profilePicture !== profilePicture ||
-  //     user?.user?.location !== location ||
-  //     user?.user?.dateOfBirth !== dateOfBirth
-  //   );
-  // }, [user, nickname, email, location, dateOfBirth, profilePicture]);
+  useEffect(() => {
+    if (user?.user) {
+      const hasChanged =
+        user.user.nickname !== formData.nickname ||
+        user.user.email !== formData.email ||
+        user.user.location !== formData.location ||
+        user.user.dateOfBirth !== formData.dateOfBirth ||
+        user.user.profilePicture !== formData.profilePicture;
+
+      setDataChanged(hasChanged);
+    }
+  }, [user, formData]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    // Clear errors when user starts typing
+    setError("");
+    setEmailError("");
+  };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setProfilePicture(reader.result as string);
+        setFormData((prev) => ({ ...prev, profilePicture: reader.result as string }));
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const formatDate = (dateString: string) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   };
 
   const triggerUpdateUser = async () => {
@@ -70,54 +102,32 @@ const ProfileEdit = () => {
     setError("");
     setEmailError("");
 
-    // const emojiRegex = /\p{Emoji}/u;
-
     if (!session || !session.userId) {
       setError("User ID not found");
       setLoading(false);
       return;
     }
 
-    if (!dateOfBirth) {
+    if (!formData.dateOfBirth) {
       setError("Please select a valid date of birth");
       setLoading(false);
       return;
     }
 
-    if (nickname.length >= 10) {
+    if (formData.nickname.length >= 10) {
       setError("Nickname must be less than 10 characters");
       setLoading(false);
       return;
     }
 
-    //TODO ene regex ynzlah /u rule ni ts error ogood bga
-    // if (emojiRegex.test(nickname)) {
-    //   setError("Nickname cannot contain emojis");
-    //   setLoading(false);
-    //   return;
-    // }
-
-    // if (emojiRegex.test(email)) {
-    //   setEmailError("Email cannot contain emojis");
-    //   setLoading(false);
-    //   return;
-    // }
-
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(formData.email)) {
       setEmailError("Invalid email");
       setLoading(false);
       return;
     }
 
-    const userData = {
-      nickname,
-      location,
-      dateOfBirth,
-      profilePicture,
-    };
-
     try {
-      await updateUserInfo({ userId: session.userId, data: userData });
+      await updateUserInfo({ userId: session.userId, data: formData });
       setLoading(false);
       setDataChanged(false);
       queryClient.invalidateQueries({ queryKey: userKeys.info });
@@ -142,9 +152,9 @@ const ProfileEdit = () => {
             <div className="flex justify-center mb-8">
               <div className="relative">
                 <div className="w-24 h-24 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
-                  {profilePicture ? (
+                  {formData.profilePicture ? (
                     <Image
-                      src={profilePicture}
+                      src={formData.profilePicture}
                       alt="Profile"
                       width={96}
                       height={96}
@@ -178,13 +188,13 @@ const ProfileEdit = () => {
                   Nickname
                 </label>
                 <div className="mt-2 relative rounded-md shadow-sm">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"></div>
                   <Input
                     id="nickname"
+                    name="nickname"
                     icon={<User className="text-gray100" />}
                     placeholder="Username"
-                    onChange={(e) => setNickname(e.target.value)}
-                    value={nickname}
+                    onChange={handleInputChange}
+                    value={formData.nickname}
                   />
                 </div>
                 {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
@@ -200,10 +210,11 @@ const ProfileEdit = () => {
                 <div className="mt-2 relative rounded-md shadow-sm">
                   <Input
                     id="email"
+                    name="email"
                     icon={<Sms className="text-gray100" />}
                     placeholder="Email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
+                    onChange={handleInputChange}
+                    value={formData.email}
                   />
                 </div>
                 {emailError && (
@@ -221,10 +232,11 @@ const ProfileEdit = () => {
                 <div className="mt-2 relative rounded-md shadow-sm">
                   <Input
                     id="location"
+                    name="location"
                     icon={<Location className="text-gray100" />}
                     placeholder="Area"
-                    onChange={(e) => setLocation(e.target.value)}
-                    value={location}
+                    onChange={handleInputChange}
+                    value={formData.location}
                   />
                 </div>
               </div>
@@ -239,23 +251,32 @@ const ProfileEdit = () => {
                 <div className="mt-2 relative rounded-md shadow-sm">
                   <Input
                     id="dateOfBirth"
+                    name="dateOfBirth"
                     icon={<Cake className="text-gray100" />}
                     placeholder="Birthday"
-                    onChange={(e) => setDateOfBirth(e.target.value)}
+                    onChange={handleInputChange}
                     type="date"
-                    value={dateOfBirth}
+                    value={formData.dateOfBirth}
                   />
                 </div>
+                {formData.dateOfBirth && (
+                  <p className="mt-1 text-sm text-gray100">
+                    {formatDate(formData.dateOfBirth)}
+                  </p>
+                )}
               </div>
             </div>
 
             <div className="mt-8">
               <Button
-                variant="primary"
+                variant={dataChanged ? 'primary' : 'secondary'}
                 className="w-full justify-between"
-                onClick={() => router.push("profile/profile-edit")}
+                onClick={triggerUpdateUser}
+                disabled={!dataChanged || loading}
               >
-                <p>Save Changes</p>
+                <span className="justify-center flex w-full">
+                  <p>{loading ? "Saving..." : "Save Changes"}</p>
+                </span>
               </Button>
             </div>
           </div>
