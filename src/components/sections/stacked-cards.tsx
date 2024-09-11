@@ -11,25 +11,12 @@ import Search from "../icons/search";
 const StackedCard = () => {
   const [cardPositions, setCardPositions] = useState(-400);
   const router = useRouter();
-  const [currentLocation, setCurrentLocation] = useState({
-    latitude: 0,
-    longitude: 0,
-  });
-
-  useEffect(() => {
-    // Simulating getting current location
-    setCurrentLocation({ latitude: 40.7128, longitude: -74.006 });
-  }, []);
 
   const { data: cards = [], isLoading } = useQuery({
     queryKey: userKeys.cards,
     queryFn: () => {
-      return getUserCard({
-        latitude: currentLocation.latitude,
-        longitude: currentLocation.longitude,
-      });
+      return getUserCard();
     },
-    enabled: !!currentLocation.latitude,
   });
 
   useEffect(() => {
@@ -50,13 +37,14 @@ const StackedCard = () => {
         <div className="bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-[20px]">
           <div className="flex flex-col items-center justify-center p-8 gap-6">
             <div className="flex flex-col justify-center items-center gap-4">
-            <Search />
-            <p className="text-center text-gray50 text-sm">
-            Discover restaurants, add membership cards, and earn rewards when you check-in!
-            </p>
+              <Search />
+              <p className="text-center text-gray50 text-sm">
+                Discover restaurants, add membership cards, and earn rewards
+                when you check-in!
+              </p>
             </div>
             <Button
-            variant={"secondary"}
+              variant={"secondary"}
               onClick={() => router.push("/Acards")}
             >
               Explore

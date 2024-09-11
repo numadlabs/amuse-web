@@ -4,9 +4,9 @@ import { useRouter } from "next/router";
 
 const domain = "https://web.amusebouche.io";
 
-export default function SEOHead({
-  title = "Amuse Bouche",
-  description = "Earn  and redeem tokens for exclusive culinary experiences.",
+export default function AmuseWebAppSEO({
+  title = "Amuse Bouche - Your Digital Culinary Passport",
+  description = "Access exclusive rewards, check in at top restaurants, and manage your culinary journey with Amuse Bouche.",
   logo = `${domain}/img/og.png`,
 }) {
   const router = useRouter();
@@ -29,13 +29,34 @@ export default function SEOHead({
       <meta property="og:site_name" content={domain.replace("https://", "")} />
       <meta property="og:image" content={logo} />
       <meta property="og:image:secure_url" content={logo} />
-      <meta property="og:image:width" content="1170" />
+      <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:image" content={logo} />
-      <link rel="icon" type="image/png" sizes="32x32" href={logo} />
-      <link rel="icon" type="image/png" sizes="96x96" href={logo} />
-      <link rel="icon" type="image/png" sizes="16x16" href={logo} />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="/favicon-32x32.png"
+      />
+      <link
+        rel="icon"
+        type="image/png"
+        sizes="16x16"
+        href="/favicon-16x16.png"
+      />
+      <link
+        rel="apple-touch-icon"
+        sizes="180x180"
+        href="/apple-touch-icon.png"
+      />
+      <link rel="manifest" href="/site.webmanifest" />
+      <meta name="application-name" content="Amuse Bouche" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+      <meta name="apple-mobile-web-app-title" content="Amuse Bouche" />
+      <meta name="format-detection" content="telephone=no" />
+      <meta name="mobile-web-app-capable" content="yes" />
     </Head>
   );
 }

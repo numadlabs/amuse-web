@@ -26,6 +26,12 @@ import SERVER_SETTINGS from "@/lib/serverSettings";
 import { useSession } from "next-auth/react";
 import AuthenticatedLayout from "@/components/layout/layout";
 
+interface UserTier {
+  id: string;
+  name: string;
+  // Add other properties as needed
+}
+
 const Profile = () => {
   const router = useRouter();
   const { data: session } = useSession();
@@ -34,23 +40,26 @@ const Profile = () => {
 
   const { data: taps = [] } = useQuery({
     queryKey: userKeys.taps,
-    queryFn: getUserTaps,
+    queryFn: () => getUserTaps(),
   });
 
-  const { data: userTier = [], isLoading: isUserTierLoading } = useQuery({
+  const { data: userTier = [], isLoading: isUserTierLoading } = useQuery<
+    UserTier[]
+  >({
     queryKey: userKeys.tier,
-    queryFn: getUserTiers,
+    queryFn: () => getUserTiers(),
     enabled: !!session?.userId,
   });
 
   const { data: cards = [] } = useQuery({
     queryKey: userKeys.cards,
-    queryFn: getUserCard,
+    queryFn: () => getUserCard(),
   });
 
-  const { data: user = [] } = useQuery({
+  const { data: user } = useQuery({
     queryKey: userKeys.info,
-    queryFn: () => getUserById(session?.userId),
+    queryFn: () => (session?.userId ? getUserById(session.userId) : null),
+    enabled: !!session?.userId,
   });
 
   const userTierData = userTier.find(
@@ -59,7 +68,7 @@ const Profile = () => {
 
   return (
     <AuthenticatedLayout>
-      <Card className="mb-6 bg-gradient-to-b from-gray500 to-gray600/1">
+      <Card className="mb-6 pt-[72px] bg-gradient-to-b from-gray500 to-gray600/1">
         <CardContent className="p-6">
           <div className="flex items-center space-x-4">
             <Avatar className="w-20 h-20">
@@ -71,7 +80,9 @@ const Profile = () => {
               </AvatarFallback>
             </Avatar>
             <div>
-              <h2 className="text-xl font-semibold text-white">{user?.user?.nickname}</h2>
+              <h2 className="text-xl font-semibold text-white">
+                {user?.user?.nickname}
+              </h2>
               <p className="text-gray100">Tier: {userTierData?.name}</p>
             </div>
           </div>
@@ -82,7 +93,9 @@ const Profile = () => {
         <Card>
           <CardContent className="p-4 text-center">
             <p className="text-gray-500">Check-ins</p>
-            <p className="text-2xl font-bold text-white">{taps?.data?.taps.length || "00"}</p>
+            <p className="text-2xl font-bold text-white">
+              {taps?.data?.taps.length || "00"}
+            </p>
           </CardContent>
         </Card>
         <Card>
