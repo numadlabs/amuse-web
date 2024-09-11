@@ -4,8 +4,8 @@ const { publicRuntimeConfig } = getConfig();
 
 const BACKEND_URL = `${publicRuntimeConfig.apiUrl}/api`;
 
-const PROFILE_PIC_LINK = `${publicRuntimeConfig.cdnUrl}/restaurant`;
-const RESTAURANT_PIC_LINK = `${publicRuntimeConfig.cdnUrl}/user`;
+const RESTAURANT_PIC_LINK= `${publicRuntimeConfig.cdnUrl}/restaurant`;
+const PROFILE_PIC_LINK = `${publicRuntimeConfig.cdnUrl}/user`;
 console.log("🚀 ~ BACKEND_URL:", BACKEND_URL);
 
 const SERVER_SETTINGS = {
