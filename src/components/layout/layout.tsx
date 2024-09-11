@@ -86,7 +86,7 @@ export default function AuthenticatedLayout({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="flex-grow z-0"
+              className="flex-grow z-0 mx-4"
             >
               {children}
             </motion.div>

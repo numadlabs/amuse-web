@@ -54,7 +54,7 @@ const FeaturedListCard: React.FC<FeaturedListCardProps> = ({
               {restaurant?.categoryName}
             </p>
           </div>
-          <div className={`flex flex-row items-center ${isOpen ? "justify-between" : "gap-3"}`}>
+          <div className={`flex flex-row items-center ${restaurant?.isOwned  ? "gap-3" : "justify-between"}`}>
             <div className="flex flex-row gap-1.5 items-center">
               <div
                 className={`w-2 h-2 m-1 rounded-full ${
