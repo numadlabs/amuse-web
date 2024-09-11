@@ -1,11 +1,11 @@
 import { axiosClient } from "../axios";
 
-export async function getRestaurantById(id: string, time: string) {
+export async function getRestaurantById({ id, time, dayNoOfTheWeek }: { id: string; time: string; dayNoOfTheWeek: number }) {
   return axiosClient
-    .get(`/restaurants/${id}?dayNoOfTheWeek=7&time=${time}`)
+    .get(`/restaurants/${id}?dayNoOfTheWeek=${dayNoOfTheWeek}&time=${time}`)
     .then((response) => {
       if (response.data.success) {
-        return response?.data.restaurant;
+        return response?.data?.data?.restaurant;
       } else {
         throw new Error(response.data.error);
       }

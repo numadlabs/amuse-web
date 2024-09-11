@@ -85,7 +85,10 @@ export default function HomePage() {
   });
 
   const handleNavigation = (restaurant: RestaurantType) => {
-    router.push(`/restaurants/${restaurant.id}?cardId=${restaurant.cardId}`);
+    router.push({
+      pathname: "/restaurants",
+      query: { id: restaurant?.id },
+    });
   };
 
   const toggleInfo = () => {

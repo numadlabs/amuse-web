@@ -80,7 +80,7 @@ const FeaturedListCard: React.FC<HomeRestListProps> = ({
               <Button
                 variant="tertiary"
                 size="sm"
-                onClick={handleAddClick}
+                onClick={onClick}
                 className="w-[72px] border-gray000"
               >
                 Add
