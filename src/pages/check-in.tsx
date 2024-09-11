@@ -37,7 +37,7 @@ interface QrCodeData {
 }
 
 const MyQrPage: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [qrData, setQrdata] = useState<string>("");
   const [socketStatus, setSocketStatus] = useState<string>("Initializing...");
   const router = useRouter();
@@ -59,11 +59,10 @@ const MyQrPage: React.FC = () => {
       const userCard = cards.find(
         (card) => card.restaurantId === data.restaurantId
       );
-      console.log("🚀 ~ userCard:", userCard);
       if (!userCard) {
         router.push(`/restaurants/${data.restaurantId}`);
       } else {
-        console.log("no user card");
+        console.log("User card found:", userCard);
         //TODO implement perk screen
       }
     },
@@ -85,66 +84,72 @@ const MyQrPage: React.FC = () => {
   });
 
   useEffect(() => {
-    setLoading(true);
-    setSocketStatus("Initializing socket...");
+    let isMounted = true;
 
-    console.log("Attempting to connect to:", SERVER_SETTINGS.SOCKET_URL);
+    const initializeSocket = async () => {
+      if (!userId || socketRef.current) return;
 
-    const socket = io(SERVER_SETTINGS.SOCKET_URL, {
-      transports: ["websocket"],
-      reconnectionAttempts: 5,
-      reconnectionDelay: 1000,
-    });
-    socketRef.current = socket;
+      console.log("Attempting to connect to:", SERVER_SETTINGS.SOCKET_URL);
 
-    const onConnect = () => {
-      console.log("Connected to server");
-      setSocketStatus("Connected");
-      if (userId) {
+      const socket = io(SERVER_SETTINGS.SOCKET_URL, {
+        transports: ["websocket"],
+        reconnectionAttempts: 5,
+        reconnectionDelay: 1000,
+      });
+
+      socketRef.current = socket;
+
+      const onConnect = () => {
+        if (!isMounted) return;
+        console.log("Connected to server");
+        setSocketStatus("Connected");
         console.log("Emitting register event with userId:", userId);
         socket.emit("register", userId);
-      } else {
-        console.log("No userId available for registration");
-      }
-    };
 
-    const onConnectError = (error: Error) => {
-      console.error("Connection error:", error);
-      setSocketStatus(`Connection error: ${error.message}`);
-    };
+        createTapMutation().catch((error) => {
+          console.error("Failed to create tap:", error);
+          if (isMounted) setLoading(false);
+        });
+      };
 
-    const onDisconnect = (reason: string) => {
-      console.log("Disconnected:", reason);
-      setSocketStatus(`Disconnected: ${reason}`);
-    };
-
-    const onTapScan = (data: TapScanData) => {
-      console.log("Tap scan received:", data);
-      handleTapScan(data);
-    };
-
-    socket.on("connect", onConnect);
-    socket.on("connect_error", onConnectError);
-    socket.on("disconnect", onDisconnect);
-    socket.on("tap-scan", onTapScan);
-
-    if (userId) {
-      createTapMutation().catch((error) => {
-        console.error("Failed to create tap:", error);
+      const onConnectError = (error: Error) => {
+        if (!isMounted) return;
+        console.error("Connection error:", error);
+        setSocketStatus(`Connection error: ${error.message}`);
         setLoading(false);
-      });
-    } else {
-      console.log("No userId available, skipping createTapMutation");
-      setLoading(false);
-    }
+      };
+
+      const onDisconnect = (reason: string) => {
+        if (!isMounted) return;
+        console.log("Disconnected:", reason);
+        setSocketStatus(`Disconnected: ${reason}`);
+      };
+
+      const onTapScan = (data: TapScanData) => {
+        if (!isMounted) return;
+        console.log("Tap scan received:", data);
+        handleTapScan(data);
+      };
+
+      socket.on("connect", onConnect);
+      socket.on("connect_error", onConnectError);
+      socket.on("disconnect", onDisconnect);
+      socket.on("tap-scan", onTapScan);
+    };
+
+    initializeSocket();
 
     return () => {
-      console.log("Cleaning up socket connection");
-      socket.off("connect", onConnect);
-      socket.off("connect_error", onConnectError);
-      socket.off("disconnect", onDisconnect);
-      socket.off("tap-scan", onTapScan);
-      socket.disconnect();
+      isMounted = false;
+      if (socketRef.current) {
+        console.log("Cleaning up socket connection");
+        socketRef.current.off("connect");
+        socketRef.current.off("connect_error");
+        socketRef.current.off("disconnect");
+        socketRef.current.off("tap-scan");
+        socketRef.current.disconnect();
+        socketRef.current = null;
+      }
     };
   }, [userId, handleTapScan, createTapMutation]);
 

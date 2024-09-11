@@ -176,7 +176,7 @@ export default function Login() {
           Terms and Conditions.
         </Button> */}
         <Link
-          href="https://amuse-landing.vercel.app/terms-conditions"
+          href="https://www.amusebouche.io/terms-conditions"
           passHref
           legacyBehavior
         >
