@@ -23,7 +23,7 @@ const nextConfig = {
         protocol: "https",
         hostname: "d2fovtzya8mbko.cloudfront.net",
         port: "",
-        pathname: "/asset/**",
+        pathname: "/**",
       },
     ],
   },
@@ -32,7 +32,7 @@ const nextConfig = {
     defaultLocale: "en",
   },
   publicRuntimeConfig: {
-    imageCdn: "https://d2fovtzya8mbko.cloudfront.net/restaurant",
+    cdnUrl: "https://d2fovtzya8mbko.cloudfront.net",
     // apiUrl: getBackendUrl(),
     apiUrl: "https://amuse-backend-staging-478fc2297634.herokuapp.com",
   },

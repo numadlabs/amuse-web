@@ -28,6 +28,8 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import BottomNavigation from "@/components/layout/bottom-navigation";
+import Header from "@/components/layout/header-comp";
+import AuthenticatedLayout from "@/components/layout/layout";
 
 export default function HomePage() {
   const router = useRouter();
@@ -100,8 +102,8 @@ export default function HomePage() {
   );
 
   return (
-    <>
-      <div className="bg-gray600 min-h-screen flex justify-center">
+    <AuthenticatedLayout>
+      <div className=" flex justify-center">
         <div className="flex flex-col px-4 pt-6 gap-6 max-w-[600px] w-screen">
           <div className="flex flex-col gap-4">
             {user && (
@@ -168,7 +170,6 @@ export default function HomePage() {
           onClose={toggleMembershipInfo}
         />
       </div>
-      <BottomNavigation />
-    </>
+    </AuthenticatedLayout>
   );
 }
