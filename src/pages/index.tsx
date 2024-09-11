@@ -81,7 +81,7 @@ export default function Login() {
       <Card className="h-[544px] w-[343px] bg-gray500 border border-gray400 rounded-[32px]">
         <CardHeader className="text-center">
           <Image
-            src="/images/LogoDark.png"
+            src="/img/LogoDark.png"
             alt="Logo"
             width={96}
             height={96}
