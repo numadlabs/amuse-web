@@ -36,11 +36,11 @@ export default function Login() {
     checkWelcomeMessageStatus();
   }, []);
 
-  useEffect(() => {
-    if (status === "authenticated") {
-      router.replace("/home");
-    }
-  }, [status, router]);
+  // useEffect(() => {
+  //   if (status === "authenticated") {
+  //     router.replace("/home");
+  //   }
+  // }, [status, router]);
 
   const checkWelcomeMessageStatus = async () => {
     try {
@@ -82,6 +82,11 @@ export default function Login() {
       setLoading(false);
     }
   };
+
+  if (status === "authenticated") {
+    router.push("/home");
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
