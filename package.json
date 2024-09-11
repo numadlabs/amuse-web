@@ -11,7 +11,7 @@
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.0",
     "embla-carousel-react": "^8.2.1",
-    "framer-motion": "^11.4.0",
+    "framer-motion": "^11.5.4",
     "next": "14.2.7",
     "react": "^18",
     "react-dom": "^18",
