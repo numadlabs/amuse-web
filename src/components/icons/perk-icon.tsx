@@ -1,10 +1,14 @@
 import React from "react";
 
-const PerkIcon = () => {
+interface perkProps {
+  size: number;
+}
+
+const PerkIcon: React.FC<perkProps> = ({ size }) => {
   return (
     <svg
-      width="33"
-      height="32"
+      width={size}
+      height={size}
       viewBox="0 0 33 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
