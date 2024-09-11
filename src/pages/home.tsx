@@ -99,7 +99,7 @@ export default function HomePage() {
 
   return (
     <AuthenticatedLayout>
-      <div className=" flex justify-center">
+      <div className="flex justify-center ">
         <div className="flex flex-col pt-6 gap-6 max-w-[480px] w-screen">
           <div className="flex flex-col gap-4">
             {user && (
@@ -112,16 +112,16 @@ export default function HomePage() {
             )}
 
             <div className="flex flex-col gap-3">
-              <p className="text-gray100 text-md font-semibold">Featured</p>
+              <p className="font-semibold text-gray100 text-md">Featured</p>
               <Carousel className="w-full">
                 <CarouselContent>
                   <CarouselItem className="basis-auto w-[90%]">
                     <div className="bg-gradient-to-b from-gray500 to-transparent h-full border border-gray400 rounded-[20px] p-4 flex flex-col gap-4">
                       <div className="flex flex-row items-center gap-3">
-                        <div className="bg-gray400 flex justify-center items-center h-9 w-9 rounded-xl">
+                        <div className="flex items-center justify-center bg-gray400 h-9 w-9 rounded-xl">
                           <ImportIcon />
                         </div>
-                        <p className="text-md text-gray00 font-semibold">
+                        <p className="font-semibold text-md text-gray00">
                           Download Amuse Bouche app
                         </p>
                       </div>
@@ -178,8 +178,8 @@ export default function HomePage() {
           </div>
 
           <div className="flex flex-col gap-3">
-            <div className="flex flex-row justify-between items-center">
-              <p className="text-gray100 font-semibold text-md">Memberships</p>
+            <div className="flex flex-row items-center justify-between">
+              <p className="font-semibold text-gray100 text-md">Memberships</p>
               <button onClick={toggleMembershipInfo}>
                 <InfoCircle size={18} color="#9AA2A7" />
               </button>
@@ -189,7 +189,7 @@ export default function HomePage() {
               <div className="flex justify-center mt-8 mb-36">
                 <Button
                   variant={"secondary"}
-                  onClick={() => router.push("/my-cards")}
+                  onClick={() => router.push("/discover")}
                 >
                   See all
                 </Button>
