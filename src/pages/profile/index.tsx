@@ -67,7 +67,7 @@ const Profile = () => {
   );
 
   return (
-    <AuthenticatedLayout>
+    <AuthenticatedLayout >
       <Card className="mb-6 pt-[72px] bg-gradient-to-b from-gray500 to-gray600/1">
         <CardContent className="p-6">
           <div className="flex items-center space-x-4">

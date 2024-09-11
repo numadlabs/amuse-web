@@ -24,7 +24,7 @@ const Balance: React.FC<BalanceProps> = ({
   return (
     <>
       <Card className="relative overflow-hidden bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-[20px] flex items-center">
-        <div className="flex flex-col gap-3 items-start pt-3 pb-4 px-4 z-50 w-full">
+        <div className="flex flex-col gap-3 items-start pt-3 pb-4 px-4 w-full">
           <div className="flex flex-col gap-2">
             <p className="text-sm text-gray100">Total balance</p>
             <div className="flex flex-row gap-2 items-end">
@@ -57,7 +57,7 @@ const Balance: React.FC<BalanceProps> = ({
             </Button>
           </div>
         </div>
-        <div className="absolute z-10 -right-24 opacity-80">
+        <div className="absolute -right-24 opacity-80">
           <APassStripes />
         </div>
       </Card>
