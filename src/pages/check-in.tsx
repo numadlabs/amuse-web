@@ -174,7 +174,7 @@ const MyQrPage: React.FC = () => {
 
   return (
     <AuthenticatedLayout headerType="blank" bottomNavigationType="Modal">
-      <div className="flex flex-col items-center justify-center min-h-screen p-4">
+      <div className="flex flex-col items-center justify-center min-h-screen p-4 max-w-[480px] w-screen relative">
         <div className="w-full max-w-md text-gray100">
           <div className="flex flex-col items-center p-6 space-y-6">
             <h2 className="text-2xl font-bold text-white">My QR Code</h2>
@@ -188,7 +188,7 @@ const MyQrPage: React.FC = () => {
             ) : (
               <>
               <div className="mx-4">
-                <div ref={qrContainerRef} className="bg-gradient-to-br from-qrGradientStart to-qrGradientEnd p-8 flex justify-center items-center rounded-[32px] max-w-[480px] w-screen">
+                <div ref={qrContainerRef} className="bg-gradient-to-br from-qrGradientStart to-qrGradientEnd p-8 flex justify-center items-center rounded-[32px]">
                   <QRCodeCanvas
                     value={`data:image/png;base64,${qrData}`}
                     size={qrSize}

@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
 import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   getUserById,
   getUserCard,
@@ -17,9 +16,8 @@ import QuickInfo from "@/components/sections/quick-info";
 import StackedCard from "@/components/sections/stacked-cards";
 import FeaturedListCard from "@/components/atom/featured-list-card";
 import BalanceInfo from "@/components/bottomsheet/balance-info";
-import { InfoCircle } from "iconsax-react";
+import { InfoCircle, GooglePlay, Apple } from "iconsax-react";
 import MembershipInfo from "@/components/bottomsheet/membership-info";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -27,9 +25,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import BottomNavigation from "@/components/layout/bottom-navigation";
-import Header from "@/components/layout/header-comp";
 import AuthenticatedLayout from "@/components/layout/layout";
+import ImportIcon from "@/components/icons/import-icon";
 
 export default function HomePage() {
   const router = useRouter();
@@ -118,12 +115,46 @@ export default function HomePage() {
               <p className="text-gray100 text-md font-semibold">Featured</p>
               <Carousel className="w-full">
                 <CarouselContent>
+                  <CarouselItem className="basis-auto w-[90%]">
+                    <div className="bg-gradient-to-b from-gray500 to-transparent h-full border border-gray400 rounded-[20px] p-4 flex flex-col gap-4">
+                      <div className="flex flex-row items-center gap-3">
+                        <div className="bg-gray400 flex justify-center items-center h-9 w-9 rounded-xl">
+                          <ImportIcon />
+                        </div>
+                        <p className="text-md text-gray00 font-semibold">
+                          Download Amuse Bouche app
+                        </p>
+                      </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        <Button
+                          size={"sm"}
+                          variant={"tertiary"}
+                          className="flex flex-row items-center gap-2"
+                        >
+                          <span>
+                            <Apple size={16} color="#FFFFFF" />
+                          </span>
+                          App Store
+                        </Button>
+                        <Button
+                          size={"sm"}
+                          variant={"tertiary"}
+                          className="flex flex-row items-center gap-2"
+                        >
+                          <span>
+                            <GooglePlay size={16} color="#FFFFFF" />
+                          </span>
+                          Google Play
+                        </Button>
+                      </div>
+                    </div>
+                  </CarouselItem>
                   {user?.user?.dateOfBirth &&
                   user?.user?.location &&
                   showProfilePicture
                     ? null
                     : isQuickInfoVisible && (
-                        <CarouselItem className="basis-auto w-full">
+                        <CarouselItem className="basis-auto w-[90%]">
                           <QuickInfo
                             onPress={() => setIsQuickInfoVisible(false)}
                             user={user?.user}
@@ -145,7 +176,7 @@ export default function HomePage() {
               </Carousel>
             </div>
           </div>
-                  
+
           <div className="flex flex-col gap-3">
             <div className="flex flex-row justify-between items-center">
               <p className="text-gray100 font-semibold text-md">Memberships</p>
@@ -155,10 +186,15 @@ export default function HomePage() {
             </div>
             <StackedCard />
             {cards?.data?.cards.length > 0 && (
-            <div className="flex justify-center mt-8 mb-36">
-              <Button variant={"secondary"} onClick={() => router.push("/my-cards")}>See all</Button>
-            </div>
-          )}
+              <div className="flex justify-center mt-8 mb-36">
+                <Button
+                  variant={"secondary"}
+                  onClick={() => router.push("/my-cards")}
+                >
+                  See all
+                </Button>
+              </div>
+            )}
           </div>
         </div>
         <BalanceInfo open={showInfo} onClose={toggleInfo} />
