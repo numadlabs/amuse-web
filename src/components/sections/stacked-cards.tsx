@@ -7,6 +7,10 @@ import { Button } from "@/components/ui/button";
 import { getUserCard } from "@/lib/service/queryHelper";
 import { userKeys } from "@/lib/service/keysHelper";
 import Search from "../icons/search";
+import SERVER_SETTINGS from "@/lib/serverSettings";
+import Image from "next/image";
+import { TicketStar } from "iconsax-react";
+import APassStripes from "../icons/apass-stripes";
 
 const StackedCard = () => {
   const [cardPositions, setCardPositions] = useState(-400);
@@ -65,34 +69,54 @@ const StackedCard = () => {
                 top: `${index * 10}px`,
               }}
             >
-              <Card
-                className="w-full shadow-lg overflow-hidden cursor-pointer"
-                onClick={() => handleNavigation(card)}
-              >
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between">
+              <Card className="relative w-[343px] h-[264px] overflow-hidden bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-[20px] flex items-center">
+                <div className="flex flex-col gap-5 items-start p-5 z-50 w-full">
+                  <div className="flex justify-start gap-5">
                     <div>
-                      <h3 className="font-bold">{card.name}</h3>
-                      <p className="text-sm text-gray-500">
-                        {card.categoryName}
-                      </p>
+                      <Image
+                        src={`${SERVER_SETTINGS.RESTAURANT_PIC_LINK}/${card.logo}`}
+                        alt="image"
+                        width={40}
+                        height={40}
+                        className="rounded-lg object-cover"
+                      />
                     </div>
-                    {card.hasBonus && (
-                      <span className="bg-yellow-400 text-xs font-semibold px-2 py-1 rounded-full">
-                        Bonus
-                      </span>
-                    )}
+                    <div>
+                      <h1 className="font-bold text-lg text-white">
+                        {card.name}
+                      </h1>
+                      <h2 className="uppercase font-normal text-sm text-gray50">
+                        {card.category}
+                      </h2>
+                    </div>
                   </div>
-                  <div className="mt-4">
-                    <p className="text-sm">Visits: {card.visitCount}</p>
-                    <p className="text-sm">
-                      Remaining:{" "}
-                      {card?.target - card?.current === 0
-                        ? 0
-                        : card?.target - card?.current}
-                    </p>
+                  <div className="flex gap-4">
+                    <div>
+                      <Image
+                        src={`${SERVER_SETTINGS.RESTAURANT_PIC_LINK}/${card.nftImageUrl}`}
+                        alt="image"
+                        width={164}
+                        height={164}
+                        className="rounded-xl object-cover"
+                      />
+                    </div>
+                    <div className="w-[123px] h-[164px] rounded-xl bg-gray500 border border-gray400">
+                      <div className="flex flex-col justify-center items-center gap-1 h-[126px] border-b border-gray400">
+                        <h1 className="font-bold text-4xl text-white">
+                          {card.visitCount < 10
+                            ? `0${card.visitCount}`
+                            : card.visitCount}
+                        </h1>
+                        <h2 className="font-normal text-sm text-gray50">
+                          Check-ins
+                        </h2>
+                      </div>
+                    </div>
                   </div>
-                </CardContent>
+                </div>
+                <div className="absolute z-10 -right-28 opacity-80">
+                  <APassStripes />
+                </div>
               </Card>
             </motion.div>
           ))}

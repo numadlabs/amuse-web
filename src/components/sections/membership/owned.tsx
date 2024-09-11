@@ -17,9 +17,12 @@ import PowerUpCard from "@/components/atom/cards/powerUp-card";
 
 interface ownedProps {
   restaurant: RestaurantType;
+  onClick: () => void;
+  cardId: string;
+  marker: boolean;
 }
 
-const Owned: React.FC<ownedProps> = ({ restaurant }) => {
+const Owned: React.FC<ownedProps> = ({ restaurant, onClick }) => {
   const { data: timeTable } = useQuery({
     queryKey: ["RestaurantTimeTable"],
     queryFn: () => getTimeTable(restaurant?.id as string),
@@ -68,7 +71,7 @@ const Owned: React.FC<ownedProps> = ({ restaurant }) => {
         <div className="flex flex-col gap-4">
           <div className="flex flex-row items-center justify-between px-2">
             <p className="text-lg text-gray00 font-bold">Perks</p>
-            <button>
+            <button onClick={onClick}>
               <InfoCircle size={20} color="#D7DADC" />
             </button>
           </div>

@@ -1,5 +1,8 @@
 import React from "react";
+import Restaurants from "./[id]";
 
 export default function index() {
-  return <div>index</div>;
+  return (
+    <Restaurants/>
+  );
 }

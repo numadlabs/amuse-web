@@ -57,7 +57,7 @@ const Balance: React.FC<BalanceProps> = ({
             </Button>
           </div>
         </div>
-        <div className="absolute z-10 -right-4 opacity-80">
+        <div className="absolute z-10 -right-24 opacity-80">
           <APassStripes />
         </div>
       </Card>

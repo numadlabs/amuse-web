@@ -53,7 +53,7 @@ const MembershipCard: React.FC<MembershipProps> = ({ name, nftImage, category, v
             </div>
             <div className="flex justify-center items-center gap-[6px] pt-2 pb-3">
               <h1 className="font-bold text-md text-white">{target}</h1>
-              <h2 className="font-normal text-sm text-gray50">Until a perk</h2>
+              {/* <h2 className="font-normal text-sm text-gray50">Until a perk</h2> */}
             </div>
           </div>
         </div>
