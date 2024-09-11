@@ -162,7 +162,7 @@ export default function HomePage() {
             </div>
           )}
         </div>
-
+        <div></div>
         <BalanceInfo open={showInfo} onClose={toggleInfo} />
         <MembershipInfo
           open={showMembershipInfo}

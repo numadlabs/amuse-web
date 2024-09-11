@@ -26,7 +26,7 @@ export default function BottomNavigation() {
         <span className="text-xs">Check-in</span>
       </Link>
       <Link
-        href="/restaurants"
+        href="/discover"
         className="flex flex-col items-center justify-center gap-1 text-gray-500 transition-colors hover:text-gray-900 focus:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 dark:focus:text-gray-50"
         prefetch={false}
       >
