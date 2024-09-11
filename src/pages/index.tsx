@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,6 +19,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { useAuth } from "@/lib/context/auth-context";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -67,10 +68,14 @@ export default function Login() {
       setLoading(true);
       setError("");
 
-      const response = await onLogin(email, password);
+      const response = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
       console.log("🚀 ~ handleLogin ~ response:", response);
-      if (!response.error) {
-        // router.push("/home");
+      if (!response?.error) {
+        router.push("/home");
         toast.success("Welcome");
       } else {
         setError(response.error ?? "Unknown error happened");
@@ -83,13 +88,20 @@ export default function Login() {
     }
   };
 
-  if (status === "authenticated") {
-    router.push("/home");
-    return null;
+  if (status === "loading") {
+    return (
+      <div className="flex items-center justify-center w-full h-screen">
+        <Loader2 className="animate-spin" color="#FFFFFF" size={48} />
+      </div>
+    );
   }
+  // if (status === "authenticated") {
+  //   router.push("/home");
+  //   return null;
+  // }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-background">
       <Card className="max-w-[480px] w-full bg-gray500 border border-gray400 rounded-[32px]">
         <CardHeader className="text-center">
           <Image
@@ -131,12 +143,12 @@ export default function Login() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                className="absolute inset-y-0 right-0 flex items-center pr-3"
               >
                 {showPassword ? (
-                  <EyeOff className="h-5 w-5 text-gray-400" />
+                  <EyeOff className="w-5 h-5 text-gray-400" />
                 ) : (
-                  <Eye className="h-5 w-5 text-gray-400" />
+                  <Eye className="w-5 h-5 text-gray-400" />
                 )}
               </button>
             </div>
@@ -152,7 +164,7 @@ export default function Login() {
           <div className="mt-4">
             <Button
               variant="ghost"
-              className="text-white w-full font-semibold font-md2"
+              className="w-full font-semibold text-white font-md2"
               onClick={() => router.push("/auth/forgot-password")}
             >
               Forgot password?
@@ -160,7 +172,7 @@ export default function Login() {
           </div>
           <div className="flex items-center gap-3">
             <div className="w-full h-[1px] bg-gray400" />
-            <div className="flex items-center font-normal text-sm text-gray50">
+            <div className="flex items-center text-sm font-normal text-gray50">
               or
             </div>
             <div className="w-full h-[1px] bg-gray400" />
@@ -168,7 +180,7 @@ export default function Login() {
           <div className="pt-4">
             <Button
               variant="secondary"
-              className="w-full text-white h-12"
+              className="w-full h-12 text-white"
               onClick={() => router.push("/auth/sign-up")}
             >
               Sign up
@@ -176,13 +188,13 @@ export default function Login() {
           </div>
         </CardContent>
       </Card>
-      <div className="relative top-14 text-center">
-        <p className="text-center text-sm text-gray-400">
+      <div className="relative text-center top-14">
+        <p className="text-sm text-center text-gray-400">
           By continuing, I agree with Amuse-Bouche&apos;s{" "}
         </p>
         {/* <Button
           variant="ghost"
-          className="text-white font-normal text-md"
+          className="font-normal text-white text-md"
           onClick={() => router.push("/terms")}
         >
           Terms and Conditions.
@@ -193,7 +205,7 @@ export default function Login() {
           legacyBehavior
         >
           <a target="_blank" rel="noopener noreferrer">
-            <Button variant="ghost" className="text-white font-normal text-md">
+            <Button variant="ghost" className="font-normal text-white text-md">
               Terms and Conditions
             </Button>
           </a>
@@ -204,7 +216,7 @@ export default function Login() {
         <DialogContent className="bg-background max-w-[480px] w-screen h-[598px] flex flex-col justify-around p-4 rounded-xl border-hidden">
           <ScrollArea className="h-[478px] rounded-md border-hidden">
             <DialogHeader>
-              <DialogTitle className="text-faq font-bold pb-4 text-start text-white">
+              <DialogTitle className="pb-4 font-bold text-white text-faq text-start">
                 Welcome to <br /> Amuse Bouche!
               </DialogTitle>
             </DialogHeader>
