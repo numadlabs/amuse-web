@@ -38,8 +38,8 @@ const PerkIcon: React.FC<perkProps> = ({ size }) => {
           y2="15.9997"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FDAD32" />
-          <stop offset="1" stop-color="#F187FB" />
+          <stop stopColor="#FDAD32" />
+          <stop offset="1" stopColor="#F187FB" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_11491_3091"
@@ -49,8 +49,8 @@ const PerkIcon: React.FC<perkProps> = ({ size }) => {
           y2="15.9997"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FDAD32" />
-          <stop offset="1" stop-color="#F187FB" />
+          <stop stopColor="#FDAD32" />
+          <stop offset="1" stopColor="#F187FB" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_11491_3091"
@@ -60,8 +60,8 @@ const PerkIcon: React.FC<perkProps> = ({ size }) => {
           y2="15.9997"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FDAD32" />
-          <stop offset="1" stop-color="#F187FB" />
+          <stop stopColor="#FDAD32" />
+          <stop offset="1" stopColor="#F187FB" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_11491_3091"
@@ -71,8 +71,8 @@ const PerkIcon: React.FC<perkProps> = ({ size }) => {
           y2="15.9997"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FDAD32" />
-          <stop offset="1" stop-color="#F187FB" />
+          <stop stopColor="#FDAD32" />
+          <stop offset="1" stopColor="#F187FB" />
         </linearGradient>
       </defs>
     </svg>

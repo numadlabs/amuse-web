@@ -64,11 +64,7 @@ export default function HomePage() {
 
   const { data: cards = [] } = useQuery({
     queryKey: ["userCards"],
-    queryFn: () =>
-      getUserCard({
-        latitude: 0, // Replace with actual location
-        longitude: 0, // Replace with actual location
-      }),
+    queryFn: () => getUserCard(),
     enabled: true, // Replace with actual condition
   });
 
@@ -106,7 +102,7 @@ export default function HomePage() {
 
   return (
     <AuthenticatedLayout>
-      <div className=" flex justify-center">
+      <div className=" flex justify-center pt-[72px]">
         <div className="flex flex-col px-4 pt-6 gap-6 max-w-[600px] w-screen">
           <div className="flex flex-col gap-4">
             {user && (

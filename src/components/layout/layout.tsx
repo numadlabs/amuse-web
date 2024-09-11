@@ -5,6 +5,10 @@ import BottomNavigation from "./bottom-navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
 
+import { Sora } from "next/font/google";
+const sora = Sora({ subsets: ["latin"], weight: ["400", "700"] });
+const subClass = sora.className;
+
 export default function AuthenticatedLayout({
   children,
 }: {
@@ -15,11 +19,11 @@ export default function AuthenticatedLayout({
   return (
     <div className="bg-background">
       <div
-        className={`flex flex-col w-full h-full min-h-screen max-w-[600px] mx-auto items-center`}
+        className={`flex flex-col w-full h-full min-h-screen max-w-[600px] mx-auto items-center overflow-hidden ${subClass}`}
       >
         <Header />
 
-        <div className="w-full flex-grow">
+        <div className="w-full flex-grow  overflow-y-auto">
           <div className="hidden lg:block">{/* <OnlyMobileWarning /> */}</div>
           <AnimatePresence mode="wait">
             <motion.div

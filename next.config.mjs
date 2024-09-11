@@ -34,7 +34,7 @@ const nextConfig = {
   publicRuntimeConfig: {
     cdnUrl: "https://d2fovtzya8mbko.cloudfront.net",
     // apiUrl: getBackendUrl(),
-    apiUrl: "https://amuse-backend-staging-478fc2297634.herokuapp.com",
+    apiUrl: "https://api.amusebouche.io",
   },
 };
 

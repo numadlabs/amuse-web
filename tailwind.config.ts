@@ -75,6 +75,8 @@ module.exports = {
         systemError: "#FF5C69",
         systemInformation: "#007FFF",
         borderColor: "rgba(189, 184, 175, 0.62)",
+        qrGradientStart: "rgba(36, 46, 53, 1)",
+        qrGradientEnd: "rgba(36, 46, 53, 0)",
       },
       border: { "1": "1px" },
       rounded: { "4xl": "48px" },
@@ -106,7 +108,6 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
         "slide-up": "slide-up 0.3s ease-in-out",
       },
-
     },
     screens: {
       sm: "640px",
