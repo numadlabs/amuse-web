@@ -34,7 +34,7 @@ const Header: React.FC<HeaderProps> = ({ type = 'default', title }) => {
         );
       default:
         return (
-          <div className='max-w-[600px] z-50 flex h-12 w-full mx-auto items-center justify-center gap-11 bg-background'>
+          <div className='max-w-[480px] z-50 flex h-12 w-full mx-auto items-center justify-center gap-11 bg-background'>
             <Link href="/profile" passHref className='p-4'>
               <Button variant="ghost" size="icon">
                 <User className="h-6 w-6" />
@@ -59,7 +59,7 @@ const Header: React.FC<HeaderProps> = ({ type = 'default', title }) => {
   }
 
   return (
-    <header className="max-w-[600px] mx-auto flex justify-between items-center p-4 w-full top-0 left-0 right-0 fixed bg-background">
+    <header className="max-w-[480px] mx-auto flex justify-between items-center p-4 w-full top-0 left-0 right-0 fixed bg-background">
       {renderContent()}
     </header>
   );

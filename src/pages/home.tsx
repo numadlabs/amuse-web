@@ -103,7 +103,7 @@ export default function HomePage() {
   return (
     <AuthenticatedLayout>
       <div className=" flex justify-center pt-[72px]">
-        <div className="flex flex-col pt-6 gap-6 max-w-[343px] w-screen">
+        <div className="flex flex-col pt-6 gap-6 max-w-[480px] w-screen">
           <div className="flex flex-col gap-4">
             {user && (
               <Balance
@@ -145,7 +145,7 @@ export default function HomePage() {
               </Carousel>
             </div>
           </div>
-
+                  
           <div className="flex flex-col gap-3">
             <div className="flex flex-row justify-between items-center">
               <p className="text-gray100 font-semibold text-md">Memberships</p>
@@ -154,15 +154,13 @@ export default function HomePage() {
               </button>
             </div>
             <StackedCard />
-          </div>
-
-          {cards?.data?.cards.length > 0 && (
-            <div className="flex justify-center mt-8 mb-16">
+            {cards?.data?.cards.length > 0 && (
+            <div className="flex justify-center mt-8 mb-36">
               <Button variant={"secondary"} onClick={() => router.push("/my-cards")}>See all</Button>
             </div>
           )}
+          </div>
         </div>
-        <div></div>
         <BalanceInfo open={showInfo} onClose={toggleInfo} />
         <MembershipInfo
           open={showMembershipInfo}
