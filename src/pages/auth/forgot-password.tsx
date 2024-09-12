@@ -92,7 +92,7 @@ const EmailInput: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"
-        className="max-w-[480px] w-full h-12 absolute bottom-32"
+        className="max-w-[480px] w-full h-12 absolute bottom-20"
         disabled={!email || isLoading}
       >
         {isLoading ? "Sending..." : "Send Code"}
@@ -135,7 +135,7 @@ const OTPVerification: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"
-        className="max-w-[480px] w-full h-12 absolute bottom-32"
+        className="max-w-[480px] w-full h-12 absolute bottom-20"
         disabled={!verificationCode || isLoading}
       >
         {isLoading ? "Verifying..." : "Verify Code"}
@@ -258,7 +258,7 @@ const Success: React.FC = () => {
       <Button
         onClick={handleNavigation}
         variant="secondary"
-        className="max-w-[480px] w-full h-12 absolute bottom-32"
+        className="max-w-[480px] w-full h-12 absolute bottom-20"
       >
         Go to Login
       </Button>
