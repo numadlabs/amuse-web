@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 // import { PowerUpCard } from "@/components/atom/cards/PowerUpCard";
 import moment from "moment";
 import AuthenticatedLayout from "@/components/layout/layout";
+import MembershipCard from "@/components/atom/cards/membership-card";
 
 export default function Success() {
   const router = useRouter();
@@ -41,30 +42,34 @@ export default function Success() {
 
   return (
     <AuthenticatedLayout headerType="blank" bottomNavigationType="Modal">
-      <Card className="bg-gradient-to-b from-brand-card-start to-brand-card-end text-white">
-        <CardContent className="flex flex-col items-center justify-center h-48 space-y-2">
-          <h2 className="text-2xl font-bold">
-            +{Number(btcAmount).toFixed(2)} EUR of Bitcoin
-          </h2>
-          <p className="text-gray-200">Check-in successful.</p>
-        </CardContent>
-      </Card>
+      <div className="w-[343px] m-auto">
+        <div className="border border-gray400 rounded-2xl bg-gradient-to-br from-[#242E35] to-transparent relative top-20">
+          <Card>
+            <CardContent className="flex flex-col w-[343px] h-[110px] items-center justify-center gap-3 py-6">
+              <h2 className="text-aboutUs text-white font-bold">
+                +{Number(btcAmount).toFixed(2)} EUR of Bitcoin
+              </h2>
+              <p className="text-gray-200">Check-in successful.</p>
+            </CardContent>
+          </Card>
+        </div>
 
-      {/* {powerUp && (
+        {/* {powerUp && (
         <PowerUpCard
           title={powerUp as string}
           onPress={() => router.push("/PowerUp")}
         />
       )} */}
 
-      <div className="fixed bottom-5 left-0 right-0 px-4">
-        <Button
-          variant="secondary"
-          className="w-full"
-          onClick={handleNavigation}
-        >
-          Confirm
-        </Button>
+        <div className="w-[343px] fixed m-auto bottom-20 left-0 right-0 px-4">
+          <Button
+            variant="primary"
+            className="w-full"
+            onClick={handleNavigation}
+          >
+            Confirm
+          </Button>
+        </div>
       </div>
     </AuthenticatedLayout>
   );
