@@ -52,7 +52,7 @@ const MembershipCard: React.FC<MembershipProps> = ({
               className="rounded-xl w-full max-h-[300px] object-cover"
             />
           </div>
-          <div className="w-[123px] max-h-full rounded-xl bg-gray500 border border-gray400 flex flex-col justify-center items-center">
+          <div className="min-w-[100px] max-h-full rounded-xl bg-gray500 border border-gray400 flex flex-col justify-center items-center">
             <div className="flex flex-col justify-center items-center gap-1 h-full border-b border-gray400">
               <h1 className="font-bold text-4xl text-white">
                 {visitCount < 10 ? `0${visitCount}` : visitCount}
