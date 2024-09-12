@@ -19,13 +19,13 @@ interface Card {
 }
 
 interface TapScanData {
-  // data: {
-  restaurantId: string;
-  increment: number;
-  bonus?: {
-    name: string;
+  data: {
+    restaurantId: string;
+    increment: number;
+    bonus?: {
+      name: string;
+    };
   };
-  // };
 }
 
 interface QrCodeData {
@@ -58,14 +58,33 @@ const MyQrPage: React.FC = () => {
   const handleTapScan = useCallback(
     (data: TapScanData) => {
       console.log("Tap scan emitted: ", data);
+      console.log("🚀 ~ cards:", cards);
+
+      // Check if cards array is not empty
+      if (cards.length === 0) {
+        console.log("Cards array is empty. Data might not be loaded yet.");
+        return;
+      }
+
       const userCard = cards.find(
-        (card) => card.restaurantId === data.restaurantId
+        (card) => card.restaurantId === data.data.restaurantId // Note the change here
       );
+
+      console.log("🚀 ~ userCard:", userCard);
+
       if (!userCard) {
-        router.push(`/restaurants/${data.restaurantId}`);
+        console.log(
+          "User card not found for restaurantId:",
+          data.data.restaurantId
+        );
+        router.push(`/restaurants/${data.data.restaurantId}`);
       } else {
         console.log("User card found:", userCard);
-        router.push(`/check-in/${data.restaurantId}/success`);
+        // router.push(`/check-in/${data.data.restaurantId}/success`);
+        router.push({
+          pathname: `/check-in/${data.data.restaurantId}/success`,
+          query: { btcAmount: data.data?.increment },
+        });
         //TODO implement perk screen
       }
     },

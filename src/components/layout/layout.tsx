@@ -11,52 +11,52 @@ const subClass = sora.className;
 
 interface AuthenticatedLayoutProps {
   children: ReactNode;
-  headerType?: 'blank' | 'default' | 'page';
+  headerType?: "blank" | "default" | "page";
   headerTitle?: string;
-  bottomNavigationType?: 'Modal' | 'default';
+  bottomNavigationType?: "Modal" | "default";
 }
 
 export default function AuthenticatedLayout({
   children,
   headerType,
   headerTitle,
-  bottomNavigationType = 'default',
+  bottomNavigationType = "default",
 }: AuthenticatedLayoutProps) {
   const router = useRouter();
 
   const determineHeaderType = () => {
     if (headerType) return headerType;
-    
-    if (router.pathname === '/restaurants' && router.query.id) {
-      return 'blank';
+
+    if (router.pathname === "/restaurants" && router.query.id) {
+      return "blank";
     }
-    
+
     switch (router.pathname) {
-      case '/home':
-        return 'default';
-      case '/profile':
-        return 'page';
-      case '/settings':
-        return 'page';
-      case '/notifications':
-        return 'page';
+      case "/home":
+        return "default";
+      case "/profile":
+        return "page";
+      case "/settings":
+        return "page";
+      case "/notifications":
+        return "page";
       default:
-        return 'default';
+        return "default";
     }
   };
 
   const determineHeaderTitle = () => {
     if (headerTitle) return headerTitle;
-    
+
     switch (router.pathname) {
-      case '/profile':
-        return 'Profile';
-      case '/settings':
-        return 'Settings';
-      case '/notifications':
-        return 'Notifications';
+      case "/profile":
+        return "Profile";
+      case "/settings":
+        return "Settings";
+      case "/notifications":
+        return "Notifications";
       default:
-        return '';
+        return "";
     }
   };
 
@@ -67,17 +67,17 @@ export default function AuthenticatedLayout({
       <div
         className={`flex flex-col w-full h-full min-h-screen max-w-[480px] mx-auto items-center overflow-hidden ${subClass}`}
       >
-        {headerTypeToUse !== 'blank' && (
+        {headerTypeToUse !== "blank" && (
           <div className="z-50">
-
-          <Header 
-            type={headerTypeToUse} 
-            title={determineHeaderTitle()} 
-          />
+            <Header type={headerTypeToUse} title={determineHeaderTitle()} />
           </div>
         )}
 
-        <div className={`w-full flex-grow overflow-y-auto ${headerTypeToUse === 'blank' ? 'pt-0' : 'pt-16'} ${bottomNavigationType === 'default' ? 'pb-20' : ''}`}>
+        <div
+          className={`w-full flex-grow overflow-y-auto ${
+            headerTypeToUse === "blank" ? "pt-0" : "pt-16"
+          } ${bottomNavigationType === "default" ? "pb-20" : ""}`}
+        >
           <div className="hidden lg:block">{/* <OnlyMobileWarning /> */}</div>
           <AnimatePresence mode="wait">
             <motion.div
