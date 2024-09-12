@@ -14,10 +14,11 @@ const Notification = () => {
   const { session, status } = useAuth();
   const { data: userNotifications = [], isLoading } = useQuery({
     queryKey: userKeys.notifications,
-    queryFn: getUserNotification,
+    queryFn: () => getUserNotification(),
     enabled: !!session?.user?.id,
     // enabled: !!authState.userId,
   });
+  console.log("🚀 ~ Notification ~ userNotifications:", userNotifications);
 
   const reversedNotifications = useMemo(() => {
     return [...userNotifications].reverse();
