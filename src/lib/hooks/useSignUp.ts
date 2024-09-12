@@ -9,6 +9,8 @@ import {
   verifyEmailOtp,
 } from "../service/mutationHelper";
 import { useRouter } from "next/router";
+import { emailSchema } from "../validators/SignUpSchema";
+import { ZodError } from "zod";
 
 // API response types
 export interface ApiResponse {
@@ -121,6 +123,15 @@ export const useSignUp = (): UseSignUpReturn => {
     setIsLoading(true);
     clearError();
     try {
+      emailSchema.parse(email);
+      const checkEmailResponse = await checkEmailMutation({
+        email: email,
+      });
+
+      if (checkEmailResponse.data.isEmailRegistered) {
+        setError("This email is already registered.");
+        throw new Error("This email is already registered.");
+      }
       const response = await sendOtpMutation({ email: emailInput });
       if (response.success) {
         setEmail(emailInput);
@@ -128,6 +139,19 @@ export const useSignUp = (): UseSignUpReturn => {
         throw new Error(response.message);
       }
     } catch (err) {
+      if (err instanceof ZodError) {
+        console.log("🚀 ~ sendOtp ~ err:", err.errors);
+        const formattedErrors = err.errors.map((issue) => {
+          console.log("🚀 ~ formattedErrors ~ issue:", issue.message);
+          return `${issue.message}`;
+        });
+
+        setError(formattedErrors.toLocaleString());
+
+        setTimeout(() => {
+          setError("");
+        }, 4000);
+      }
       const apiError = err as ApiError;
       setError(apiError.message || "Failed to send OTP");
       throw err;
