@@ -92,7 +92,7 @@ const EmailInput: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"
-        className="max-w-[480px] w-full h-12 absolute bottom-20"
+        className="max-w-[480px] w-full h-12 absolute bottom-14"
         disabled={!email || isLoading}
       >
         {isLoading ? "Sending..." : "Send Code"}
@@ -135,7 +135,7 @@ const OTPVerification: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"
-        className="max-w-[480px] w-full h-12 absolute bottom-20"
+        className="max-w-[480px] w-full h-12 absolute bottom-14"
         disabled={!verificationCode || isLoading}
       >
         {isLoading ? "Verifying..." : "Verify Code"}
@@ -219,7 +219,7 @@ const NewPassword: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"
-        className="max-w-[480px] w-full h-12 absolute bottom-8 lg:bottom-32"
+        className="max-w-[480px] w-full h-12 absolute bottom-2 lg:bottom-32"
         disabled={!isPasswordValid(password) || !doPasswordsMatch || isLoading}
       >
         {isLoading ? "Changing Password..." : "Change Password"}
@@ -258,7 +258,7 @@ const Success: React.FC = () => {
       <Button
         onClick={handleNavigation}
         variant="secondary"
-        className="max-w-[480px] w-full h-12 absolute bottom-20"
+        className="max-w-[480px] w-full h-12 absolute bottom-14"
       >
         Go to Login
       </Button>
