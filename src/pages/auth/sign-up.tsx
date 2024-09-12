@@ -24,7 +24,10 @@ const SignUp: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-background gap-6">
       {step > 1 && step < 4 && (
-        <div onClick={prevStep} className="relative right-40 top-0">
+        <div
+          onClick={prevStep}
+          className="relative right-40 lg:right-56 sm:right-56 md:right-56 bottom-0"
+        >
           <ArrowLeft size="24" color="#d7dadc" />
         </div>
       )}
@@ -62,7 +65,7 @@ const EmailInput: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col justify-center gap-4 pt-6 pr-4 pb-4 pl-4 max-w-[480px] w-screen h-[180px] items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
+      className="flex flex-col justify-center gap-4 pt-6 pr-4 pb-4 pl-4 max-w-[480px] w-full h-[180px] items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
     >
       <h2 className="text-faq font-bold text-white">Email</h2>
       <p className="text-gray100 text-sm font-normal">
@@ -78,7 +81,7 @@ const EmailInput: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"
-        className="max-w-[480px] w-screen h-12 absolute bottom-32"
+        className="max-w-[480px] w-full h-12 absolute bottom-32"
         disabled={!email || isLoading}
       >
         {isLoading ? "Sending..." : "Send code"}
@@ -105,7 +108,7 @@ const OTPVerification: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col justify-center max-w-[480px] w-screen gap-4 pt-6 pr-4 pb-4 pl-4 h-[200px] items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
+      className="flex flex-col justify-center max-w-[480px] w-full gap-4 pt-6 pr-4 pb-4 pl-4 h-[200px] items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
     >
       <h2 className="text-faq font-bold text-white">Verification code</h2>
       <p className="text-gray100 text-sm font-normal">
@@ -121,7 +124,7 @@ const OTPVerification: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"
-        className="max-w-[480px] h-12 absolute bottom-32"
+        className="max-w-[480px] w-full h-12 absolute bottom-32"
         disabled={!verificationCode || isLoading}
       >
         {isLoading ? "Verifying..." : "Verify Code"}
@@ -149,7 +152,7 @@ const Password: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col justify-center h-[382px] max-w-[480px] w-screen gap-6 pt-4 pr-4 pb-4 pl-4 items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
+      className="flex flex-col justify-center h-[382px] max-w-[480px] w-full gap-6 pt-4 pr-4 pb-4 pl-4 items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
     >
       <h2 className="text-faq font-bold text-white">Create password</h2>
       <div className="relative w-full">
@@ -199,7 +202,7 @@ const Password: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       </div>
       <Button
         type="submit"
-        className="max-w-[480px] w-screen h-12 absolute bottom-32"
+        className="max-w-[480px] w-full h-12 absolute bottom-8 lg:bottom-32"
         disabled={!isPasswordValid(password) || !doPasswordsMatch}
       >
         Continue
@@ -228,7 +231,7 @@ const Nickname: React.FC = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col justify-center max-w-[480px] w-screen gap-4 pt-6 pr-4 pb-4 pl-4 h-[210px] items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
+      className="flex flex-col justify-center max-w-[480px] w-full gap-4 pt-6 pr-4 pb-4 pl-4 h-[210px] items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
     >
       <h2 className="text-faq font-bold text-white">Nickname</h2>
       <p className="text-gray100 text-sm font-normal">
@@ -245,7 +248,7 @@ const Nickname: React.FC = () => {
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"
-        className="max-w-[480px] h-12 absolute bottom-32"
+        className="max-w-[480px] w-full h-12 absolute bottom-32"
         disabled={!nickname || isLoading}
       >
         {isLoading ? "Finishing..." : "Finish"}
