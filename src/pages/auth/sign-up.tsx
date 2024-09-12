@@ -12,6 +12,8 @@ import { Eye, EyeOff, Check } from "lucide-react";
 import Steps from "@/components/atom/steps";
 import { useSignUpStore } from "@/lib/store/signUpStore";
 import { ArrowLeft } from "iconsax-react";
+import { emailSchema } from "@/lib/validators/SignUpSchema";
+import { checkEmail } from "@/lib/service/mutationHelper";
 
 // Main SignUp component
 const SignUp: React.FC = () => {
@@ -49,7 +51,7 @@ const SignUp: React.FC = () => {
 // EmailInput component
 const EmailInput: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   //email register hiisniig shalgah
-  const { email, setEmail } = useSignUpStore();
+  const { email, setEmail, reset } = useSignUpStore();
   const { sendOtp, isLoading, error } = useSignUp();
 
   const handleSubmit = async (e: React.FormEvent) => {
