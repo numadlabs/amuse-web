@@ -42,14 +42,11 @@ const StackedCard = () => {
           <div className="flex flex-col justify-center items-center gap-4">
             <Search />
             <p className="text-center text-gray50 text-sm">
-              Discover restaurants, add membership cards, and earn rewards
-              when you check-in!
+              Discover restaurants, add membership cards, and earn rewards when
+              you check-in!
             </p>
           </div>
-          <Button
-            variant="secondary"
-            onClick={() => router.push("/Acards")}
-          >
+          <Button variant="secondary" onClick={() => router.push("/discovery")}>
             Explore
           </Button>
         </div>
@@ -59,7 +56,10 @@ const StackedCard = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="relative" style={{ height: `${Math.max(latestCards.length * 10 + 300, 300)}px` }}>
+      <div
+        className="relative"
+        style={{ height: `${Math.max(latestCards.length * 10 + 300, 300)}px` }}
+      >
         <AnimatePresence>
           {latestCards.map((card: any, index: number) => (
             <motion.div
@@ -85,7 +85,9 @@ const StackedCard = () => {
                       className="rounded-lg object-cover"
                     />
                     <div>
-                      <h1 className="font-bold text-lg text-white">{card.name}</h1>
+                      <h1 className="font-bold text-lg text-white">
+                        {card.name}
+                      </h1>
                       <h2 className="uppercase font-normal text-sm text-gray50">
                         {card.category}
                       </h2>
@@ -104,7 +106,9 @@ const StackedCard = () => {
                     <div className="min-w-[100px] max-h-full rounded-xl bg-gray500 border border-gray400 flex flex-col justify-center items-center">
                       <div className="flex flex-col justify-center items-center gap-1 h-full border-b border-gray400">
                         <h1 className="font-bold text-4xl text-white">
-                          {card.visitCount < 10 ? `0${card.visitCount}` : card.visitCount}
+                          {card.visitCount < 10
+                            ? `0${card.visitCount}`
+                            : card.visitCount}
                         </h1>
                         <h2 className="font-normal text-sm text-gray50">
                           Check-ins
@@ -121,7 +125,7 @@ const StackedCard = () => {
           ))}
         </AnimatePresence>
       </div>
-      <div className="flex justify-center mt-4 h-12"/>
+      <div className="flex justify-center mt-4 h-12" />
     </div>
   );
 };
