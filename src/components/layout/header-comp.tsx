@@ -40,9 +40,9 @@ const Header: React.FC<HeaderProps> = ({ type = 'default', title }) => {
                 <User className="h-6 w-6" />
               </Button>
             </Link>
-            <Link href={'/'}>
+            <div>
               <Logo />
-            </Link>
+            </div>
 
             <Link href="/notifications" passHref className='p-4'>
               <Button variant="ghost" size="icon">
