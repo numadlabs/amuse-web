@@ -128,6 +128,7 @@ const MyQrPage: React.FC = () => {
       };
 
       const onTapScan = (data: TapScanData) => {
+        console.log("🚀 ~ onTapScan ~ data:", data);
         if (!isMounted) return;
         console.log("Tap scan received:", data);
         handleTapScan(data);
@@ -165,10 +166,10 @@ const MyQrPage: React.FC = () => {
     };
 
     handleResize(); // Initial size calculation
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -187,16 +188,19 @@ const MyQrPage: React.FC = () => {
               </div>
             ) : (
               <>
-              <div className="mx-4">
-                <div ref={qrContainerRef} className="bg-gradient-to-br from-qrGradientStart to-qrGradientEnd p-8 flex justify-center items-center rounded-[32px]">
-                  <QRCodeCanvas
-                    value={`data:image/png;base64,${qrData}`}
-                    size={qrSize}
-                    bgColor="transparent "
-                    fgColor="#ffffff"
-                    level="H"
-                  />
-                </div>
+                <div className="mx-4">
+                  <div
+                    ref={qrContainerRef}
+                    className="bg-gradient-to-br from-qrGradientStart to-qrGradientEnd p-8 flex justify-center items-center rounded-[32px]"
+                  >
+                    <QRCodeCanvas
+                      value={`data:image/png;base64,${qrData}`}
+                      size={qrSize}
+                      bgColor="transparent "
+                      fgColor="#ffffff"
+                      level="H"
+                    />
+                  </div>
                 </div>
                 <p className="text-center text-gray100 text-md">
                   Show this to your waiter to check-in. Do not worry, they are
