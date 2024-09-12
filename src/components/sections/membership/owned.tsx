@@ -79,9 +79,9 @@ const Owned: React.FC<ownedProps> = ({ restaurant, onClick }) => {
         <div className="w-full bg-background text-white rounded-lg">
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="timetable">
-              <AccordionTrigger className="flex justify-between items-center">
+              <AccordionTrigger className="flex justify-between items-center relative">
                 <span className="font-bold text-lg text-white">Timetable</span>
-                <div className="flex items-center relative left-24 gap-[6px]">
+                <div className="flex items-center gap-[6px] absolute right-8">
                   <span
                     className={`relative w-2 h-2 p-1 rounded-full ${
                       restaurant?.isOpen ? "bg-systemSuccess" : "bg-systemError"
@@ -93,7 +93,7 @@ const Owned: React.FC<ownedProps> = ({ restaurant, onClick }) => {
                 </div>
               </AccordionTrigger>
               <AccordionContent>
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-3 mt-6">
                   {timeTable?.map((item: any) => (
                     <div className="flex flex-col gap-3" key={item.id}>
                       <div className="flex flex-row justify-between items-center">
@@ -103,7 +103,7 @@ const Owned: React.FC<ownedProps> = ({ restaurant, onClick }) => {
                         {item.isOffDay ? (
                           <span className="text-gray50 text-md">-</span>
                         ) : (
-                          <span className="text-gray50 text-md">
+                          <span className="text-gray50 text-md max-w-[100px] w-screen text-end">
                             {item.opensAt}-{item.closesAt}
                           </span>
                         )}
