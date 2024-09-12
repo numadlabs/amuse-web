@@ -55,7 +55,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ type = 'default' })
         className={linkClass("/discover")}
         prefetch={false}
       >
-        <Map {...iconProps("/discover")} />
+        <Map variant="Bold"/>
         <span className="text-sm">Discover</span>
       </Link>
     </nav>
