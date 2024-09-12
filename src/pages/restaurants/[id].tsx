@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import MembershipCard from "@/components/atom/cards/membership-card";
 import UnOwned from "@/components/sections/membership/unowned";
 import Owned from "@/components/sections/membership/owned";
@@ -11,9 +11,7 @@ import {
 } from "@/lib/service/queryHelper";
 import moment from "moment";
 import { useRouter } from "next/router";
-import PerkInfo from "@/components/bottomsheet/perk-info";
 import AuthenticatedLayout from "@/components/layout/layout";
-import { Button } from "@/components/ui/button";
 import { WalletAdd1 } from "iconsax-react";
 import { getAcard } from "@/lib/service/mutationHelper";
 import { useSession } from "next-auth/react";
@@ -87,6 +85,14 @@ const Restaurants = () => {
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <Loader2 className="animate-spin" color="#FFFFFF" size={48} />
+      </div>
+    );
+  }
+
   return (
     <AuthenticatedLayout>
       <div className="flex w-full items-center justify-center min-h-screen">
@@ -126,7 +132,7 @@ const Restaurants = () => {
                 <UnOwned restaurant={restaurantData} />
               )}
             </div>
-          </ScrollArea> 
+          </ScrollArea>
           {!restaurantData?.isOwned && (
             <div className="sticky bottom-20 z-20 w-full">
               <button
@@ -137,12 +143,11 @@ const Restaurants = () => {
                   <WalletAdd1 size={24} color="#FFFFFF" />
                 </span>
                 <span className="text-lg text-gray00 font-semibold">
-                Add membership
+                  Add membership
                 </span>
               </button>
             </div>
           )}
-          <PerkInfo onClose={toggleDrawer} open={isDrawer} />
         </div>
       </div>
     </AuthenticatedLayout>
