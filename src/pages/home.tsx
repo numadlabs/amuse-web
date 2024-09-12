@@ -97,6 +97,8 @@ export default function HomePage() {
     (restaurant: any) => !restaurant.isOwned
   );
 
+  const isFilteredArrayEmpty = filteredRestaurantsArray.length === 0;
+
   return (
     <AuthenticatedLayout>
       <div className="flex justify-center ">
@@ -115,7 +117,7 @@ export default function HomePage() {
               <p className="font-semibold text-gray100 text-md">Featured</p>
               <Carousel className="w-full">
                 <CarouselContent>
-                  <CarouselItem className="basis-auto w-[90%]">
+                  <CarouselItem className={`basis-auto ${isFilteredArrayEmpty ? 'w-full' : 'w-[90%]'}`}>
                     <div className="bg-gradient-to-b from-gray500 to-transparent h-full border border-gray400 rounded-[20px] p-4 flex flex-col gap-4">
                       <div className="flex flex-row items-center gap-3">
                         <div className="flex items-center justify-center bg-gray400 h-9 w-9 rounded-xl">
@@ -149,18 +151,6 @@ export default function HomePage() {
                       </div>
                     </div>
                   </CarouselItem>
-                  {user?.user?.dateOfBirth &&
-                  user?.user?.location &&
-                  showProfilePicture
-                    ? null
-                    : isQuickInfoVisible && (
-                        <CarouselItem className="basis-auto w-[90%]">
-                          <QuickInfo
-                            onPress={() => setIsQuickInfoVisible(false)}
-                            user={user?.user}
-                          />
-                        </CarouselItem>
-                      )}
                   {filteredRestaurantsArray.map((restaurant: any) => (
                     <CarouselItem
                       key={restaurant.id}
