@@ -51,9 +51,9 @@ const Balance: React.FC<BalanceProps> = ({
               variant="ghost"
               size="icon"
               onClick={handleToggle}
-              className="w-4 h-4"
+              className="w-4 h-4 z-10"
             >
-              <Info className="h-4 w-4 cursor-pointer" />
+              <Info size={16} color="#D7DADC"/>
             </Button>
           </div>
         </div>

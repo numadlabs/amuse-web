@@ -90,12 +90,12 @@ const Profile = () => {
             </p>
           </div>
           <div className="w-[1px] h-[58px] bg-gray400" />
-          <div className="flex flex-col gap-2 w-full justify-center items-center">
+          <button className="flex flex-col gap-2 w-full justify-center items-center" onClick={() => router.push("/membership")}>
             <p className="text-gray100 text-md">Memberships</p>
             <p className="text-2xl text-gray00 font-bold">
               {cards?.data?.cards.length || "00"}
             </p>
-          </div>
+          </button>
         </div>
       </div>
 

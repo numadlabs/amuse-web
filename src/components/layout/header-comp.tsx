@@ -34,15 +34,15 @@ const Header: React.FC<HeaderProps> = ({ type = 'default', title }) => {
         );
       default:
         return (
-          <div className='max-w-[480px] z-50 flex h-12 w-full mx-auto items-center justify-center gap-11 bg-background'>
+          <div className='max-w-[480px] z-50 flex h-12 w-full mx-auto items-center justify-between bg-background'>
             <Link href="/profile" passHref className='p-4'>
               <Button variant="ghost" size="icon">
                 <User className="h-6 w-6" />
               </Button>
             </Link>
-            <div>
+            <Link href={'/'}>
               <Logo />
-            </div>
+            </Link>
 
             <Link href="/notifications" passHref className='p-4'>
               <Button variant="ghost" size="icon">
