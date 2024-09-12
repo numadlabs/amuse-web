@@ -65,6 +65,7 @@ const MyQrPage: React.FC = () => {
         router.push(`/restaurants/${data.restaurantId}`);
       } else {
         console.log("User card found:", userCard);
+        router.push(`/check-in/${data.restaurantId}/success`);
         //TODO implement perk screen
       }
     },
