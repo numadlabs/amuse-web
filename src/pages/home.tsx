@@ -12,7 +12,6 @@ import { useSession } from "next-auth/react";
 
 import { RestaurantType } from "@/lib/types";
 import Balance from "@/components/sections/balance";
-import QuickInfo from "@/components/sections/quick-info";
 import StackedCard from "@/components/sections/stacked-cards";
 import FeaturedListCard from "@/components/atom/featured-list-card";
 import BalanceInfo from "@/components/bottomsheet/balance-info";
@@ -22,15 +21,12 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import AuthenticatedLayout from "@/components/layout/layout";
 import ImportIcon from "@/components/icons/import-icon";
 
 export default function HomePage() {
   const router = useRouter();
-  const [isQuickInfoVisible, setIsQuickInfoVisible] = useState(true);
   const [showProfilePicture, setShowProfilePicture] = useState(true);
   const [showDateOfBirth, setShowDateOfBirth] = useState(true);
   const [showArea, setShowArea] = useState(true);
@@ -117,7 +113,11 @@ export default function HomePage() {
               <p className="font-semibold text-gray100 text-md">Featured</p>
               <Carousel className="w-full">
                 <CarouselContent>
-                  <CarouselItem className={`basis-auto ${isFilteredArrayEmpty ? 'w-full' : 'w-[90%]'}`}>
+                  <CarouselItem
+                    className={`basis-auto ${
+                      isFilteredArrayEmpty ? "w-full" : "w-[90%]"
+                    }`}
+                  >
                     <div className="bg-gradient-to-b from-gray500 to-transparent h-full border border-gray400 rounded-[20px] p-4 flex flex-col gap-4">
                       <div className="flex flex-row items-center gap-3">
                         <div className="flex items-center justify-center bg-gray400 h-9 w-9 rounded-xl">
@@ -171,7 +171,7 @@ export default function HomePage() {
             <div className="flex flex-row items-center justify-between">
               <p className="font-semibold text-gray100 text-md">Memberships</p>
               <button onClick={toggleMembershipInfo}>
-                <InfoCircle size={18} color="#9AA2A7" />
+                <InfoCircle size={18} color="#D7DADC" />
               </button>
             </div>
             <StackedCard />
