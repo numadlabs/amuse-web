@@ -174,7 +174,7 @@ const MyQrPage: React.FC = () => {
 
   return (
     <AuthenticatedLayout headerType="blank" bottomNavigationType="Modal">
-      <div className="flex flex-col items-center justify-center min-h-screen p-4 max-w-[480px] w-screen relative">
+      <div className="flex flex-col items-center justify-center min-h-screen p-4 max-w-[480px] w-full relative">
         <div className="w-full max-w-md text-gray100">
           <div className="flex flex-col items-center p-6 space-y-6">
             <h2 className="text-2xl font-bold text-white">My QR Code</h2>
