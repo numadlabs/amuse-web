@@ -179,7 +179,7 @@ export default function HomePage() {
               <div className="flex justify-center mt-8 mb-36">
                 <Button
                   variant={"secondary"}
-                  onClick={() => router.push("/discover")}
+                  onClick={() => router.push("/membership")}
                 >
                   See all
                 </Button>

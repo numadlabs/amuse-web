@@ -103,7 +103,7 @@ const Owned: React.FC<ownedProps> = ({ restaurant, onClick }) => {
                         {item.isOffDay ? (
                           <span className="text-gray50 text-md">-</span>
                         ) : (
-                          <span className="text-gray50 text-md max-w-[100px] w-screen text-end">
+                          <span className="text-gray50 text-md max-w-[100px] w-screen text-start">
                             {item.opensAt}-{item.closesAt}
                           </span>
                         )}
