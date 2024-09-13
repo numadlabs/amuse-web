@@ -9,8 +9,8 @@ const Steps: React.FC<StepsProps> = ({ activeStep, totalSteps = 4 }) => {
   const progressWidth = `${(activeStep / totalSteps) * 100}%`;
 
   return (
-    <div className="flex justify-center items-center py-2 h-2 rounded-[4px] max-w-[480px] w-screen">
-      <div className="relative flex justify-start mb-10 rounded-full overflow-hidden bg-gray400 w-full h-2">
+    <div className="flex justify-center items-center py-2 h-2 rounded-[4px] w-[343px] m-auto">
+      <div className="relative flex justify-center bottom-10 m-auto rounded-full overflow-hidden bg-gray400 w-[343px] h-2">
         <div
           className="absolute top-0 left-0 h-full custom-gradient transition-all duration-300 ease-in-out"
           style={{ width: progressWidth }}
