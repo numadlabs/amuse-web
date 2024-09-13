@@ -9,7 +9,8 @@ import { Location } from "iconsax-react";
 import { Check } from "lucide-react";
 import { RestaurantType } from "@/lib/types";
 import { useQuery } from "@tanstack/react-query";
-import { getPerksByRestaurant, getTimeTable } from "@/lib/service/queryHelper";
+import { getTimeTable } from "@/lib/service/queryHelper";
+import Link from "next/link";
 
 interface ownedProps {
   restaurant: RestaurantType;
@@ -25,15 +26,6 @@ const Owned: React.FC<ownedProps> = ({ restaurant, onClick }) => {
     enabled: !!restaurant?.id,
   });
 
-  const { data: perks = [] } = useQuery({
-    queryKey: ["perkKey", restaurant?.id as string],
-    queryFn: () => getPerksByRestaurant(restaurant?.id as string),
-    enabled: !!restaurant?.id,
-  });
-
-  const hasPerks =
-    perks && (perks.userBonuses?.length > 0 || perks.followingBonus);
-
   const getDayName = (dayNo: number) => {
     const daysOfWeek = [
       "Monday",
@@ -45,6 +37,15 @@ const Owned: React.FC<ownedProps> = ({ restaurant, onClick }) => {
       "Sunday",
     ];
     return daysOfWeek[dayNo - 1]; // dayNo is 1-based
+  };
+
+  const handleLocationPress = () => {
+    if (restaurant.latitude && restaurant.longitude) {
+      const mapURL = `https://maps.google.com/?q=${restaurant.latitude},${restaurant.longitude}`;
+      window.open(mapURL, "_blank");
+    } else {
+      console.warn("Latitude and longitude are not available");
+    }
   };
 
   return (
@@ -63,9 +64,12 @@ const Owned: React.FC<ownedProps> = ({ restaurant, onClick }) => {
           <h1 className="font-bold text-lg text-white">Locations</h1>
           <div className="flex gap-3">
             <Location color="#ffffff" size={20} />
-            <h2 className="font-normal text-lg text-systemInformation">
+            <button
+              className="font-normal text-lg text-systemInformation text-start"
+              onClick={handleLocationPress}
+            >
               {restaurant?.location}
-            </h2>
+            </button>
           </div>
         </div>
         <div className="grid gap-4">

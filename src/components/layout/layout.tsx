@@ -61,6 +61,7 @@ export default function AuthenticatedLayout({
   };
 
   const headerTypeToUse = determineHeaderType();
+  
 
   return (
     <div className="bg-background">
@@ -93,7 +94,7 @@ export default function AuthenticatedLayout({
           </AnimatePresence>
           <Toaster />
         </div>
-        <BottomNavigation type={bottomNavigationType} />
+        {headerTypeToUse === "default" && <BottomNavigation type={bottomNavigationType} />}
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ interface OwnedAcardsProp {
 }
 
 const OwnedAcards: React.FC<OwnedAcardsProp> = ({ marker, onPress }) => {
+
   const opensAt = new Date(marker.opensAt);
   const closesAt = new Date(marker.closesAt);
   const currentTime = new Date();
@@ -18,6 +19,7 @@ const OwnedAcards: React.FC<OwnedAcardsProp> = ({ marker, onPress }) => {
     currentTime.getTime() >= opensAt.getTime() &&
     currentTime.getTime() <= closesAt.getTime();
 
+    console.log(opensAt)
   return (
     <div
       className="p-3 bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-[20px] w-full cursor-pointer"

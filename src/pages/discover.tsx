@@ -10,14 +10,11 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Discover = () => {
   const router = useRouter();
-  const [searchTerm, setSearchTerm] = React.useState("");
   const currentTime = moment().format("HH:mm:ss");
   const currentDayOfWeek = moment().isoWeekday();
 
   const {
     data: restaurantsData,
-    isLoading,
-    isError,
   } = useQuery({
     queryKey: ["restaurants"],
     queryFn: () =>
