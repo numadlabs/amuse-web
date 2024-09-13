@@ -4,7 +4,7 @@ import { useForgotPassword } from "@/lib/hooks/useForgotPassword";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Eye, EyeOff, Check, CheckCircle } from "lucide-react";
+import { Eye, EyeOff, Check } from "lucide-react";
 import Steps from "@/components/atom/steps";
 import { usePasswordStore } from "@/lib/store/passwordStore";
 import { useRouter } from "next/router";
@@ -12,7 +12,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { ArrowLeft } from "iconsax-react";
 
-// Password validation rules (you can move these to a separate file if needed)
+// Password validation rules
 const passwordValidationRules = {
   minLength: (password: string) => password.length >= 8,
   hasUpperCase: (password: string) => /[A-Z]/.test(password),
@@ -26,32 +26,43 @@ const isPasswordValid = (password: string): boolean => {
 
 // Main ForgotPassword component
 const ForgotPassword: React.FC = () => {
-  // const [step, setStep] = useState<Step>(1);
-
-  // const nextStep = () => setStep((prevStep) => (prevStep + 1) as Step);
   const [step, setStep] = useState(1);
 
-  const nextStep = () => setStep((prevStep) => (prevStep + 1) as Step);
-  const prevStep = () => setStep((prevStep) => prevStep - 1);
-  
+  const nextStep = () =>
+    setStep((prevStep) => Math.min(prevStep + 1, 4) as Step);
+  const prevStep = () =>
+    setStep((prevStep) => Math.max(prevStep - 1, 1) as Step);
+
+  const renderStep = () => {
+    switch (step) {
+      case 1:
+        return <EmailInput onNext={nextStep} />;
+      case 2:
+        return <OTPVerification onNext={nextStep} />;
+      case 3:
+        return <NewPassword onNext={nextStep} />;
+      case 4:
+        return <Success />;
+      default:
+        return null;
+    }
+  };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-background gap-6">
-           {step > 1 && step < 4 && (
-            <div  onClick={prevStep} className="relative right-40 lg:right-56 sm:right-56 md:right-56 bottom-0">
-              <ArrowLeft size="24" color="#d7dadc"/>
-            </div>
-          )}
-      <Card className="border-none bg-transparent text-center p-6">
-        
-        <CardContent className="">
-          
+    <div className="flex flex-col items-center justify-center min-h-screen bg-background p-4 relative">
+      {step > 1 && (
+        <button
+          onClick={prevStep}
+          className="fixed top-4 left-4 z-10 p-2 bg-gray-800 rounded-full shadow-lg hover:bg-gray-700 transition-colors duration-200"
+          aria-label="Go back"
+        >
+          <ArrowLeft size="24" color="#d7dadc" />
+        </button>
+      )}
+      <Card className="w-full max-w-md border-none bg-transparent text-center">
+        <CardContent className="p-0">
           <Steps activeStep={step} />
-          {step === 1 && <EmailInput onNext={nextStep} />}
-          {step === 2 && <OTPVerification onNext={nextStep} />}
-          {step === 3 && <NewPassword onNext={nextStep} />}
-          {step === 4 && <Success />}
-     
+          {renderStep()}
         </CardContent>
       </Card>
     </div>
@@ -76,10 +87,10 @@ const EmailInput: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col justify-center max-w-[480px] w-full gap-4 pt-6 pr-4 pb-4 pl-4 h-[180px] items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
+      className="flex flex-col justify-center gap-4 p-4 w-full bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-3xl"
     >
-      <h2 className="text-faq font-bold text-white">Forgot Password?</h2>
-      <p className="text-gray100 text-sm font-normal">
+      <h2 className="text-2xl font-bold text-white">Forgot Password?</h2>
+      <p className="text-gray100 text-sm">
         We will send an email verification code.
       </p>
       <Input
@@ -92,7 +103,7 @@ const EmailInput: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"
-        className="max-w-[480px] w-full h-12 absolute bottom-14"
+        className="w-full h-12"
         disabled={!email || isLoading}
       >
         {isLoading ? "Sending..." : "Send Code"}
@@ -119,12 +130,10 @@ const OTPVerification: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col justify-center max-w-[480px] w-full gap-4 pt-6 pr-4 pb-4 pl-4 h-[180px] items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
+      className="flex flex-col justify-center w-full gap-4 p-4 bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-3xl"
     >
-      <h2 className="text-faq font-bold text-white">Verification Code</h2>
-      <p className="text-gray100 text-sm font-normal">
-        Enter the code sent to your email.
-      </p>
+      <h2 className="text-2xl font-bold text-white">Verification Code</h2>
+      <p className="text-gray100 text-sm">Enter the code sent to your email.</p>
       <Input
         type="text"
         placeholder="Enter verification code"
@@ -135,7 +144,7 @@ const OTPVerification: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"
-        className="max-w-[480px] w-full h-12 absolute bottom-14"
+        className="w-full h-12"
         disabled={!verificationCode || isLoading}
       >
         {isLoading ? "Verifying..." : "Verify Code"}
@@ -168,16 +177,15 @@ const NewPassword: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col justify-center h-[382px] max-w-[480px] w-full gap-6 pt-4 pr-4 pb-4 pl-4 items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
+      className="flex flex-col justify-center w-full gap-4 p-4 bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-3xl"
     >
-      <h2 className="text-faq font-bold text-white">Create New Password</h2>
+      <h2 className="text-2xl font-bold text-white">Create New Password</h2>
       <div className="relative w-full">
         <Input
           type={showPassword ? "text" : "password"}
           placeholder="New Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className=""
         />
         <button
           type="button"
@@ -196,16 +204,15 @@ const NewPassword: React.FC<{ onNext: () => void }> = ({ onNext }) => {
         placeholder="Confirm Password"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
-        className=""
       />
       {!doPasswordsMatch && (
-        <p className="text-red-500 mb-4">Passwords do not match</p>
+        <p className="text-red-500">Passwords do not match</p>
       )}
-      <div className="relative right-[69px]">
+      <div className="text-left">
         {Object.entries(passwordValidationRules).map(([key, rule]) => (
           <p
             key={key}
-            className={`flex items-center text-start  ${
+            className={`flex items-center ${
               rule(password) ? "text-systemSuccess" : "text-gray-400"
             }`}
           >
@@ -219,7 +226,7 @@ const NewPassword: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"
-        className="max-w-[480px] w-full h-12 absolute bottom-2 lg:bottom-32"
+        className="w-full h-12 mt-4"
         disabled={!isPasswordValid(password) || !doPasswordsMatch || isLoading}
       >
         {isLoading ? "Changing Password..." : "Change Password"}
@@ -241,24 +248,22 @@ const Success: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center max-w-[480px] w-full gap-4 pt-6 pr-4 pb-4 pl-4 h-[190px] bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]">
-      {/* <CheckCircle className="w-16 h-16 text-green-500 mb-4" /> */}
+    <div className="flex flex-col items-center justify-center w-full gap-4 p-4 bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-3xl">
       <Image
-        src={"/images/success.png"}
-        alt="image"
+        src="/images/success.png"
+        alt="Success"
         width={72}
         height={72}
         sizes="100%"
-        // className="rounded-xl h-[80px] hover:rounded-[32px] hover:w-[200px] md:hover:w-[300px] lg:hover:w-[400px] hover:h-[200px] md:hover:h-[300px] lg:hover:h-[400px] zoom"
       />
-      <h2 className="text-xl font-bold text-white">Password Changed</h2>
-      <p className="text-gray100 text-sm2 font-normal">
-        Your password has been changed.
+      <h2 className="text-2xl font-bold text-white">Password Changed</h2>
+      <p className="text-gray100 text-sm">
+        Your password has been changed successfully.
       </p>
       <Button
         onClick={handleNavigation}
         variant="secondary"
-        className="max-w-[480px] w-full h-12 absolute bottom-14"
+        className="w-full h-12 mt-4"
       >
         Go to Login
       </Button>
