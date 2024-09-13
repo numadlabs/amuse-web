@@ -180,7 +180,7 @@ const MyQrPage: React.FC = () => {
     const handleResize = () => {
       if (qrContainerRef.current) {
         const containerWidth = qrContainerRef.current.offsetWidth;
-        const newSize = Math.min(containerWidth - 64, 300); // 64px for padding
+        const newSize = Math.min(containerWidth - 64, 270); // 64px for padding
         setQrSize(newSize);
       }
     };
@@ -199,9 +199,9 @@ const MyQrPage: React.FC = () => {
         <div className="w-full max-w-md text-gray100">
           <div className="flex flex-col items-center p-6 space-y-6">
             <h2 className="text-2xl font-bold text-white">My QR Code</h2>
-            <p className="text-sm text-gray-400">
+            {/* <p className="text-sm text-gray-400">
               Socket status: {socketStatus}
-            </p>
+            </p> */}
             {loading ? (
               <div className="flex justify-center items-center h-64">
                 <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>

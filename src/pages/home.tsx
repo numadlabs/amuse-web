@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/carousel";
 import AuthenticatedLayout from "@/components/layout/layout";
 import ImportIcon from "@/components/icons/import-icon";
+import Link from "next/link";
 
 export default function HomePage() {
   const router = useRouter();
@@ -122,26 +123,38 @@ export default function HomePage() {
                         </p>
                       </div>
                       <div className="grid grid-cols-2 gap-3">
-                        <Button
-                          size={"sm"}
-                          variant={"tertiary"}
-                          className="flex flex-row items-center gap-2"
+                        <Link
+                          href="https://apps.apple.com/us/app/amuse-bouche/id6479389566"
+                          target="_blank"
+                          rel="noopener noreferrer"
                         >
-                          <span>
-                            <Apple size={16} color="#FFFFFF" />
-                          </span>
-                          App Store
-                        </Button>
-                        <Button
-                          size={"sm"}
-                          variant={"tertiary"}
-                          className="flex flex-row items-center gap-2"
+                          <Button
+                            size={"sm"}
+                            variant={"tertiary"}
+                            className="w-full flex flex-row items-center gap-2"
+                          >
+                            <span>
+                              <Apple size={16} color="#FFFFFF" />
+                            </span>
+                            App Store
+                          </Button>
+                        </Link>
+                        <Link
+                          href="#"
+                          target="_blank"
+                          rel="noopener noreferrer"
                         >
-                          <span>
-                            <GooglePlay size={16} color="#FFFFFF" />
-                          </span>
-                          Google Play
-                        </Button>
+                          <Button
+                            size={"sm"}
+                            variant={"tertiary"}
+                            className="w-full flex flex-row items-center gap-2"
+                          >
+                            <span>
+                              <GooglePlay size={16} color="#FFFFFF" />
+                            </span>
+                            Google Play
+                          </Button>
+                        </Link>
                       </div>
                     </div>
                   </CarouselItem>
@@ -169,8 +182,8 @@ export default function HomePage() {
               </button>
             </div>
             <div className="mb-[500px]">
-            <StackedCard />
-            {/* {cards?.data?.cards.length > 0 && (
+              <StackedCard />
+              {/* {cards?.data?.cards.length > 0 && (
               <div className="flex justify-center mb-16">
                 <Button
                   variant={"secondary"}
