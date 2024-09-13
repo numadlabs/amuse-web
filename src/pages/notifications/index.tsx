@@ -36,7 +36,7 @@ const Notification = () => {
 
   const getNotificationIcon = (type: string) => {
     switch (type) {
-      case "REWARD": return TicketStar;
+      case "REWARD": return Bitcoin;
       case "TAP": return ScanBarcode;
       case "BONUS": return Bitcoin;
       default: return Bell;

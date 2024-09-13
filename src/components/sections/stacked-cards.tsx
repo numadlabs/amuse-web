@@ -58,7 +58,7 @@ const StackedCard = () => {
     <div className="flex flex-col gap-4">
       <div
         className="relative"
-        style={{ height: `${Math.max(latestCards.length * 10 + 300, 300)}px` }}
+        // style={{ height: `${Math.max(latestCards.length * 10 + 300, 300)}px` }}
       >
         <AnimatePresence>
           {latestCards.map((card: any, index: number) => (
@@ -100,7 +100,7 @@ const StackedCard = () => {
                         alt={`${card.name} NFT`}
                         width={1000}
                         height={1000}
-                        className="rounded-xl w-full max-h-[300px] object-cover"
+                        className="rounded-xl min-w-[130px] w-full max-h-[300px] object-cover"
                       />
                     </div>
                     <div className="min-w-[100px] max-h-full rounded-xl bg-gray500 border border-gray400 flex flex-col justify-center items-center">
@@ -121,11 +121,21 @@ const StackedCard = () => {
                   <APassStripes width={360} height={1000}/>
                 </div>
               </Card>
+              {cards?.data?.cards.length > 0 && (
+              <div className="flex justify-center mt-6">
+                <Button
+                  variant={"secondary"}
+                  onClick={() => router.push("/membership")}
+                >
+                  See all
+                </Button>
+              </div>
+            )}
             </motion.div>
           ))}
         </AnimatePresence>
       </div>
-      <div className="flex justify-center mt-4 h-12" />
+      {/* <div className="flex justify-center mt-4 h-12" /> */}
     </div>
   );
 };
