@@ -25,6 +25,7 @@ import {
 import AuthenticatedLayout from "@/components/layout/layout";
 import ImportIcon from "@/components/icons/import-icon";
 import Link from "next/link";
+import { Loader2 } from "lucide-react";
 
 export default function HomePage() {
   const router = useRouter();
@@ -56,7 +57,7 @@ export default function HomePage() {
     enabled: !!session?.userId,
   });
 
-  const { data: restaurantsData } = useQuery({
+  const { data: restaurantsData, isLoading } = useQuery({
     queryKey: ["restaurants"],
     queryFn: () =>
       getRestaurants({
@@ -89,6 +90,14 @@ export default function HomePage() {
   );
 
   const isFilteredArrayEmpty = filteredRestaurantsArray.length === 0;
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <Loader2 className="animate-spin" color="#FFFFFF" size={48} />
+      </div>
+    );
+  }
 
   return (
     <AuthenticatedLayout>
@@ -164,6 +173,7 @@ export default function HomePage() {
                       className="basis-auto w-[90%]"
                     >
                       <FeaturedListCard
+                        key={restaurant?.id}
                         restaurant={restaurant}
                         onClick={() => handleNavigation(restaurant)}
                       />

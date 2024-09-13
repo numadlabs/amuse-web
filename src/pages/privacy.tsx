@@ -58,7 +58,7 @@ that information is inaccurate or incomplete.
 const Privacy = () => {
   return (
     <AuthenticatedLayout headerTitle="Privacy policy" headerType="page">
-      <div className="mt-6 flex flex-col gap-4">
+      <div className="mt-6 flex flex-col gap-4 bg-gradient-to-b from-gray500 to-transparent p-4 rounded-2xl border border-gray400">
         <div className="flex flex-col mx-2 gap-2">
           <p className="text-lg text-gray00 font-bold">Disclaimer</p>
           <p className="text-sm text-gray100">
@@ -72,7 +72,7 @@ const Privacy = () => {
             <AccordionItem
               key={index}
               value={`item-${index}`}
-              className="border border-gray400 rounded-2xl p-4 bg-gradient-to-b from-gray500 to-transparent flex flex-col gap-3"
+              className="border border-gray400 rounded-2xl p-4 flex flex-col gap-3"
             >
               <AccordionTrigger className="text-gray00 text-lg font-semibold">
                 {item.title}

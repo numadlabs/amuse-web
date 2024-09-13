@@ -8,10 +8,13 @@ import { useRouter } from "next/router";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useSession } from "next-auth/react";
 import OwnedAcards from "@/components/atom/cards/owned-card";
+import moment from "moment";
 
 const Membership = () => {
   const router = useRouter();
   const { data: session } = useSession();
+  const currentTime = moment().format("HH:mm:ss");
+  const currentDayOfWeek = moment().isoWeekday();
 
   const { data: cards, isLoading } = useQuery({
     queryKey: ["cardKey"],
@@ -20,6 +23,8 @@ const Membership = () => {
     },
     enabled: !!session?.userId
   });
+
+  console.log(cards?.data?.cards)
 
   const handleNavigation = (restaurant: RestaurantType) => {
     router.push({

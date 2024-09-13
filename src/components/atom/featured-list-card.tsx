@@ -14,14 +14,6 @@ const FeaturedListCard: React.FC<FeaturedListCardProps> = ({
   restaurant,
   onClick,
 }) => {
-  const opensAt = new Date(restaurant?.opensAt);
-  const closesAt = new Date(restaurant?.closesAt);
-  const currentTime = new Date();
-
-  const isOpen =
-    currentTime.getTime() >= opensAt?.getTime() &&
-    currentTime.getTime() <= closesAt?.getTime();
-
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     onClick(restaurant);
@@ -33,8 +25,8 @@ const FeaturedListCard: React.FC<FeaturedListCardProps> = ({
   };
 
   return (
-    <div 
-      className="p-3 bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-[20px] w-full cursor-pointer" 
+    <div
+      className="p-3 bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-[20px] w-full cursor-pointer"
       onClick={handleClick}
     >
       <div className="flex flex-row gap-4">
@@ -54,15 +46,19 @@ const FeaturedListCard: React.FC<FeaturedListCardProps> = ({
               {restaurant?.categoryName}
             </p>
           </div>
-          <div className={`flex flex-row items-center ${restaurant?.isOwned  ? "gap-3" : "justify-between"}`}>
+          <div
+            className={`flex flex-row items-center ${
+              restaurant?.isOwned ? "gap-3" : "justify-between"
+            }`}
+          >
             <div className="flex flex-row gap-1.5 items-center">
               <div
                 className={`w-2 h-2 m-1 rounded-full ${
-                  isOpen ? "bg-green-500" : "bg-red-500"
+                  restaurant?.isOpen ? "bg-green-500" : "bg-red-500"
                 }`}
               />
               <span className="text-sm text-gray-300">
-                {isOpen ? "Open" : "Closed"}
+                {restaurant?.isOpen ? "Open" : "Closed"}
               </span>
             </div>
             {restaurant?.isOwned ? (

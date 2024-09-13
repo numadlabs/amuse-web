@@ -28,7 +28,7 @@ const Header: React.FC<HeaderProps> = ({ type = 'default', title }) => {
                 <ChevronLeft className="h-6 w-6" />
               </Button>
             </Link>
-            <h1 className="text-xl font-semibold text-white">{title}</h1>
+            <h1 className="text-lg font-semibold text-white">{title}</h1>
             <div className="w-10" /> {/* Spacer to maintain layout */}
           </>
         );

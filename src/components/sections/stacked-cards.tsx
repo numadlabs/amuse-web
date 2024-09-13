@@ -46,7 +46,7 @@ const StackedCard = () => {
               you check-in!
             </p>
           </div>
-          <Button variant="secondary" onClick={() => router.push("/discovery")}>
+          <Button variant="secondary" onClick={() => router.push("/discover")}>
             Explore
           </Button>
         </div>
