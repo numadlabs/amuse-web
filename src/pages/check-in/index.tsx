@@ -44,7 +44,7 @@ const MyQrPage: React.FC = () => {
   const { data: session } = useSession();
   const userId = session?.userId as string | undefined;
   const socketRef = useRef<Socket | null>(null);
-  const [qrSize, setQrSize] = useState(400);
+  const [qrSize, setQrSize] = useState(270);
   const qrContainerRef = useRef<HTMLDivElement>(null);
 
   const { data: cardsData } = useQuery({
