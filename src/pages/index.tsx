@@ -212,8 +212,10 @@ export default function Login() {
         <DialogContent className="bg-background max-w-[480px] w-screen h-[598px] flex flex-col justify-around p-4 rounded-xl border-hidden">
           <ScrollArea className="h-[478px] rounded-md border-hidden">
             <DialogHeader>
-              <DialogTitle className="pb-4 font-bold text-white text-faq text-start">
-                Welcome to <br /> Amuse Bouche!
+              <DialogTitle className="pb-4 font-bold text-gray00 text-faq text-start">
+                <span className="text-gray00">
+                  Welcome to <br /> Amuse Bouche!
+                </span>
               </DialogTitle>
             </DialogHeader>
             <DialogDescription className="space-y-4 font-normal text-gray100">

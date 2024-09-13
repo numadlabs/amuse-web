@@ -55,12 +55,6 @@ export default function HomePage() {
     enabled: !!session?.userId,
   });
 
-  const { data: cards = [] } = useQuery({
-    queryKey: ["userCards"],
-    queryFn: () => getUserCard(),
-    enabled: true, // Replace with actual condition
-  });
-
   const { data: restaurantsData } = useQuery({
     queryKey: ["restaurants"],
     queryFn: () =>
@@ -174,9 +168,10 @@ export default function HomePage() {
                 <InfoCircle size={18} color="#D7DADC" />
               </button>
             </div>
+            <div className="mb-[500px]">
             <StackedCard />
-            {cards?.data?.cards.length > 0 && (
-              <div className="flex justify-center mt-8 mb-36">
+            {/* {cards?.data?.cards.length > 0 && (
+              <div className="flex justify-center mb-16">
                 <Button
                   variant={"secondary"}
                   onClick={() => router.push("/membership")}
@@ -184,7 +179,8 @@ export default function HomePage() {
                   See all
                 </Button>
               </div>
-            )}
+            )} */}
+            </div>
           </div>
         </div>
         <BalanceInfo open={showInfo} onClose={toggleInfo} />
