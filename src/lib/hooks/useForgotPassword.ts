@@ -6,7 +6,11 @@ import {
   sendOtpApi,
   checkOtp,
   forgotPassword,
+  checkEmail,
 } from "../service/mutationHelper";
+import { emailSchema } from "../validators/SignUpSchema";
+import axios from "axios";
+import { ZodError } from "zod";
 
 // API response types
 export interface ApiResponse {
@@ -72,10 +76,25 @@ export const useForgotPassword = (): UseForgotPasswordReturn => {
     mutationFn: forgotPassword,
   });
 
+  const { mutateAsync: checkEmailMutation } = useMutation({
+    mutationFn: checkEmail,
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
   const sendOtpHandler = async (emailInput: string): Promise<void> => {
     setIsLoading(true);
     clearError();
     try {
+      emailSchema.parse(email);
+      const checkEmailResponse = await checkEmailMutation({
+        email: email,
+      });
+      if (!checkEmailResponse.data.isEmailRegistered) {
+        setError("This email is not registered");
+        throw new Error("This email is not registered");
+      }
       const response = await sendOtpMutation({ email: emailInput });
       if (response.success) {
         setEmail(emailInput);
@@ -83,8 +102,15 @@ export const useForgotPassword = (): UseForgotPasswordReturn => {
         throw new Error(response.message);
       }
     } catch (err) {
-      const apiError = err as ApiError;
-      setError(apiError.message || "Failed to send OTP");
+      if (err instanceof ZodError) {
+        const formattedErrors = err.errors.map((issue) => issue.message);
+        setError(formattedErrors.join("\n"));
+        throw new Error(formattedErrors.join(", "));
+      }
+      if (axios.isAxiosError(err) && err.response) {
+        const apiError = err.response.data.error || "Failed to send OTP";
+        throw new Error(apiError);
+      }
       throw err;
     } finally {
       setIsLoading(false);
@@ -99,14 +125,17 @@ export const useForgotPassword = (): UseForgotPasswordReturn => {
         email,
         verificationCode: code,
       });
+
       if (response.success) {
         setVerificationCode(code);
       } else {
         throw new Error(response.message);
       }
     } catch (err) {
-      const apiError = err as ApiError;
-      setError(apiError.message || "Failed to verify OTP");
+      if (axios.isAxiosError(err) && err.response) {
+        const apiError = err.response.data.error || "Failed to verify OTP";
+        throw new Error(apiError);
+      }
       throw err;
     } finally {
       setIsLoading(false);
@@ -130,8 +159,10 @@ export const useForgotPassword = (): UseForgotPasswordReturn => {
         throw new Error(response.message);
       }
     } catch (err) {
-      const apiError = err as ApiError;
-      setError(apiError.message || "Password reset failed");
+      if (axios.isAxiosError(err) && err.response) {
+        const apiError = err.response.data.error || "Password reset failed";
+        throw new Error(apiError);
+      }
       throw err;
     } finally {
       setIsLoading(false);

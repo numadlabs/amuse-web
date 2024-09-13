@@ -11,6 +11,7 @@ import {
 import { useRouter } from "next/router";
 import { emailSchema } from "../validators/SignUpSchema";
 import { ZodError } from "zod";
+import axios, { AxiosError } from "axios";
 
 // API response types
 export interface ApiResponse {
@@ -140,20 +141,14 @@ export const useSignUp = (): UseSignUpReturn => {
       }
     } catch (err) {
       if (err instanceof ZodError) {
-        console.log("🚀 ~ sendOtp ~ err:", err.errors);
-        const formattedErrors = err.errors.map((issue) => {
-          console.log("🚀 ~ formattedErrors ~ issue:", issue.message);
-          return `${issue.message}`;
-        });
-
-        setError(formattedErrors.toLocaleString());
-
-        setTimeout(() => {
-          setError("");
-        }, 4000);
+        const formattedErrors = err.errors.map((issue) => issue.message);
+        setError(formattedErrors.join("\n"));
+        throw new Error(formattedErrors.join(", "));
       }
-      const apiError = err as ApiError;
-      setError(apiError.message || "Failed to send OTP");
+      if (axios.isAxiosError(err) && err.response) {
+        const apiError = err.response.data.error || "Failed to send OTP";
+        throw new Error(apiError);
+      }
       throw err;
     } finally {
       setIsLoading(false);
@@ -174,8 +169,15 @@ export const useSignUp = (): UseSignUpReturn => {
         throw new Error(response.message);
       }
     } catch (err) {
-      const apiError = err as ApiError;
-      setError(apiError.message || "Failed to verify OTP");
+      if (axios.isAxiosError(error) && error.response) {
+        // Use the error message from the API if available
+        const apiError =
+          error.response.data.error ||
+          "Unexpected error happened to verify OTP";
+        setError(apiError);
+        throw new Error(apiError);
+      }
+
       throw err;
     } finally {
       setIsLoading(false);
@@ -186,7 +188,6 @@ export const useSignUp = (): UseSignUpReturn => {
     setIsLoading(true);
     clearError();
     const { email, password, verificationCode } = useSignUpStore.getState();
-    console.log("🚀 ~ register ~ password:", password);
 
     try {
       const response = await registerUser({
@@ -203,8 +204,10 @@ export const useSignUp = (): UseSignUpReturn => {
         throw new Error(response.message);
       }
     } catch (err) {
-      const apiError = err as ApiError;
-      setError(apiError.message || "Registration failed");
+      if (axios.isAxiosError(err) && err.response) {
+        const apiError = err.response.data.error || "Registration failed";
+        throw new Error(apiError);
+      }
       throw err;
     } finally {
       setIsLoading(false);
