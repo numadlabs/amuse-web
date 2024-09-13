@@ -46,13 +46,13 @@ const Notification = () => {
   return (
     <AuthenticatedLayout>
       <div className="min-h-screen bg-background">
-        <div className="px-4 w-full h-screen mt-6">
+        <div className="px-4 w-full py-4">
           {isLoading ? (
             <div className="flex justify-center items-center h-64">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
             </div>
           ) : userNotifications.length > 0 ? (
-            <div className="space-y-4">
+            <div className="space-y-4 mb-4">
               {reversedNotifications.map((item, index) => (
                 <NotificationCard
                   key={index}
