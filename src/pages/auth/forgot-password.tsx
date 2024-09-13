@@ -27,11 +27,19 @@ const isPasswordValid = (password: string): boolean => {
 // Main ForgotPassword component
 const ForgotPassword: React.FC = () => {
   const [step, setStep] = useState(1);
+  const router = useRouter();
 
   const nextStep = () =>
     setStep((prevStep) => Math.min(prevStep + 1, 4) as Step);
   const prevStep = () =>
     setStep((prevStep) => Math.max(prevStep - 1, 1) as Step);
+  const handleBackClick = () => {
+    if (step === 1) {
+      router.push("/"); 
+    } else {
+      prevStep();
+    }
+  };
 
   const renderStep = () => {
     switch (step) {
@@ -50,9 +58,10 @@ const ForgotPassword: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-background p-4 relative">
-      {step > 1 && (
+      {step >= 1 && (
         <button
-          onClick={prevStep}
+          // onClick={prevStep}
+          onClick={handleBackClick}
           className="fixed top-4 left-4 z-10 p-2 bg-gray-800 rounded-full shadow-lg hover:bg-gray-700 transition-colors duration-200"
           aria-label="Go back"
         >
