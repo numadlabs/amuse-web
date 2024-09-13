@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getSession } from "next-auth/react";
+import { getSession, signOut } from "next-auth/react";
 import SERVER_SETTINGS from "./serverSettings";
 
 const BACKEND_URL = SERVER_SETTINGS.BACKEND_URL;
@@ -36,6 +36,7 @@ axiosClient.interceptors.response.use(
         }
       } catch (err) {
         console.error("Error refreshing token:", err);
+        await signOut({ callbackUrl: "/" });
       }
     }
     return Promise.reject(error);

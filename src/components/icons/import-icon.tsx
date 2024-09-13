@@ -30,8 +30,8 @@ const ImportIcon = () => {
           y2="12.6686"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FDAD32" />
-          <stop offset="1" stop-color="#F187FB" />
+          <stop stopColor="#FDAD32" />
+          <stop offset="1" stopColor="#F187FB" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_11552_9964"
@@ -41,8 +41,8 @@ const ImportIcon = () => {
           y2="7.03464"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FDAD32" />
-          <stop offset="1" stop-color="#F187FB" />
+          <stop stopColor="#FDAD32" />
+          <stop offset="1" stopColor="#F187FB" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_11552_9964"
@@ -52,8 +52,8 @@ const ImportIcon = () => {
           y2="11.9378"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FDAD32" />
-          <stop offset="1" stop-color="#F187FB" />
+          <stop stopColor="#FDAD32" />
+          <stop offset="1" stopColor="#F187FB" />
         </linearGradient>
       </defs>
     </svg>
