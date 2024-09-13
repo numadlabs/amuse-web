@@ -12,46 +12,55 @@ import { Eye, EyeOff, Check } from "lucide-react";
 import Steps from "@/components/atom/steps";
 import { useSignUpStore } from "@/lib/store/signUpStore";
 import { ArrowLeft } from "iconsax-react";
-import { emailSchema } from "@/lib/validators/SignUpSchema";
-import { checkEmail } from "@/lib/service/mutationHelper";
 
 // Main SignUp component
 const SignUp: React.FC = () => {
-  // const [step, setStep] = useState<Step>(1);
   const [step, setStep] = useState(1);
 
-  const nextStep = () => setStep((prevStep) => (prevStep + 1) as Step);
-  const prevStep = () => setStep((prevStep) => prevStep - 1);
+  const nextStep = () =>
+    setStep((prevStep) => Math.min(prevStep + 1, 4) as Step);
+  const prevStep = () =>
+    setStep((prevStep) => Math.max(prevStep - 1, 1) as Step);
+
+  const renderStep = () => {
+    switch (step) {
+      case 1:
+        return <EmailInput onNext={nextStep} />;
+      case 2:
+        return <OTPVerification onNext={nextStep} />;
+      case 3:
+        return <Password onNext={nextStep} />;
+      case 4:
+        return <Nickname />;
+      default:
+        return null;
+    }
+  };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-background gap-6">
-      {step > 1 && step < 4 && (
-        <div
+    <div className="flex flex-col items-center justify-center min-h-screen bg-background p-4 relative">
+      {step > 1 && (
+        <button
           onClick={prevStep}
-          className="relative right-40 lg:right-56 sm:right-56 md:right-56 bottom-0"
+          className="fixed top-4 left-4 z-10 p-2 bg-gray-800 rounded-full shadow-lg hover:bg-gray-700 transition-colors duration-200"
+          aria-label="Go back"
         >
           <ArrowLeft size="24" color="#d7dadc" />
-        </div>
+        </button>
       )}
-      <Card className="border-none bg-transparent text-center">
-        <CardContent className="">
+      <Card className="w-full max-w-md border-none bg-transparent text-center">
+        <CardContent className="p-0">
           <Steps activeStep={step} />
-          {step === 1 && <EmailInput onNext={nextStep} />}
-          {step === 2 && <OTPVerification onNext={nextStep} />}
-          {step === 3 && <Password onNext={nextStep} />}
-          {step === 4 && <Nickname />}
+          {renderStep()}
         </CardContent>
       </Card>
     </div>
   );
 };
 
-// Steps component remains the same
-
 // EmailInput component
 const EmailInput: React.FC<{ onNext: () => void }> = ({ onNext }) => {
-  //email register hiisniig shalgah
-  const { email, setEmail, reset } = useSignUpStore();
+  const { email, setEmail } = useSignUpStore();
   const { sendOtp, isLoading, error } = useSignUp();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -67,10 +76,10 @@ const EmailInput: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col justify-center gap-4 pt-6 pr-4 pb-4 pl-4 max-w-[480px] w-full h-[180px] items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
+      className="flex flex-col justify-center gap-4 p-4 w-full bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-3xl"
     >
-      <h2 className="text-faq font-bold text-white">Email</h2>
-      <p className="text-gray100 text-sm font-normal">
+      <h2 className="text-2xl font-bold text-white">Email</h2>
+      <p className="text-gray100 text-sm">
         We will send an email verification code.
       </p>
       <Input
@@ -83,7 +92,7 @@ const EmailInput: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"
-        className="max-w-[480px] w-full h-12 absolute bottom-14"
+        className="w-full h-12"
         disabled={!email || isLoading}
       >
         {isLoading ? "Sending..." : "Send code"}
@@ -110,12 +119,10 @@ const OTPVerification: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col justify-center max-w-[480px] w-full gap-4 pt-6 pr-4 pb-4 pl-4 h-[200px] items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
+      className="flex flex-col justify-center w-full gap-4 p-4 bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-3xl"
     >
-      <h2 className="text-faq font-bold text-white">Verification code</h2>
-      <p className="text-gray100 text-sm font-normal">
-        Enter the code sent to your email.
-      </p>
+      <h2 className="text-2xl font-bold text-white">Verification code</h2>
+      <p className="text-gray100 text-sm">Enter the code sent to your email.</p>
       <Input
         type="number"
         placeholder="Enter verification code"
@@ -126,7 +133,7 @@ const OTPVerification: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"
-        className="max-w-[480px] w-full h-12 absolute bottom-14"
+        className="w-full h-12"
         disabled={!verificationCode || isLoading}
       >
         {isLoading ? "Verifying..." : "Verify Code"}
@@ -138,7 +145,6 @@ const OTPVerification: React.FC<{ onNext: () => void }> = ({ onNext }) => {
 // Password component
 const Password: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   const { password, setPassword } = useSignUpStore();
-  console.log("🚀 ~ password:", password);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -154,16 +160,15 @@ const Password: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col justify-center h-[382px] max-w-[480px] w-full gap-6 pt-4 pr-4 pb-4 pl-4 items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
+      className="flex flex-col justify-center w-full gap-4 p-4 bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-3xl"
     >
-      <h2 className="text-faq font-bold text-white">Create password</h2>
+      <h2 className="text-2xl font-bold text-white">Create password</h2>
       <div className="relative w-full">
         <Input
           type={showPassword ? "text" : "password"}
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className=""
         />
         <button
           type="button"
@@ -185,13 +190,13 @@ const Password: React.FC<{ onNext: () => void }> = ({ onNext }) => {
         className="mb-4"
       />
       {!doPasswordsMatch && (
-        <p className="text-red-500 h-4">Passwords do not match</p>
+        <p className="text-red-500">Passwords do not match</p>
       )}
-      <div className="relative right-[69px]">
+      <div className="text-left">
         {Object.entries(passwordValidationRules).map(([key, rule]) => (
           <p
             key={key}
-            className={`flex items-center text-start ${
+            className={`flex items-center ${
               rule(password) ? "text-systemSuccess" : "text-gray-400"
             }`}
           >
@@ -204,7 +209,7 @@ const Password: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       </div>
       <Button
         type="submit"
-        className="max-w-[480px] w-full h-12 absolute bottom-2 lg:bottom-32"
+        className="w-full h-12 mt-4"
         disabled={!isPasswordValid(password) || !doPasswordsMatch}
       >
         Continue
@@ -222,9 +227,6 @@ const Nickname: React.FC = () => {
     e.preventDefault();
     try {
       await register(nickname);
-      // if (response.success) {
-      //   router.push("/home");
-      // }
     } catch (err) {
       // Error is handled by the hook and stored in the error state
     }
@@ -233,12 +235,12 @@ const Nickname: React.FC = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col justify-center max-w-[480px] w-full gap-4 pt-6 pr-4 pb-4 pl-4 h-[210px] items-center bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-[32px]"
+      className="flex flex-col justify-center w-full gap-4 p-4 bg-gradient-to-br from-gray500 to-transparent border border-gray400 rounded-3xl"
     >
-      <h2 className="text-faq font-bold text-white">Nickname</h2>
-      <p className="text-gray100 text-sm font-normal">
-        This will be shared with others. We want exclusive <br /> invites to
-        feel special.
+      <h2 className="text-2xl font-bold text-white">Nickname</h2>
+      <p className="text-gray100 text-sm">
+        This will be shared with others. We want exclusive invites to feel
+        special.
       </p>
       <Input
         type="text"
@@ -250,7 +252,7 @@ const Nickname: React.FC = () => {
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"
-        className="max-w-[480px] w-full h-12 absolute bottom-14"
+        className="w-full h-12"
         disabled={!nickname || isLoading}
       >
         {isLoading ? "Finishing..." : "Finish"}
