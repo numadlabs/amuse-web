@@ -1,11 +1,16 @@
 import React from "react";
 
-const APassStripes = () => {
+interface ApassProps {
+  width: number;
+  height: number;
+}
+
+const APassStripes: React.FC<ApassProps> = ({ width, height }) => {
   return (
     <>
       <svg
-        width="242"
-        height="322"
+        width={width}
+        height={height}
         viewBox="0 0 242 322"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

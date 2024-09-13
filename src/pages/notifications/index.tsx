@@ -65,7 +65,7 @@ const Notification = () => {
               ))}
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center h-[812px]">
+            <div className="flex flex-col items-center justify-center">
               <div className="bg-gray400 p-3 rounded-full mb-4">
                 <Bell size={24} color="#ffffff" />
               </div>

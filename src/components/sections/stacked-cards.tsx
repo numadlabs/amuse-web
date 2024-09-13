@@ -117,8 +117,8 @@ const StackedCard = () => {
                     </div>
                   </div>
                 </div>
-                <div className="absolute z-10 -right-28 opacity-80">
-                  <APassStripes />
+                <div className="absolute z-10 -right-48 opacity-80">
+                  <APassStripes width={360} height={1000}/>
                 </div>
               </Card>
             </motion.div>
