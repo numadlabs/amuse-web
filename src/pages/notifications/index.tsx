@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { userKeys } from "@/lib/service/keysHelper";
 import { getUserNotification } from "@/lib/service/queryHelper";
-import { Bell, Bitcoin, ScanBarcode } from "lucide-react";
+import { Bell, Bitcoin, Loader2, ScanBarcode } from "lucide-react";
 import { useAuth } from "@/lib/context/auth-context";
 import NotificationCard from "@/components/atom/cards/NotificationCard";
 import AuthenticatedLayout from "@/components/layout/layout";
@@ -36,12 +36,24 @@ const Notification = () => {
 
   const getNotificationIcon = (type: string) => {
     switch (type) {
-      case "REWARD": return Bitcoin;
-      case "TAP": return ScanBarcode;
-      case "BONUS": return Bitcoin;
-      default: return Bell;
+      case "REWARD":
+        return Bitcoin;
+      case "TAP":
+        return ScanBarcode;
+      case "BONUS":
+        return Bitcoin;
+      default:
+        return Bell;
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center w-full h-screen">
+        <Loader2 className="animate-spin" color="#FFFFFF" size={48} />
+      </div>
+    );
+  }
 
   return (
     <AuthenticatedLayout>

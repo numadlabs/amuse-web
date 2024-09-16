@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { io, Socket } from "socket.io-client";
 import { QRCodeCanvas } from "qrcode.react";
-import { X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { generateTap } from "@/lib/service/mutationHelper";
 import { getUserCard } from "@/lib/service/queryHelper";
@@ -193,6 +193,14 @@ const MyQrPage: React.FC = () => {
     };
   }, []);
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center w-full h-screen">
+        <Loader2 className="animate-spin" color="#FFFFFF" size={48} />
+      </div>
+    );
+  }
+
   return (
     <AuthenticatedLayout headerType="blank" bottomNavigationType="Modal">
       <div className="flex flex-col items-center justify-center min-h-screen p-4 max-w-[480px] w-full relative">
@@ -202,32 +210,31 @@ const MyQrPage: React.FC = () => {
             {/* <p className="text-sm text-gray-400">
               Socket status: {socketStatus}
             </p> */}
-            {loading ? (
+            {/* {loading ? (
               <div className="flex justify-center items-center h-64">
                 <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
               </div>
             ) : (
-              <>
-                <div className="mx-4">
-                  <div
-                    ref={qrContainerRef}
-                    className="bg-gradient-to-br from-qrGradientStart to-qrGradientEnd p-8 flex justify-center items-center rounded-[32px]"
-                  >
-                    <QRCodeCanvas
-                      value={`data:image/png;base64,${qrData}`}
-                      size={qrSize}
-                      bgColor="transparent "
-                      fgColor="#ffffff"
-                      level="H"
-                    />
-                  </div>
-                </div>
-                <p className="text-center text-gray100 text-md">
-                  Show this to your waiter to check-in. Do not worry, they are
-                  pros.
-                </p>
-              </>
-            )}
+              <> */}
+            <div className="mx-4">
+              <div
+                ref={qrContainerRef}
+                className="bg-gradient-to-br from-qrGradientStart to-qrGradientEnd p-8 flex justify-center items-center rounded-[32px]"
+              >
+                <QRCodeCanvas
+                  value={`data:image/png;base64,${qrData}`}
+                  size={qrSize}
+                  bgColor="transparent "
+                  fgColor="#ffffff"
+                  level="H"
+                />
+              </div>
+            </div>
+            <p className="text-center text-gray100 text-md">
+              Show this to your waiter to check-in. Do not worry, they are pros.
+            </p>
+            {/* </>
+            )} */}
           </div>
         </div>
         <Button
