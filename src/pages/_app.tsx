@@ -4,6 +4,7 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { AuthProvider } from "../lib/context/auth-context";
 import AmuseWebAppSEO from "@/components/layout/seo-head";
 import { SessionProvider } from "next-auth/react";
+import { Analytics } from "@vercel/analytics/react";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,6 +31,7 @@ export default function MyApp({
           <Component {...pageProps} />
         </AuthProvider>
       </QueryClientProvider>
+      <Analytics />
     </SessionProvider>
   );
 }
