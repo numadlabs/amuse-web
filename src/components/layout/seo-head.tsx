@@ -3,11 +3,12 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 const domain = "https://web.amusebouche.io";
+const logoPath = "/img/og.png";
 
 export default function AmuseWebAppSEO({
   title = "Amuse Bouche - Your Digital Culinary Passport",
   description = "Access exclusive rewards, check in at top restaurants, and manage your culinary journey with Amuse Bouche.",
-  logo = `${domain}/img/og.png`,
+  logo = `${domain}${logoPath}`,
 }) {
   const router = useRouter();
   const currentUrl = `${domain}${router.asPath}`;
@@ -33,18 +34,8 @@ export default function AmuseWebAppSEO({
       <meta property="og:image:height" content="630" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:image" content={logo} />
-      <link
-        rel="icon"
-        type="image/png"
-        sizes="32x32"
-        href="/favicon-32x32.png"
-      />
-      <link
-        rel="icon"
-        type="image/png"
-        sizes="16x16"
-        href="/favicon-16x16.png"
-      />
+      <link rel="icon" type="image/png" sizes="32x32" href={`${logoPath}`} />
+      <link rel="icon" type="image/png" sizes="16x16" href={`${logoPath}`} />
       <link
         rel="apple-touch-icon"
         sizes="180x180"

@@ -35,7 +35,7 @@ const ForgotPassword: React.FC = () => {
     setStep((prevStep) => Math.max(prevStep - 1, 1) as Step);
   const handleBackClick = () => {
     if (step === 1) {
-      router.push("/"); 
+      router.push("/");
     } else {
       prevStep();
     }
@@ -247,11 +247,11 @@ const NewPassword: React.FC<{ onNext: () => void }> = ({ onNext }) => {
 // Success component
 const Success: React.FC = () => {
   const router = useRouter();
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   const reset = usePasswordStore((state) => state.reset);
 
   const handleNavigation = () => {
-    queryClient.invalidateQueries({ queryKey: ["userInfo"] });
+    // queryClient.invalidateQueries({ queryKey: ["userInfo"] });
     router.replace("/");
     reset();
   };

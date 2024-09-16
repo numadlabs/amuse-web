@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { emailSchema } from "../validators/SignUpSchema";
 import { ZodError } from "zod";
 import axios, { AxiosError } from "axios";
+import { useAuth } from "../context/auth-context";
 
 // API response types
 export interface ApiResponse {
@@ -92,6 +93,7 @@ export const useSignUp = (): UseSignUpReturn => {
     setVerificationCode,
     reset,
   } = useSignUpStore();
+  const { onLogin } = useAuth();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -124,32 +126,55 @@ export const useSignUp = (): UseSignUpReturn => {
     setIsLoading(true);
     clearError();
     try {
-      emailSchema.parse(email);
-      const checkEmailResponse = await checkEmailMutation({
-        email: email,
-      });
+      // Validate email
+      emailSchema.parse(emailInput);
 
+      // Check if email is already registered
+      const checkEmailResponse = await checkEmailMutation({
+        email: emailInput,
+      });
       if (checkEmailResponse.data.isEmailRegistered) {
-        setError("This email is already registered.");
         throw new Error("This email is already registered.");
       }
+
+      // Send OTP
       const response = await sendOtpMutation({ email: emailInput });
       if (response.success) {
         setEmail(emailInput);
       } else {
-        throw new Error(response.message);
+        throw new Error(response.message || "Failed to send OTP");
       }
     } catch (err) {
+      let errorMessage = "An unexpected error occurred while sending OTP";
+
       if (err instanceof ZodError) {
+        // Handle Zod validation errors
         const formattedErrors = err.errors.map((issue) => issue.message);
-        setError(formattedErrors.join("\n"));
-        throw new Error(formattedErrors.join(", "));
+        errorMessage = formattedErrors.join(", ");
+      } else if (axios.isAxiosError(err)) {
+        // Handle Axios errors
+        if (err.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          errorMessage =
+            err.response.data.error ||
+            err.response.data.message ||
+            `Failed to send OTP: ${err.response.status}`;
+        } else if (err.request) {
+          // The request was made but no response was received
+          errorMessage =
+            "No response received from the server. Please check your internet connection.";
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          errorMessage = err.message || "Error setting up the OTP request";
+        }
+      } else if (err instanceof Error) {
+        // Handle standard JavaScript errors
+        errorMessage = err.message;
       }
-      if (axios.isAxiosError(err) && err.response) {
-        const apiError = err.response.data.error || "Failed to send OTP";
-        throw new Error(apiError);
-      }
-      throw err;
+
+      setError(errorMessage);
+      throw new Error(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -163,22 +188,30 @@ export const useSignUp = (): UseSignUpReturn => {
         email,
         verificationCode: code,
       });
+
       if (response.success) {
         setVerificationCode(code);
       } else {
-        throw new Error(response.message);
+        // Handle the case where the API returns a failure response
+        throw new Error(response.message || "Failed to verify OTP");
       }
     } catch (err) {
-      if (axios.isAxiosError(error) && error.response) {
-        // Use the error message from the API if available
-        const apiError =
-          error.response.data.error ||
-          "Unexpected error happened to verify OTP";
-        setError(apiError);
-        throw new Error(apiError);
+      if (axios.isAxiosError(err)) {
+        // Handle Axios errors
+        const errorMessage =
+          err.response?.data?.error || err.message || "Failed to verify OTP";
+        setError(errorMessage);
+        throw new Error(errorMessage);
+      } else if (err instanceof Error) {
+        // Handle other errors
+        setError(err.message);
+        throw err;
+      } else {
+        // Handle unknown errors
+        const errorMessage = "An unexpected error occurred";
+        setError(errorMessage);
+        throw new Error(errorMessage);
       }
-
-      throw err;
     } finally {
       setIsLoading(false);
     }
@@ -196,19 +229,48 @@ export const useSignUp = (): UseSignUpReturn => {
         password,
         verificationCode,
       });
+
       if (response.success) {
-        // Handle successful registration (e.g., store token, redirect)
-        router.push("/home");
-        reset(); // Clear the store after successful registration
+        const loginResponse = await onLogin(email, password);
+        if (!loginResponse.error) {
+          reset(); // Clear the store after successful registration
+          await router.push("/home");
+        } else {
+          throw new Error(
+            loginResponse.error ?? "Failed to log in after registration"
+          );
+        }
       } else {
-        throw new Error(response.message);
+        throw new Error(response.message || "Registration failed");
       }
     } catch (err) {
-      if (axios.isAxiosError(err) && err.response) {
-        const apiError = err.response.data.error || "Registration failed";
-        throw new Error(apiError);
+      let errorMessage = "An unexpected error occurred during registration";
+
+      if (axios.isAxiosError(err)) {
+        // Handle Axios errors
+        if (err.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          errorMessage =
+            err.response.data.error ||
+            err.response.data.message ||
+            `Registration failed: ${err.response.status}`;
+        } else if (err.request) {
+          // The request was made but no response was received
+          errorMessage =
+            "No response received from the server. Please check your internet connection.";
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          errorMessage =
+            err.message || "Error setting up the registration request";
+        }
+      } else if (err instanceof Error) {
+        // Handle standard JavaScript errors
+        errorMessage = err.message;
       }
-      throw err;
+
+      setError(errorMessage);
+      throw new Error(errorMessage);
     } finally {
       setIsLoading(false);
     }
