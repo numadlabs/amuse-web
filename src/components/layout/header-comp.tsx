@@ -1,41 +1,43 @@
-import React from 'react';
+import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, Bell } from "lucide-react";
-import { User, Notification } from 'iconsax-react';
+import { User, Notification } from "iconsax-react";
 
-import Logo from '../icons/logo';
+import Logo from "../icons/logo";
 
 interface HeaderProps {
-  type?: 'blank' | 'default' | 'page';
+  type?: "blank" | "default" | "page";
   title?: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ type = 'default', title }) => {
+const Header: React.FC<HeaderProps> = ({ type = "default", title }) => {
   const router = useRouter();
   const currentPath = router.pathname;
 
+  const handleBack = () => {
+    router.back();
+  };
+
   const renderContent = () => {
     switch (type) {
-      case 'blank':
+      case "blank":
         return null;
-      case 'page':
+      case "page":
         return (
           <>
-            <Link href="/home" passHref>
-              <Button variant="ghost" size="icon">
-                <ChevronLeft className="h-6 w-6" />
-              </Button>
-            </Link>
+            <Button variant="ghost" size="icon" onClick={handleBack}>
+              <ChevronLeft className="h-6 w-6" />
+            </Button>
             <h1 className="text-lg font-semibold text-white">{title}</h1>
             <div className="w-10" /> {/* Spacer to maintain layout */}
           </>
         );
       default:
         return (
-          <div className='max-w-[480px] z-50 flex h-12 w-full mx-auto items-center justify-between bg-background'>
-            <Link href="/profile" passHref className='p-4'>
+          <div className="max-w-[480px] z-50 flex h-12 w-full mx-auto items-center justify-between bg-background">
+            <Link href="/profile" passHref className="p-4">
               <Button variant="ghost" size="icon">
                 <User className="h-6 w-6" />
               </Button>
@@ -44,7 +46,7 @@ const Header: React.FC<HeaderProps> = ({ type = 'default', title }) => {
               <Logo />
             </div>
 
-            <Link href="/notifications" passHref className='p-4'>
+            <Link href="/notifications" passHref className="p-4">
               <Button variant="ghost" size="icon">
                 <Notification className="h-6 w-6" />
               </Button>
@@ -54,7 +56,7 @@ const Header: React.FC<HeaderProps> = ({ type = 'default', title }) => {
     }
   };
 
-  if (type === 'blank') {
+  if (type === "blank") {
     return null;
   }
 
