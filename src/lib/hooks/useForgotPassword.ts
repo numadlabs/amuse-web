@@ -92,7 +92,7 @@ export const useForgotPassword = (): UseForgotPasswordReturn => {
         email: email,
       });
       if (!checkEmailResponse.data.isEmailRegistered) {
-        setError("This email is not registered");
+        // setError("This email is not registered");
         throw new Error("This email is not registered");
       }
       const response = await sendOtpMutation({ email: emailInput });
@@ -102,16 +102,35 @@ export const useForgotPassword = (): UseForgotPasswordReturn => {
         throw new Error(response.message);
       }
     } catch (err) {
+      let errorMessage = "An unexpected error occurred while sending OTP";
+
       if (err instanceof ZodError) {
         const formattedErrors = err.errors.map((issue) => issue.message);
-        setError(formattedErrors.join("\n"));
-        throw new Error(formattedErrors.join(", "));
+        errorMessage = formattedErrors.join(", ");
+      } else if (axios.isAxiosError(err)) {
+        // Handle Axios errors
+        if (err.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          errorMessage =
+            err.response.data.error ||
+            err.response.data.message ||
+            `Failed to send OTP: ${err.response.status}`;
+        } else if (err.request) {
+          // The request was made but no response was received
+          errorMessage =
+            "No response received from the server. Please check your internet connection.";
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          errorMessage = err.message || "Error setting up the OTP request";
+        }
+      } else if (err instanceof Error) {
+        // Handle standard JavaScript errors
+        errorMessage = err.message;
       }
-      if (axios.isAxiosError(err) && err.response) {
-        const apiError = err.response.data.error || "Failed to send OTP";
-        throw new Error(apiError);
-      }
-      throw err;
+
+      setError(errorMessage);
+      throw new Error(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -132,11 +151,22 @@ export const useForgotPassword = (): UseForgotPasswordReturn => {
         throw new Error(response.message);
       }
     } catch (err) {
-      if (axios.isAxiosError(err) && err.response) {
-        const apiError = err.response.data.error || "Failed to verify OTP";
-        throw new Error(apiError);
+      if (axios.isAxiosError(err)) {
+        // Handle Axios errors
+        const errorMessage =
+          err.response?.data?.error || err.message || "Failed to verify OTP";
+        setError(errorMessage);
+        throw new Error(errorMessage);
+      } else if (err instanceof Error) {
+        // Handle other errors
+        setError(err.message);
+        throw err;
+      } else {
+        // Handle unknown errors
+        const errorMessage = "An unexpected error occurred";
+        setError(errorMessage);
+        throw new Error(errorMessage);
       }
-      throw err;
     } finally {
       setIsLoading(false);
     }
@@ -159,11 +189,22 @@ export const useForgotPassword = (): UseForgotPasswordReturn => {
         throw new Error(response.message);
       }
     } catch (err) {
-      if (axios.isAxiosError(err) && err.response) {
-        const apiError = err.response.data.error || "Password reset failed";
-        throw new Error(apiError);
+      if (axios.isAxiosError(err)) {
+        // Handle Axios errors
+        const errorMessage =
+          err.response?.data?.error || err.message || "Failed to verify OTP";
+        setError(errorMessage);
+        throw new Error(errorMessage);
+      } else if (err instanceof Error) {
+        // Handle other errors
+        setError(err.message);
+        throw err;
+      } else {
+        // Handle unknown errors
+        const errorMessage = "An unexpected error occurred";
+        setError(errorMessage);
+        throw new Error(errorMessage);
       }
-      throw err;
     } finally {
       setIsLoading(false);
     }
