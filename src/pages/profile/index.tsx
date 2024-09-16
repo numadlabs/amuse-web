@@ -23,6 +23,7 @@ import { userKeys } from "@/lib/service/keysHelper";
 import SERVER_SETTINGS from "@/lib/serverSettings";
 import { useSession } from "next-auth/react";
 import AuthenticatedLayout from "@/components/layout/layout";
+import Link from "next/link";
 
 interface UserTier {
   id: string;
@@ -90,7 +91,10 @@ const Profile = () => {
             </p>
           </div>
           <div className="w-[1px] h-[58px] bg-gray400" />
-          <button className="flex flex-col gap-2 w-full justify-center items-center" onClick={() => router.push("/membership")}>
+          <button
+            className="flex flex-col gap-2 w-full justify-center items-center"
+            onClick={() => router.push("/membership")}
+          >
             <p className="text-gray100 text-md">Memberships</p>
             <p className="text-2xl text-gray00 font-bold">
               {cards?.data?.cards.length || "00"}
@@ -130,25 +134,38 @@ const Profile = () => {
           </span>
           <ChevronRight />
         </Button>
+
         <Button
           variant="ghost"
           className="w-full justify-between bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-2xl h-14"
-          onClick={() => router.push("/terms-condition")}
+          // onClick={() => router.push("/terms-condition")}
+          asChild
         >
-          <span className="flex items-center">
-            <FileText className="mr-2" /> Terms and Conditions
-          </span>
-          <ChevronRight />
+          <Link
+            href="https://www.amusebouche.io/terms-conditions"
+            target="_blank"
+          >
+            <span className="flex items-center">
+              <FileText className="mr-2" /> Terms and Conditions
+            </span>
+            <ChevronRight />
+          </Link>
         </Button>
         <Button
           variant="ghost"
           className="w-full justify-between bg-gradient-to-b from-gray500 to-transparent border border-gray400 rounded-2xl h-14"
-          onClick={() => router.push("/privacy")}
+          // onClick={() => router.push("/privacy")}
+          asChild
         >
-          <span className="flex items-center">
-            <Lock className="mr-2" /> Privacy
-          </span>
-          <ChevronRight />
+          <Link
+            href="https://www.amusebouche.io/privacy-policy"
+            target="_blank"
+          >
+            <span className="flex items-center">
+              <Lock className="mr-2" /> Privacy
+            </span>
+            <ChevronRight />
+          </Link>
         </Button>
         <Button
           variant="secondary"
