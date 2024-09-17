@@ -115,7 +115,7 @@ const Restaurants = () => {
                 logo={restaurantData?.logo}
                 nftImage={restaurantData?.nftImageUrl}
                 category={restaurantData?.category}
-                visitCount={restaurantData?.visitcount || 0}
+                visitCount={restaurantData?.visitCount || 0}
                 target={calculateTarget(
                   restaurantData?.perkOccurence,
                   perks?.followingBonus?.current
