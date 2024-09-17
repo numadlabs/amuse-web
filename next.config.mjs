@@ -3,10 +3,8 @@
 const getBackendUrl = () => {
   if (process.env.VERCEL_ENV === "production") {
     return "https://api.amusebouche.io";
-  } else if (process.env.VERCEL_ENV === "preview") {
-    return "https://amuse-backend-staging-478fc2297634.herokuapp.com";
   } else {
-    return "http://localhost:3001";
+    return "https://amuse-backend-staging-478fc2297634.herokuapp.com";
   }
 };
 const nextConfig = {
@@ -34,7 +32,7 @@ const nextConfig = {
   publicRuntimeConfig: {
     cdnUrl: "https://d2fovtzya8mbko.cloudfront.net",
     // apiUrl: getBackendUrl(),
-    apiUrl: "https://api.amusebouche.io",
+    apiUrl: getBackendUrl(),
   },
 };
 
