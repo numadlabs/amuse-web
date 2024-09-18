@@ -55,10 +55,9 @@ const StackedCard = () => {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 mb-[50vh] xs:mb-[60vh]">
       <div
         className="relative"
-        // style={{ height: `${Math.max(latestCards.length * 10 + 300, 300)}px` }}
       >
         <AnimatePresence>
           {latestCards.map((card: any, index: number) => (
@@ -125,7 +124,7 @@ const StackedCard = () => {
               <div className="flex justify-center mt-6">
                 <Button
                   variant={"secondary"}
-                  onClick={() => router.push("/membership")}
+                  onClick={() => router.push("/memberships")}
                 >
                   See all
                 </Button>
