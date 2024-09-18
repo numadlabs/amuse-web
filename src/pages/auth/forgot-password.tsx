@@ -57,18 +57,20 @@ const ForgotPassword: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-background p-4 relative">
-      {step >= 1 && (
-        <button
-          // onClick={prevStep}
-          onClick={handleBackClick}
-          className="fixed top-4 left-4 z-10 p-2 bg-gray-800 rounded-full shadow-lg hover:bg-gray-700 transition-colors duration-200"
-          aria-label="Go back"
-        >
-          <ArrowLeft size="24" color="#d7dadc" />
-        </button>
+    <div className="flex flex-col items-center min-h-screen bg-background p-4">
+      <div className="h-14 max-w-[480px] w-full flex justify-center items-center relative">
+        <p className="text-lg text-gray50 font-bold">Forgot password?</p>
+        {step >= 1 && (
+          <button
+            onClick={handleBackClick}
+            className="absolute top-0 left-0 h-14 w-14 rounded-full shadow-lg transition-colors duration-200"
+            aria-label="Go back"
+          >
+            <ArrowLeft size="24" color="#d7dadc" />
+          </button>
       )}
-      <Card className="w-full max-w-md border-none bg-transparent text-center">
+      </div>
+      <Card className="w-full max-w-[480px] border-none bg-transparent text-center mt-10">
         <CardContent className="p-0">
           <Steps activeStep={step} />
           {renderStep()}
