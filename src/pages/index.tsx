@@ -27,7 +27,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showWelcomeMessage, setShowWelcomeMessage] = useState(false);
+  const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
   const router = useRouter();
   const { onLogin, status } = useAuth();
 
@@ -209,7 +209,7 @@ export default function Login() {
       </div>
 
       <Dialog open={showWelcomeMessage} onOpenChange={setShowWelcomeMessage}>
-        <DialogContent className="bg-background max-w-[480px] w-screen h-[598px] flex flex-col justify-around p-4 rounded-xl border-hidden">
+        <DialogContent className="bg-background w-[320px] xs:w-[360px]  sm:w-[480px] h-[575px] md:h-[598px] flex flex-col justify-around p-5 rounded-xl border-hidden">
           <ScrollArea className="h-[478px] rounded-md border-hidden">
             <DialogHeader>
               <DialogTitle className="pb-4 font-bold text-gray00 text-faq text-start">
