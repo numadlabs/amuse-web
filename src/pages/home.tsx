@@ -3,11 +3,7 @@ import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
 import { Button } from "@/components/ui/button";
-import {
-  getUserById,
-  getUserCard,
-  getRestaurants,
-} from "@/lib/service/queryHelper";
+import { getUserById, getRestaurants } from "@/lib/service/queryHelper";
 import { useSession } from "next-auth/react";
 
 import { RestaurantType } from "@/lib/types";
@@ -191,19 +187,7 @@ export default function HomePage() {
                 <InfoCircle size={18} color="#D7DADC" />
               </button>
             </div>
-            <div className="mb-[500px]">
-              <StackedCard />
-              {/* {cards?.data?.cards.length > 0 && (
-              <div className="flex justify-center mb-16">
-                <Button
-                  variant={"secondary"}
-                  onClick={() => router.push("/membership")}
-                >
-                  See all
-                </Button>
-              </div>
-            )} */}
-            </div>
+            <StackedCard />
           </div>
         </div>
         <BalanceInfo open={showInfo} onClose={toggleInfo} />
