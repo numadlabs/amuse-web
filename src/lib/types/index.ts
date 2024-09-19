@@ -1,3 +1,6 @@
+import { z } from "zod";
+import { bugReportSchema } from "../validators/bug-report-schema";
+
 export type RestaurantType = {
   id: string | string[];
   name: string;
@@ -39,4 +42,4 @@ export type UserBoostRequestData = {
   dateOfBirth?: string;
 };
 
-
+export type BugReportType = z.infer<typeof bugReportSchema>;
