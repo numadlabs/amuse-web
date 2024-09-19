@@ -103,7 +103,7 @@ const EmailInput: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       <p className="text-gray100 text-sm">
         We will send an email verification code.
       </p>
-      <div className="w-full flex justify-center mb-4">
+      {/* <div className="w-full flex justify-center mb-4">
         <InputOTP maxLength={4} value={email} onChange={handleOTPChange}>
           <InputOTPGroup className="flex flex-row gap-3">
             <InputOTPSlot index={0} />
@@ -112,7 +112,14 @@ const EmailInput: React.FC<{ onNext: () => void }> = ({ onNext }) => {
             <InputOTPSlot index={3} />
           </InputOTPGroup>
         </InputOTP>
-      </div>
+      </div> */}
+      <Input
+        type="email"
+        placeholder="Enter your email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="mb-4"
+      />
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"
