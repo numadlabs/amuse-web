@@ -28,7 +28,7 @@ axiosClient.interceptors.response.use(
       try {
         // Implement your token refresh logic here
         // You might need to create a new API route for token refresh
-        const res = await axios.post("/api/auth/refresh-token");
+        const res = await axiosClient.post("/auth/refresh-token");
         if (res.status === 200) {
           // Update the session with the new token
           // You'll need to implement this part

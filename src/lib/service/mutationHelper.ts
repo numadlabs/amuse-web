@@ -75,7 +75,13 @@ export async function updateUserEmail({
     console.log(response.data.error);
   }
 }
-export async function updateUserInfo({ userId, data } : {userId: string | null, data: any}) {
+export async function updateUserInfo({
+  userId,
+  data,
+}: {
+  userId: string | null;
+  data: any;
+}) {
   const formData = new FormData();
 
   Object.keys(data).forEach((key) => {
@@ -227,4 +233,33 @@ export async function checkEmail({ email }: { email: string }) {
   return axiosClient.post("/auth/checkEmail", { email }).then((response) => {
     return response.data;
   });
+}
+
+export async function submitBugReport({
+  deviceModel,
+  appVersion,
+  osVersion,
+  reason,
+  description,
+  userId,
+}: {
+  deviceModel: string;
+  appVersion: string;
+  osVersion: string;
+  reason: string;
+  description: string;
+  userId: string;
+}) {
+  return axiosClient
+    .post("/bug-reports", {
+      deviceModel,
+      appVersion,
+      osVersion,
+      reason,
+      description,
+      userId,
+    })
+    .then((response) => {
+      return response.data;
+    });
 }
