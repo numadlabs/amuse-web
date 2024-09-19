@@ -1,4 +1,5 @@
 import { axiosClient } from "../axios";
+import { BugReportType } from "../types";
 
 export function generateTap() {
   return axiosClient.post("/taps/generate").then((response) => {
@@ -235,31 +236,8 @@ export async function checkEmail({ email }: { email: string }) {
   });
 }
 
-export async function submitBugReport({
-  deviceModel,
-  appVersion,
-  osVersion,
-  reason,
-  description,
-  userId,
-}: {
-  deviceModel: string;
-  appVersion: string;
-  osVersion: string;
-  reason: string;
-  description: string;
-  userId: string;
-}) {
-  return axiosClient
-    .post("/bug-reports", {
-      deviceModel,
-      appVersion,
-      osVersion,
-      reason,
-      description,
-      userId,
-    })
-    .then((response) => {
-      return response.data;
-    });
+export async function submitBugReport(bugReport: BugReportType): Promise<any> {
+  return axiosClient.post("/api/bug-report", bugReport).then((response) => {
+    return response.data;
+  });
 }

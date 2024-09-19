@@ -17,12 +17,37 @@ import { BugIcon } from "lucide-react";
 import { submitBugReport } from "@/lib/service/mutationHelper";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
+import { bugReportSchema } from "@/lib/validators/bug-report-schema";
+import { z } from "zod";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { BugReportType } from "@/lib/types";
+
+//end solison bol bas zod validation deer ni solih estoi shuuu
+const reasonOptions = [
+  { value: "loyalty_program", label: "Issues with loyalty program or rewards" },
+  {
+    value: "restaurant_info",
+    label: "Problems finding or viewing restaurant information",
+  },
+  { value: "account_issues", label: "Trouble with my account or profile" },
+  { value: "app_navigation", label: "Difficulty using or navigating the app" },
+  { value: "app_performance", label: "App is slow or unresponsive" },
+  { value: "other", label: "Other issue not listed here" },
+];
 
 const BugReportButton = () => {
-  const [open, setOpen] = useState(false);
-  const [reason, setReason] = useState("");
-  const [description, setDescription] = useState("");
   const { data: session } = useSession();
+
+  const [open, setOpen] = useState(false);
+  const [reason, setReason] = useState<BugReportType["reason"]>("other");
+  const [description, setDescription] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -38,21 +63,25 @@ const BugReportButton = () => {
       toast.error("You need to be logged in to submit a bug report.");
       return;
     }
+    const bugReport: BugReportType = {
+      deviceModel,
+      appVersion,
+      osVersion,
+      reason,
+      description,
+      userId,
+    };
 
     try {
-      const response = await submitBugReport({
-        deviceModel,
-        appVersion,
-        osVersion,
-        reason,
-        description,
-        userId,
-      });
+      const validatedReport = bugReportSchema.parse(bugReport);
+      const response = await submitBugReport(validatedReport);
 
       if (response.success) {
-        toast.success("Bug report submitted successfully!");
+        toast.success(
+          "Thank you for your feedback! We've received your report and will look into it."
+        );
         setOpen(false);
-        setReason("");
+        setReason("other");
         setDescription("");
       } else {
         toast.error("Failed to submit bug report. Please try again.");
@@ -61,8 +90,14 @@ const BugReportButton = () => {
         );
       }
     } catch (error) {
-      console.error("Error submitting bug report:", error);
-      toast.error("An error occurred. Please try again later.");
+      if (error instanceof z.ZodError) {
+        setError(error.errors.map((e) => e.message).join(", "));
+      } else {
+        console.error("Error submitting bug report:", error);
+        setError(
+          "We encountered an issue while submitting your report. Please try again later."
+        );
+      }
     }
   };
 
@@ -79,38 +114,52 @@ const BugReportButton = () => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Report a Bug</DialogTitle>
+          <DialogTitle>Help Us Improve</DialogTitle>
           <DialogDescription>
-            Please provide details about the bug you&apos;ve encountered.
+            We&apos;d love to hear about any issues you&apos;re experiencing or
+            suggestions you have for our app.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="reason" className="text-right">
-                Reason
+                What&apos;s the issue
               </Label>
-              <Input
-                id="reason"
+              <Select
                 value={reason}
-                onChange={(e) => setReason(e.target.value)}
-                className="col-span-3"
-              />
+                onValueChange={(value: BugReportType["reason"]) =>
+                  setReason(value)
+                }
+              >
+                <SelectTrigger className="col-span-3">
+                  <SelectValue placeholder="Select the type of issue" />
+                </SelectTrigger>
+                <SelectContent>
+                  {reasonOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="description" className="text-right">
-                Description
+                Tell us more
               </Label>
               <Textarea
                 id="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 className="col-span-3"
+                placeholder="Please provide any additional details that might help us understand and address the issue."
               />
             </div>
           </div>
+          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}s
           <DialogFooter>
-            <Button type="submit">Submit Report</Button>
+            <Button type="submit">Submit Feedback</Button>
           </DialogFooter>
         </form>
       </DialogContent>
