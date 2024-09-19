@@ -17,7 +17,7 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      "flex flex-row gap-2 items-center h-10 rounded-[48px] pl-5 pr-4 py-3 text-md font-semibold text-gray00 border border-gray400 hover:bg-gray500 transition-all duration-200 ease-ou",
+      "flex flex-row gap-2 items-center rounded-[48px] px-6 py-3 text-md text-start font-semibold text-gray00 border border-gray400 hover:bg-gray500 transition-all duration-200 ease-ou",
       className
     )}
     {...props}
@@ -42,7 +42,6 @@ const SelectScrollUpButton = React.forwardRef<
     )}
     {...props}
   >
-    <ChevronUp className="h-4 w-4" />
   </SelectPrimitive.ScrollUpButton>
 ))
 SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName
@@ -59,7 +58,6 @@ const SelectScrollDownButton = React.forwardRef<
     )}
     {...props}
   >
-    <ChevronDown className="h-4 w-4" />
   </SelectPrimitive.ScrollDownButton>
 ))
 SelectScrollDownButton.displayName =

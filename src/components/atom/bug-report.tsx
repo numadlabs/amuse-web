@@ -121,58 +121,13 @@ const BugReportButton = () => {
             suggestions you have for our app.
           </DialogDescription>
         </DialogHeader>
-        {/* <form onSubmit={handleSubmit} className="">
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="reason" className="text-right">
-                What&apos;s the issue
-              </Label>
-              <Select
-                value={reason}
-                onValueChange={(value: BugReportType["reason"]) =>
-                  setReason(value)
-                }
-              >
-                <SelectTrigger className="col-span-3">
-                  <SelectValue placeholder="Select the type of issue" />
-                </SelectTrigger>
-                <SelectContent>
-                  {reasonOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="description" className="text-right">
-                Tell us more
-              </Label>
-              <Textarea
-                id="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="col-span-3"
-                placeholder="Please provide any additional details that might help us understand and address the issue."
-              />
-            </div>
-          </div>
-          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}s
-          <DialogFooter>
-            <Button type="submit">Submit Feedback</Button>
-          </DialogFooter>
-        </form> */}
-        <div className="w-full bg-gray400 h-[1px] my-2"/>
+        <div className="w-full bg-gray400 h-[1px] my-2" />
         <form className="flex flex-col gap-8 w-full" onSubmit={handleSubmit}>
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <div className="w-full sm:max-w-[125px]">
-            <Label
-              htmlFor="reason"
-              className="text-md text-gray50 w-full"
-            >
-              What&apos;s the issue
-            </Label>
+              <Label htmlFor="reason" className="text-md text-gray50 w-full">
+                What&apos;s the issue
+              </Label>
             </div>
             <div className="w-full">
               <Select
@@ -184,29 +139,34 @@ const BugReportButton = () => {
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select the type of issue" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="w-[var(--radix-select-trigger-width)] h-[300px] overflow-y-auto">
+                  <div className="flex flex-col gap-2">
                   {reasonOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
+                    <SelectItem key={option.value} value={option.value} className="w-full">
                       {option.label}
                     </SelectItem>
                   ))}
+                  </div>
                 </SelectContent>
               </Select>
             </div>
           </div>
           <div className="flex flex-col sm:flex-row gap-4">
-              <Label htmlFor="description" className="text-start text-md text-gray50 min-w-[125px]">
-                Tell us more
-              </Label>
-              <Textarea
-                id="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="w-full"
-                placeholder="Please provide any additional details that might help us understand and address the issue."
-              />
-            </div>
-            {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+            <Label
+              htmlFor="description"
+              className="text-start text-md text-gray50 min-w-[125px]"
+            >
+              Tell us more
+            </Label>
+            <Textarea
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="w-full"
+              placeholder="Please provide any additional details that might help us understand and address the issue."
+            />
+          </div>
+          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
           <DialogFooter>
             <Button type="submit">Submit Feedback</Button>
           </DialogFooter>
