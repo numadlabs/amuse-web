@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { Sms, User } from "iconsax-react";
+import { CloseCircle, DocumentDownload, Sms, User } from "iconsax-react";
 import { Button } from "@/components/ui/button";
 import { getUserById } from "@/lib/service/queryHelper";
 import { userKeys } from "@/lib/service/keysHelper";
 import AuthenticatedLayout from "@/components/layout/layout";
 import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 interface FormData {
   nickname: string;
@@ -15,6 +17,11 @@ interface FormData {
 
 const ProfileEdit = () => {
   const { data: session } = useSession();
+
+  //TODO: make these toggle gets data from backend(make it dynammic that syncs with app). Gombootoi yrij bgad hiih
+  const [showProfilePicture, setShowProfilePicture] = useState(true);
+  const [showDateOfBirth, setShowDateOfBirth] = useState(true);
+  const [showArea, setShowArea] = useState(true);
 
   const { data: user } = useQuery({
     queryKey: userKeys.info,
@@ -35,6 +42,21 @@ const ProfileEdit = () => {
       });
     }
   }, [user]);
+
+  //TODO: Make this function work
+  const handleDownloadData = async () => {
+    // Implement data download logic here
+    console.log("Downloading user data...");
+    // You would typically make an API call to get the user's data
+    // and then create a downloadable file (e.g., CSV or JSON)
+  };
+
+  const renderToggleItem = (label: string, value: boolean) => (
+    <div className="flex justify-between items-center py-2">
+      <span className="text-white">{label}</span>
+      <Switch checked={value} disabled />
+    </div>
+  );
 
   return (
     <AuthenticatedLayout headerType="page" headerTitle="Account">
@@ -78,24 +100,48 @@ const ProfileEdit = () => {
                 />
               </div>
             </div>
-          </div>
 
-          <div className="mt-8">
-            <Button
-              variant="secondary"
-              className="w-full justify-between"
-              disabled
-            >
-              <span className="justify-center flex w-full">
-                <p>Profile Editing Disabled</p>
-              </span>
-            </Button>
+            {/* TODO: Alert iig app iin design language d oruulah(het oor haragdaj bga bolhoor app tai adilhan bolgoh) */}
+            <Alert>
+              <AlertTitle>GDPR Compliance</AlertTitle>
+              <AlertDescription>
+                To modify privacy settings or delete your account, please use
+                our mobile app. You can download your data using the button
+                below.
+              </AlertDescription>
+            </Alert>
+
+            {renderToggleItem("Profile picture", showProfilePicture)}
+            {renderToggleItem("Date of birth", showDateOfBirth)}
+            {renderToggleItem("Country", showArea)}
+
+            <div className="mt-4">
+              <Button
+                variant="secondary"
+                className="w-full justify-center"
+                onClick={handleDownloadData}
+              >
+                <DocumentDownload className="mr-2" />
+                Download Data
+              </Button>
+            </div>
+
+            <div className="mt-4">
+              <Button
+                variant="secondary"
+                className="w-full justify-center"
+                disabled
+              >
+                <CloseCircle className="mr-2" />
+                Delete Account
+              </Button>
+            </div>
           </div>
 
           <div className="mt-4 text-center text-sm text-gray100">
             <p>
-              To access full profile editing features, please use our mobile
-              app.
+              To access full profile editing features and privacy settings,
+              please use our mobile app.
             </p>
           </div>
         </div>
