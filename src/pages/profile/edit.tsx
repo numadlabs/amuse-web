@@ -9,10 +9,21 @@ import AuthenticatedLayout from "@/components/layout/layout";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 interface FormData {
   nickname: string;
   email: string;
+  location: string;
+  dateOfBirth: string;
+  balance: string;
+  convertedBalance: string;
+  createdAt: string;
+  visitCount: string;
+  showProfilePicture: boolean;
+  showDateOfBirth: boolean;
+  showArea: boolean;
 }
 
 const ProfileEdit = () => {
@@ -32,6 +43,15 @@ const ProfileEdit = () => {
   const [formData, setFormData] = useState<FormData>({
     nickname: "",
     email: "",
+    location: "",
+    dateOfBirth: "",
+    balance: "",
+    convertedBalance: "",
+    createdAt: "",
+    visitCount: "",
+    showProfilePicture: false,
+    showDateOfBirth: false,
+    showArea: false,
   });
 
   useEffect(() => {
@@ -39,17 +59,63 @@ const ProfileEdit = () => {
       setFormData({
         nickname: user.user.nickname || "",
         email: user.user.email || "",
+        location: user.user.location || "",
+        dateOfBirth: user.user.dateOfBirth || "",
+        balance: user.user.balance || "",
+        convertedBalance: user.user.convertedBalance || "",
+        createdAt: user.user.createdAt || "",
+        visitCount: user.user.visitCount || "",
+        showProfilePicture: user.user.showProfilePicture || false,
+        showDateOfBirth: user.user.showDateOfBirth || false,
+        showArea: user.user.showArea || false,
       });
     }
   }, [user]);
 
   //TODO: Make this function work
-  const handleDownloadData = async () => {
-    // Implement data download logic here
-    console.log("Downloading user data...");
-    // You would typically make an API call to get the user's data
-    // and then create a downloadable file (e.g., CSV or JSON)
+  // const handleDownloadData = async () => {
+  //   // Implement data download logic here
+  //   console.log("Downloading user data...");
+  //   // You would typically make an API call to get the user's data
+  //   // and then create a downloadable file (e.g., CSV or JSON)
+  // };
+  const handleDownloadData = () => {
+    // Create workbook and worksheet
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.json_to_sheet([
+      {
+        Nickname: formData.nickname,
+        Email: formData.email,
+        location: formData.location,
+        DateOfBirth: formData.dateOfBirth,
+        Balance: formData.balance,
+        ConvertedBalance: formData.convertedBalance,
+        CreatedAt: formData.createdAt,
+        VisitCount: formData.visitCount,
+        "Show Profile Picture": showProfilePicture,
+        "Show Date of Birth": showDateOfBirth,
+        "Show Area": showArea,
+      },
+    ]);
+
+    // Add worksheet to workbook
+    XLSX.utils.book_append_sheet(wb, ws, "User Data");
+
+    // Generate XLSX file
+    const wbout = XLSX.write(wb, { type: "binary", bookType: "xlsx" });
+
+    // Convert to Blob
+    const blob = new Blob([s2ab(wbout)], { type: "application/octet-stream" });
+
+    // Save file
+    saveAs(blob, "user_data.xlsx");
   };
+  function s2ab(s: string) {
+    const buf = new ArrayBuffer(s.length);
+    const view = new Uint8Array(buf);
+    for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff;
+    return buf;
+  }
 
   const renderToggleItem = (label: string, value: boolean) => (
     <div className="flex justify-between items-center py-2">
@@ -102,9 +168,11 @@ const ProfileEdit = () => {
             </div>
 
             {/* TODO: Alert iig app iin design language d oruulah(het oor haragdaj bga bolhoor app tai adilhan bolgoh) */}
-            <Alert>
-              <AlertTitle>GDPR Compliance</AlertTitle>
-              <AlertDescription>
+            <Alert className="bg-gray500 rounded-2xl border border-gray400 flex flex-col gap-2">
+              <AlertTitle className="text-bold text-gray50">
+                GDPR Compliance
+              </AlertTitle>
+              <AlertDescription className="text-sm2 text-gray100">
                 To modify privacy settings or delete your account, please use
                 our mobile app. You can download your data using the button
                 below.

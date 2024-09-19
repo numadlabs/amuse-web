@@ -100,7 +100,6 @@ export const useSignUp = (): UseSignUpReturn => {
 
   const clearError = () => setError(null);
 
-  //TODO eniig ashiglaj shalgah
   const { mutateAsync: checkEmailMutation } = useMutation({
     mutationFn: checkEmail,
     onError: (error) => {
