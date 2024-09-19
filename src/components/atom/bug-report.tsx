@@ -10,7 +10,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { BugIcon } from "lucide-react";
@@ -107,20 +106,22 @@ const BugReportButton = () => {
         <Button
           variant="secondary"
           size="icon"
-          className="fixed bottom-4 right-4 rounded-full"
+          className="fixed bottom-24 sm:bottom-4 right-4 rounded-full z-50 w-12 h-12"
         >
           <BugIcon className="h-4 w-4" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Help Us Improve</DialogTitle>
-          <DialogDescription>
+      <DialogContent className="max-w-[480px] w-full p-6 rounded-[32px] border border-gray400 bg-gray500 flex flex-col justify-center items-center">
+        <DialogHeader className="flex flex-col gap-2">
+          <DialogTitle className="text-gray00 text-xl font-bold text-start">
+            Help Us Improve
+          </DialogTitle>
+          <DialogDescription className="text-md text-gray100 text-start">
             We&apos;d love to hear about any issues you&apos;re experiencing or
             suggestions you have for our app.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit}>
+        {/* <form onSubmit={handleSubmit} className="">
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="reason" className="text-right">
@@ -158,6 +159,54 @@ const BugReportButton = () => {
             </div>
           </div>
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}s
+          <DialogFooter>
+            <Button type="submit">Submit Feedback</Button>
+          </DialogFooter>
+        </form> */}
+        <div className="w-full bg-gray400 h-[1px] my-2"/>
+        <form className="flex flex-col gap-8 w-full" onSubmit={handleSubmit}>
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <div className="w-full sm:max-w-[125px]">
+            <Label
+              htmlFor="reason"
+              className="text-md text-gray50 w-full"
+            >
+              What&apos;s the issue
+            </Label>
+            </div>
+            <div className="w-full">
+              <Select
+                value={reason}
+                onValueChange={(value: BugReportType["reason"]) =>
+                  setReason(value)
+                }
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select the type of issue" />
+                </SelectTrigger>
+                <SelectContent>
+                  {reasonOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4">
+              <Label htmlFor="description" className="text-start text-md text-gray50 min-w-[125px]">
+                Tell us more
+              </Label>
+              <Textarea
+                id="description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="w-full"
+                placeholder="Please provide any additional details that might help us understand and address the issue."
+              />
+            </div>
+            {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
           <DialogFooter>
             <Button type="submit">Submit Feedback</Button>
           </DialogFooter>

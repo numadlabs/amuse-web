@@ -110,6 +110,8 @@ module.exports = {
       },
     },
     screens: {
+      xs2: "360px",
+      
       xs: "400px",
 
       sm: "640px",

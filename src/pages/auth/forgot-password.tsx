@@ -8,9 +8,13 @@ import { Eye, EyeOff, Check } from "lucide-react";
 import Steps from "@/components/atom/steps";
 import { usePasswordStore } from "@/lib/store/passwordStore";
 import { useRouter } from "next/router";
-import { useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { ArrowLeft } from "iconsax-react";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 
 // Password validation rules
 const passwordValidationRules = {
@@ -68,7 +72,7 @@ const ForgotPassword: React.FC = () => {
           >
             <ArrowLeft size="24" color="#d7dadc" />
           </button>
-      )}
+        )}
       </div>
       <Card className="w-full max-w-[480px] border-none bg-transparent text-center mt-10">
         <CardContent className="p-0">
@@ -127,6 +131,9 @@ const EmailInput: React.FC<{ onNext: () => void }> = ({ onNext }) => {
 const OTPVerification: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   const { verificationCode, setVerificationCode } = usePasswordStore();
   const { verifyOtp, isLoading, error } = useForgotPassword();
+  const handleOTPChange = (value: string) => {
+    setVerificationCode(value);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -145,13 +152,20 @@ const OTPVerification: React.FC<{ onNext: () => void }> = ({ onNext }) => {
     >
       <h2 className="text-2xl font-bold text-white">Verification Code</h2>
       <p className="text-gray100 text-sm">Enter the code sent to your email.</p>
-      <Input
-        type="text"
-        placeholder="Enter verification code"
-        value={verificationCode}
-        onChange={(e) => setVerificationCode(e.target.value)}
-        className="mb-4"
-      />
+      <div className="w-full flex justify-center mb-4">
+        <InputOTP
+          maxLength={4}
+          value={verificationCode}
+          onChange={handleOTPChange}
+        >
+          <InputOTPGroup className="flex flex-row gap-3">
+            <InputOTPSlot index={0} />
+            <InputOTPSlot index={1} />
+            <InputOTPSlot index={2} />
+            <InputOTPSlot index={3} />
+          </InputOTPGroup>
+        </InputOTP>
+      </div>
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"

@@ -237,7 +237,7 @@ export async function checkEmail({ email }: { email: string }) {
 }
 
 export async function submitBugReport(bugReport: BugReportType): Promise<any> {
-  return axiosClient.post("/api/bug-report", bugReport).then((response) => {
+  return axiosClient.post("/bug-reports", bugReport).then((response) => {
     return response.data;
   });
 }

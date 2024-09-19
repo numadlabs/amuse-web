@@ -2,29 +2,33 @@ import React from "react";
 import AuthenticatedLayout from "@/components/layout/layout";
 import FeaturedListCard from "@/components/atom/featured-list-card";
 import { useQuery } from "@tanstack/react-query";
-import { getUserCard } from "@/lib/service/queryHelper";
+import { getRestaurants, getUserCard } from "@/lib/service/queryHelper";
 import { RestaurantType } from "@/lib/types";
 import { useRouter } from "next/router";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useSession } from "next-auth/react";
-import OwnedAcards from "@/components/atom/cards/owned-card";
 import moment from "moment";
 
 const Membership = () => {
   const router = useRouter();
-  const { data: session } = useSession();
   const currentTime = moment().format("HH:mm:ss");
   const currentDayOfWeek = moment().isoWeekday();
 
-  const { data: cards, isLoading } = useQuery({
-    queryKey: ["cardKey"],
-    queryFn: () => {
-      return getUserCard();
-    },
-    enabled: !!session?.userId
+  const { data: restaurantsData, isLoading } = useQuery({
+    queryKey: ["restaurants"],
+    queryFn: () =>
+      getRestaurants({
+        page: 1,
+        limit: 10,
+        time: currentTime,
+        dayNoOfTheWeek: currentDayOfWeek,
+      }),
+    enabled: true, // Replace with actual condition
   });
 
-  console.log(cards?.data?.cards)
+  const restaurantsArray = restaurantsData?.data?.restaurants || [];
+  const filteredRestaurantsArray = restaurantsArray.filter(
+    (restaurant: any) => restaurant.isOwned
+  );
 
   const handleNavigation = (restaurant: RestaurantType) => {
     router.push({
@@ -37,12 +41,11 @@ const Membership = () => {
     <AuthenticatedLayout headerTitle="Memberships" headerType="page">
       <div className="flex justify-center">
         <ScrollArea className="flex flex-col pt-6 gap-6 max-w-[480px] w-full">
-        {cards &&
-          cards?.data?.cards.map((card: any) => (
-            <OwnedAcards
+        {filteredRestaurantsArray.map((card: any) => (
+            <FeaturedListCard
               key={card.id}
-              marker={card}
-              onPress={() => handleNavigation(card)}
+              restaurant={card}
+              onClick={() => handleNavigation(card)}
             />
           ))}
         </ScrollArea>
