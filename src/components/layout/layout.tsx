@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
 
 import { Sora } from "next/font/google";
+import BugReportButton from "../atom/bug-report";
 const sora = Sora({ subsets: ["latin"], weight: ["400", "700"] });
 const subClass = sora.className;
 
@@ -61,7 +62,6 @@ export default function AuthenticatedLayout({
   };
 
   const headerTypeToUse = determineHeaderType();
-  
 
   return (
     <div className="bg-background">
@@ -94,7 +94,10 @@ export default function AuthenticatedLayout({
           </AnimatePresence>
           <Toaster />
         </div>
-        {headerTypeToUse === "default" && <BottomNavigation type={bottomNavigationType} />}
+        <BugReportButton />
+        {headerTypeToUse === "default" && (
+          <BottomNavigation type={bottomNavigationType} />
+        )}
       </div>
     </div>
   );
