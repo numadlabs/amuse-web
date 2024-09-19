@@ -13,6 +13,11 @@ import Steps from "@/components/atom/steps";
 import { useSignUpStore } from "@/lib/store/signUpStore";
 import { ArrowLeft } from "iconsax-react";
 import { useRouter } from "next/router";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 
 // Main SignUp component
 const SignUp: React.FC = () => {
@@ -58,7 +63,7 @@ const SignUp: React.FC = () => {
           >
             <ArrowLeft size="24" color="#d7dadc" />
           </button>
-      )}
+        )}
       </div>
       <Card className="w-full max-w-[480px] border-none bg-transparent text-center mt-10">
         <CardContent className="p-0">
@@ -85,6 +90,10 @@ const EmailInput: React.FC<{ onNext: () => void }> = ({ onNext }) => {
     }
   };
 
+  const handleOTPChange = (value: string) => {
+    setEmail(value);
+  };
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -94,13 +103,16 @@ const EmailInput: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       <p className="text-gray100 text-sm">
         We will send an email verification code.
       </p>
-      <Input
-        type="email"
-        placeholder="Enter your email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="mb-4"
-      />
+      <div className="w-full flex justify-center mb-4">
+        <InputOTP maxLength={4} value={email} onChange={handleOTPChange}>
+          <InputOTPGroup className="flex flex-row gap-3">
+            <InputOTPSlot index={0} />
+            <InputOTPSlot index={1} />
+            <InputOTPSlot index={2} />
+            <InputOTPSlot index={3} />
+          </InputOTPGroup>
+        </InputOTP>
+      </div>
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"

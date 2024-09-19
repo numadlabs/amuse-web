@@ -209,7 +209,7 @@ export default function Login() {
       </div>
 
       <Dialog open={showWelcomeMessage} onOpenChange={setShowWelcomeMessage}>
-        <DialogContent className="bg-background w-[320px] xs:w-[360px]  sm:w-[480px] h-[575px] md:h-[598px] flex flex-col justify-around p-5 rounded-xl border-hidden">
+        <DialogContent className="bg-background w-[320px] xs2:w-[320px] xs:w-[360px]  sm:w-[480px] h-[575px] md:h-[598px] flex flex-col justify-around p-5 rounded-xl border-hidden">
           <ScrollArea className="h-[478px] rounded-md border-hidden">
             <DialogHeader>
               <DialogTitle className="pb-4 font-bold text-gray00 text-faq text-start">

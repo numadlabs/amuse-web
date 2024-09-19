@@ -9,7 +9,6 @@ import {
   Mail,
   User,
 } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/lib/context/auth-context";
@@ -93,7 +92,7 @@ const Profile = () => {
           <div className="w-[1px] h-[58px] bg-gray400" />
           <button
             className="flex flex-col gap-2 w-full justify-center items-center"
-            onClick={() => router.push("/membership")}
+            onClick={() => router.push("/memberships")}
           >
             <p className="text-gray100 text-md">Memberships</p>
             <p className="text-2xl text-gray00 font-bold">
