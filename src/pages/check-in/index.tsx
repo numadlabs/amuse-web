@@ -85,7 +85,6 @@ const MyQrPage: React.FC = () => {
           pathname: `/check-in/${data.data.restaurantId}/success`,
           query: { btcAmount: data.data?.increment },
         });
-        //TODO implement perk screen
       }
     },
     [cards, router]
