@@ -14,7 +14,6 @@ import { ZodError } from "zod";
 import axios, { AxiosError } from "axios";
 import { useAuth } from "../context/auth-context";
 
-// API response types
 export interface ApiResponse {
   success: boolean;
   message: string;
