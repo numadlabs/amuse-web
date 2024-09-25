@@ -15,18 +15,10 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-
-// Password validation rules
-const passwordValidationRules = {
-  minLength: (password: string) => password.length >= 8,
-  hasUpperCase: (password: string) => /[A-Z]/.test(password),
-  hasLowerCase: (password: string) => /[a-z]/.test(password),
-  hasNumber: (password: string) => /\d/.test(password),
-};
-
-const isPasswordValid = (password: string): boolean => {
-  return Object.values(passwordValidationRules).every((rule) => rule(password));
-};
+import {
+  isPasswordValid,
+  passwordValidationRules,
+} from "@/lib/hooks/useSignUp";
 
 // Main ForgotPassword component
 const ForgotPassword: React.FC = () => {
