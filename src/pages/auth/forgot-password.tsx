@@ -19,6 +19,10 @@ import {
   isPasswordValid,
   passwordValidationRules,
 } from "@/lib/hooks/useSignUp";
+import { passwordSchema } from "@/lib/validators/SignUpSchema";
+// import { Input, Button } from '@/components/ui'; // Adjust import path as needed
+// import { usePasswordStore, useForgotPassword } from '@/hooks'; // Adjust import path as needed
+import { UseForgotPasswordReturn } from "@/lib/hooks/useForgotPassword";
 
 // Main ForgotPassword component
 const ForgotPassword: React.FC = () => {
@@ -176,12 +180,23 @@ const NewPassword: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const { resetPassword, isLoading, error } = useForgotPassword();
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
 
   const doPasswordsMatch = password === confirmPassword;
 
+  const validatePassword = (password: string) => {
+    const result = passwordSchema.safeParse(password);
+    if (!result.success) {
+      setValidationErrors(result.error.errors.map(err => err.message));
+      return false;
+    }
+    setValidationErrors([]);
+    return true;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isPasswordValid(password) && doPasswordsMatch) {
+    if (validatePassword(password) && doPasswordsMatch) {
       try {
         await resetPassword(password);
         onNext();
@@ -202,7 +217,10 @@ const NewPassword: React.FC<{ onNext: () => void }> = ({ onNext }) => {
           type={showPassword ? "text" : "password"}
           placeholder="New Password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            validatePassword(e.target.value);
+          }}
         />
         <button
           type="button"
@@ -226,31 +244,22 @@ const NewPassword: React.FC<{ onNext: () => void }> = ({ onNext }) => {
         <p className="text-red-500">Passwords do not match</p>
       )}
       <div className="text-left">
-        {Object.entries(passwordValidationRules).map(([key, rule]) => (
-          <p
-            key={key}
-            className={`flex items-center ${
-              rule(password) ? "text-systemSuccess" : "text-gray-400"
-            }`}
-          >
-            <Check size={16} className="mr-2" />
-            {key === "minLength"
-              ? "At least 8 characters"
-              : `At least 1 ${key.slice(3).toLowerCase()}`}
-          </p>
+        {validationErrors.map((error, index) => (
+          <p key={index} className="text-red-500">{error}</p>
         ))}
       </div>
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"
         className="w-full h-12 mt-4"
-        disabled={!isPasswordValid(password) || !doPasswordsMatch || isLoading}
+        disabled={validationErrors.length > 0 || !doPasswordsMatch || isLoading}
       >
         {isLoading ? "Changing Password..." : "Change Password"}
       </Button>
     </form>
   );
 };
+
 
 // Success component
 const Success: React.FC = () => {

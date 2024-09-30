@@ -5,7 +5,7 @@ import moment from "moment";
 import { Button } from "@/components/ui/button";
 import { getUserById, getRestaurants } from "@/lib/service/queryHelper";
 import { useSession } from "next-auth/react";
-
+import Image from "next/image";
 import { RestaurantType } from "@/lib/types";
 import Balance from "@/components/sections/balance";
 import StackedCard from "@/components/sections/stacked-cards";
@@ -112,9 +112,9 @@ export default function HomePage() {
             <div className="flex flex-col gap-3">
               <p className="font-semibold text-gray100 text-md">Featured</p>
               <Carousel className="w-full">
-                <CarouselContent>
+                <CarouselContent className="flex gap-4">
                   <CarouselItem
-                    className={`basis-auto ${
+                    className={`basis-auto w-[343px] h-[116px] -ml-4 ${
                       isFilteredArrayEmpty ? "w-full" : "w-[90%]"
                     }`}
                   >
@@ -175,6 +175,52 @@ export default function HomePage() {
                       />
                     </CarouselItem>
                   ))}
+                  <CarouselItem className="w-full h-[116px] flex justify-between items-center border border-gray400 rounded-[20px] bg-gradient-to-br from-[#242E35] to-transparent overflow-hidden">
+                    <div className="flex flex-col gap-1 justify-center p-4">
+                      <h1 className="font-bold text-md text-gray00">
+                        Restaurant List Growing!
+                      </h1>
+                      <p className="font-normal text-sm text-gray100">
+                        More restaurants are coming soon
+                      </p>
+                    </div>
+                    <div className="relative w-[88px] h-[100px] self-end">
+                      <Image
+                        src={"/images/bannerItem.png"}
+                        alt="banner"
+                        fill
+                        sizes="88px"
+                        style={{
+                          objectFit: "cover",
+                          objectPosition: "bottom right",
+                        }}
+                        className="rounded-br-[20px]"
+                      />
+                    </div>
+                  </CarouselItem>
+                  <CarouselItem className="w-full h-[116px] flex justify-between items-center border border-gray400 rounded-[20px] bg-gradient-to-br from-[#242E35] to-transparent overflow-hidden">
+                    <div className="flex flex-col gap-1 justify-center p-4">
+                      <h1 className="font-bold text-md text-gray00">
+                        Bitcoin Withdrawals: Soon!
+                      </h1>
+                      <p className="font-normal text-sm text-gray100">
+                        Bitcoin withdrawals are coming. Stay tuned!
+                      </p>
+                    </div>
+                    <div className="relative w-[88px] h-[88px] self-end">
+                      <Image
+                        src={"/images/bannerItem2.png"}
+                        alt="banner"
+                        fill
+                        sizes="88px"
+                        style={{
+                          objectFit: "cover",
+                          objectPosition: "bottom right",
+                        }}
+                        className="rounded-br-[20px]"
+                      />
+                    </div>
+                  </CarouselItem>
                 </CarouselContent>
               </Carousel>
             </div>
