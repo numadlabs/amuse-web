@@ -28,7 +28,6 @@ export interface RegisterResponse extends ApiResponse {
   token?: string;
 }
 
-// Error type
 export interface ApiError {
   message: string;
   code?: string;
