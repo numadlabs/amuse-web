@@ -22,7 +22,6 @@ export default NextAuth({
             password: credentials?.password,
           });
 
-          console.log("🚀 ~ authorize ~ res:", res.data.data);
           if (res.data && res.data.data && res.data.data.auth && credentials) {
             return {
               id: res.data.data.user.id,
