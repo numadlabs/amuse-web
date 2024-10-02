@@ -243,15 +243,17 @@ const NewPassword: React.FC<{ onNext: () => void }> = ({ onNext }) => {
         </button>
       </div>
       <div className="flex flex-col gap-2">
-      <Input
-        type={showPassword ? "text" : "password"}
-        placeholder="Confirm Password"
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-      />
-      {!doPasswordsMatch && (
-        <p className="px-4 text-sm text-systemError text-start">Password doesn&apos;t match</p>
-      )}
+        <Input
+          type={showPassword ? "text" : "password"}
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+        {!doPasswordsMatch && (
+          <p className="px-4 text-sm text-systemError text-start">
+            Password doesn&apos;t match
+          </p>
+        )}
       </div>
       <div className="text-left flex flex-col gap-1">
         {validationRules.map((rule, index) => (
