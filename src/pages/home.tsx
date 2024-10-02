@@ -211,9 +211,7 @@ export default function HomePage() {
                           Restaurant List Growing!
                         </p>
                         <p className="text-sm text-gray100">
-                          Bitcoin withdrawals are coming.
-                          <br />
-                          Stay tuned!
+                          Bitcoin Withdrawals: Soon!
                         </p>
                       </div>
                       <div className="absolute w-[64px] xs:w-[88px] h-[76px] xs:h-[100px] self-end bottom-0 right-0 z-0">
