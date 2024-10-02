@@ -187,7 +187,7 @@ export default function HomePage() {
                           Restaurant List Growing!
                         </p>
                         <p className="text-sm text-gray100">
-                          More restaurants are coming soon
+                          More memberships coming soon
                         </p>
                       </div>
                       <div className="absolute w-[64px] xs:w-[88px] h-[76px] xs:h-[100px] self-end bottom-0 right-0 z-0">
@@ -208,10 +208,12 @@ export default function HomePage() {
                     <div className="w-full h-[116px] flex justify-between items-center border border-gray400 rounded-[20px] bg-gradient-to-br from-[#242E35] to-transparent overflow-hidden relative">
                       <div className="flex flex-col gap-1 pl-5 z-20">
                         <p className="text-md font-bold text-gray00">
-                          Restaurant List Growing!
+                          Bitcoin Withdrawals: Soon!
                         </p>
                         <p className="text-sm text-gray100">
-                          Bitcoin Withdrawals: Soon!
+                          Bitcoin withdrawals are coming.
+                          <br />
+                          Stay tuned!
                         </p>
                       </div>
                       <div className="absolute w-[64px] xs:w-[88px] h-[76px] xs:h-[100px] self-end bottom-0 right-0 z-0">

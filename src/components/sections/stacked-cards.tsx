@@ -42,8 +42,8 @@ const StackedCard = () => {
           <div className="flex flex-col justify-center items-center gap-4">
             <Search />
             <p className="text-center text-gray50 text-sm">
-              Discover restaurants, add membership cards, and earn rewards when
-              you check-in!
+              Discover restaurants, add a membership card, and start earning
+              rewards every time you check-in at a participating restaurant!
             </p>
           </div>
           <Button variant="secondary" onClick={() => router.push("/discover")}>
@@ -56,9 +56,7 @@ const StackedCard = () => {
 
   return (
     <div className="flex flex-col gap-4 mb-[50vh] xs:mb-[60vh]">
-      <div
-        className="relative"
-      >
+      <div className="relative">
         <AnimatePresence>
           {latestCards.map((card: any, index: number) => (
             <motion.div
@@ -117,19 +115,19 @@ const StackedCard = () => {
                   </div>
                 </div>
                 <div className="absolute z-10 -right-48 opacity-80">
-                  <APassStripes width={360} height={1000}/>
+                  <APassStripes width={360} height={1000} />
                 </div>
               </Card>
               {cards?.data?.cards.length > 0 && (
-              <div className="flex justify-center mt-6">
-                <Button
-                  variant={"secondary"}
-                  onClick={() => router.push("/memberships")}
-                >
-                  See all
-                </Button>
-              </div>
-            )}
+                <div className="flex justify-center mt-6">
+                  <Button
+                    variant={"secondary"}
+                    onClick={() => router.push("/memberships")}
+                  >
+                    See all
+                  </Button>
+                </div>
+              )}
             </motion.div>
           ))}
         </AnimatePresence>
