@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Step } from "@/lib/types/forgot-password-flow-types";
 import { useForgotPassword } from "@/lib/hooks/useForgotPassword";
 import { Card, CardContent } from "@/components/ui/card";
@@ -15,14 +15,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import {
-  isPasswordValid,
-  passwordValidationRules,
-} from "@/lib/hooks/useSignUp";
 import { passwordSchema } from "@/lib/validators/SignUpSchema";
-// import { Input, Button } from '@/components/ui'; // Adjust import path as needed
-// import { usePasswordStore, useForgotPassword } from '@/hooks'; // Adjust import path as needed
-import { UseForgotPasswordReturn } from "@/lib/hooks/useForgotPassword";
 
 // Main ForgotPassword component
 const ForgotPassword: React.FC = () => {
@@ -180,19 +173,37 @@ const NewPassword: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const { resetPassword, isLoading, error } = useForgotPassword();
-  const [validationErrors, setValidationErrors] = useState<string[]>([]);
+  const [validationRules, setValidationRules] = useState([
+    { rule: "At least 8 characters", valid: false },
+    { rule: "At least 1 uppercase case letter (A-Z)", valid: false },
+    { rule: "At least 1 lower case letter (a-z)", valid: false },
+    { rule: "At least 1 number (0-9)", valid: false },
+  ]);
 
   const doPasswordsMatch = password === confirmPassword;
 
   const validatePassword = (password: string) => {
-    const result = passwordSchema.safeParse(password);
-    if (!result.success) {
-      setValidationErrors(result.error.errors.map(err => err.message));
-      return false;
-    }
-    setValidationErrors([]);
-    return true;
+    const newValidationRules = validationRules.map((rule) => {
+      switch (rule.rule) {
+        case "At least 8 characters":
+          return { ...rule, valid: password.length >= 8 };
+        case "At least 1 uppercase case letter (A-Z)":
+          return { ...rule, valid: /[A-Z]/.test(password) };
+        case "At least 1 lower case letter (a-z)":
+          return { ...rule, valid: /[a-z]/.test(password) };
+        case "At least 1 number (0-9)":
+          return { ...rule, valid: /[0-9]/.test(password) };
+        default:
+          return rule;
+      }
+    });
+    setValidationRules(newValidationRules);
+    return newValidationRules.every((rule) => rule.valid);
   };
+
+  useEffect(() => {
+    validatePassword(password);
+  }, [password]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -217,10 +228,7 @@ const NewPassword: React.FC<{ onNext: () => void }> = ({ onNext }) => {
           type={showPassword ? "text" : "password"}
           placeholder="New Password"
           value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-            validatePassword(e.target.value);
-          }}
+          onChange={(e) => setPassword(e.target.value)}
         />
         <button
           type="button"
@@ -234,6 +242,7 @@ const NewPassword: React.FC<{ onNext: () => void }> = ({ onNext }) => {
           )}
         </button>
       </div>
+      <div className="flex flex-col gap-2">
       <Input
         type={showPassword ? "text" : "password"}
         placeholder="Confirm Password"
@@ -241,18 +250,35 @@ const NewPassword: React.FC<{ onNext: () => void }> = ({ onNext }) => {
         onChange={(e) => setConfirmPassword(e.target.value)}
       />
       {!doPasswordsMatch && (
-        <p className="text-red-500">Passwords do not match</p>
+        <p className="px-4 text-sm text-systemError text-start">Password doesn&apos;t match</p>
       )}
-      <div className="text-left">
-        {validationErrors.map((error, index) => (
-          <p key={index} className="text-red-500">{error}</p>
+      </div>
+      <div className="text-left flex flex-col gap-1">
+        {validationRules.map((rule, index) => (
+          <p
+            key={index}
+            className={`flex items-center gap-2 text-sm ${
+              rule.valid ? "text-systemSuccess" : "text-gray100"
+            }`}
+          >
+            {rule.valid ? (
+              <Check className="h-5 w-5 mr-2" />
+            ) : (
+              <Check className="h-5 w-5 mr-2" />
+            )}
+            {rule.rule}
+          </p>
         ))}
       </div>
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <Button
         type="submit"
         className="w-full h-12 mt-4"
-        disabled={validationErrors.length > 0 || !doPasswordsMatch || isLoading}
+        disabled={
+          !validationRules.every((rule) => rule.valid) ||
+          !doPasswordsMatch ||
+          isLoading
+        }
       >
         {isLoading ? "Changing Password..." : "Change Password"}
       </Button>
@@ -260,15 +286,12 @@ const NewPassword: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   );
 };
 
-
 // Success component
 const Success: React.FC = () => {
   const router = useRouter();
-  // const queryClient = useQueryClient();
   const reset = usePasswordStore((state) => state.reset);
 
   const handleNavigation = () => {
-    // queryClient.invalidateQueries({ queryKey: ["userInfo"] });
     router.replace("/");
     reset();
   };
