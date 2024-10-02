@@ -98,7 +98,7 @@ const Restaurants = () => {
       <div className="flex w-full items-center justify-center min-h-screen">
         <div className="flex flex-col items-center max-w-[480px] w-full justify-start relative h-full">
           <div className="fixed z-50 max-w-[480px] mb-2 flex items-end bg-background w-full">
-            <div className="flex justify-end w-full items-end mt-6">
+            <div className="flex justify-end w-full items-end mt-6 pr-4">
               <button
                 className="flex bg-gray400 justify-center items-center h-12 w-12 rounded-full"
                 onClick={handlePreviousClick}
