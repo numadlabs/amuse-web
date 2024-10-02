@@ -98,7 +98,7 @@ export default function HomePage() {
   return (
     <AuthenticatedLayout>
       <div className="flex justify-center ">
-        <div className="flex flex-col pt-6 gap-6 max-w-[480px] w-screen">
+        <div className="flex flex-col pt-6 gap-6 max-w-[480px] w-full">
           <div className="flex flex-col gap-4">
             {user && (
               <Balance
@@ -113,12 +113,8 @@ export default function HomePage() {
               <p className="font-semibold text-gray100 text-md">Featured</p>
               <Carousel className="w-full">
                 <CarouselContent className="flex gap-4">
-                  <CarouselItem
-                    className={`basis-auto w-[343px] h-[116px] -ml-4 ${
-                      isFilteredArrayEmpty ? "w-full" : "w-[90%]"
-                    }`}
-                  >
-                    <div className="bg-gradient-to-b from-gray500 to-transparent h-full border border-gray400 rounded-[20px] p-4 flex flex-col gap-4">
+                  <CarouselItem>
+                    <div className="w-full bg-gradient-to-b from-gray500 to-transparent h-full border border-gray400 rounded-[20px] p-4 flex flex-col gap-4">
                       <div className="flex flex-row items-center gap-3">
                         <div className="flex items-center justify-center bg-gray400 h-9 w-9 rounded-xl">
                           <ImportIcon />
@@ -133,16 +129,21 @@ export default function HomePage() {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          <Button
-                            size={"sm"}
-                            variant={"tertiary"}
-                            className="w-full flex flex-row items-center gap-2"
-                          >
-                            <span>
-                              <Apple size={16} color="#FFFFFF" />
+                          <div className="relative">
+                            <Button
+                              size={"sm"}
+                              variant={"tertiary"}
+                              className="w-full flex flex-row items-center gap-2"
+                            >
+                              <span>
+                                <Apple size={16} color="#FFFFFF" />
+                              </span>
+                              <span className="hidden xs:block">App Store</span>
+                            </Button>
+                            <span className="absolute -top-3.5 -right-12 bg-yellow-500 text-xs font-bold text-black px-2 py-1 rounded-full">
+                              Coming Soon
                             </span>
-                            App Store
-                          </Button>
+                          </div>
                         </Link>
                         <Link
                           href="#"
@@ -157,17 +158,14 @@ export default function HomePage() {
                             <span>
                               <GooglePlay size={16} color="#FFFFFF" />
                             </span>
-                            Google Play
+                            <span className="hidden xs:block">Google Play</span>
                           </Button>
                         </Link>
                       </div>
                     </div>
                   </CarouselItem>
                   {filteredRestaurantsArray.map((restaurant: any) => (
-                    <CarouselItem
-                      key={restaurant.id}
-                      className="basis-auto w-[90%]"
-                    >
+                    <CarouselItem key={restaurant.id}>
                       <FeaturedListCard
                         key={restaurant?.id}
                         restaurant={restaurant}
@@ -175,50 +173,52 @@ export default function HomePage() {
                       />
                     </CarouselItem>
                   ))}
-                  <CarouselItem className="w-full h-[116px] flex justify-between items-center border border-gray400 rounded-[20px] bg-gradient-to-br from-[#242E35] to-transparent overflow-hidden">
-                    <div className="flex flex-col gap-1 justify-center p-4">
-                      <h1 className="font-bold text-md text-gray00">
-                        Restaurant List Growing!
-                      </h1>
-                      <p className="font-normal text-sm text-gray100">
-                        More restaurants are coming soon
-                      </p>
-                    </div>
-                    <div className="relative w-[88px] h-[100px] self-end">
-                      <Image
-                        src={"/images/bannerItem.png"}
-                        alt="banner"
-                        fill
-                        sizes="88px"
-                        style={{
-                          objectFit: "cover",
-                          objectPosition: "bottom right",
-                        }}
-                        className="rounded-br-[20px]"
-                      />
+                  <CarouselItem>
+                    <div className="w-full h-[116px] flex justify-between items-center border border-gray400 rounded-[20px] bg-gradient-to-br from-[#242E35] to-transparent overflow-hidden relative">
+                      <div className="flex flex-col gap-1 pl-5 z-20">
+                        <p className="text-md font-bold text-gray00">
+                          Restaurant List Growing!
+                        </p>
+                        <p className="text-sm text-gray100">
+                          More restaurants are coming soon
+                        </p>
+                      </div>
+                      <div className="absolute w-[64px] xs:w-[88px] h-[76px] xs:h-[100px] self-end bottom-0 right-0 z-0">
+                        <Image
+                          src={"/images/bannerItem.png"}
+                          alt="banner"
+                          fill
+                          sizes="100%"
+                          style={{
+                            objectFit: "cover",
+                          }}
+                          className="rounded-br-[20px]"
+                        />
+                      </div>
                     </div>
                   </CarouselItem>
-                  <CarouselItem className="w-full h-[116px] flex justify-between items-center border border-gray400 rounded-[20px] bg-gradient-to-br from-[#242E35] to-transparent overflow-hidden">
-                    <div className="flex flex-col gap-1 justify-center p-4">
-                      <h1 className="font-bold text-md text-gray00">
-                        Bitcoin Withdrawals: Soon!
-                      </h1>
-                      <p className="font-normal text-sm text-gray100">
-                        Bitcoin withdrawals are coming. Stay tuned!
-                      </p>
-                    </div>
-                    <div className="relative w-[88px] h-[88px] self-end">
-                      <Image
-                        src={"/images/bannerItem2.png"}
-                        alt="banner"
-                        fill
-                        sizes="88px"
-                        style={{
-                          objectFit: "cover",
-                          objectPosition: "bottom right",
-                        }}
-                        className="rounded-br-[20px]"
-                      />
+                  <CarouselItem>
+                    <div className="w-full h-[116px] flex justify-between items-center border border-gray400 rounded-[20px] bg-gradient-to-br from-[#242E35] to-transparent overflow-hidden relative">
+                      <div className="flex flex-col gap-1 pl-5 z-20">
+                        <p className="text-md font-bold text-gray00">
+                          Restaurant List Growing!
+                        </p>
+                        <p className="text-sm text-gray100">
+                          More restaurants are coming soon
+                        </p>
+                      </div>
+                      <div className="absolute w-[64px] xs:w-[88px] h-[76px] xs:h-[100px] self-end bottom-0 right-0 z-0">
+                        <Image
+                          src={"/images/bannerItem2.png"}
+                          alt="banner"
+                          fill
+                          sizes="100%"
+                          style={{
+                            objectFit: "cover",
+                          }}
+                          className="rounded-br-[20px]"
+                        />
+                      </div>
                     </div>
                   </CarouselItem>
                 </CarouselContent>
