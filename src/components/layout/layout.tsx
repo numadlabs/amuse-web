@@ -79,7 +79,7 @@ export default function AuthenticatedLayout({
             headerTypeToUse === "blank" ? "pt-0" : "pt-16"
           } ${bottomNavigationType === "default" ? "pb-20" : ""}`}
         >
-          <div className="hidden lg:block">{/* <OnlyMobileWarning /> */}</div>
+          {/* <div className="hidden lg:block"> <OnlyMobileWarning /> </div> */}
           <AnimatePresence mode="wait">
             <motion.div
               key={router.pathname}
