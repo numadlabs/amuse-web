@@ -124,43 +124,50 @@ export default function HomePage() {
                         </p>
                       </div>
                       <div className="grid grid-cols-2 gap-3">
-                        <Link
+                        {/* <Link
                           href="https://apps.apple.com/us/app/amuse-bouche/id6479389566"
                           target="_blank"
                           rel="noopener noreferrer"
-                        >
-                          <div className="relative">
-                            <Button
-                              size={"sm"}
-                              variant={"tertiary"}
-                              className="w-full flex flex-row items-center gap-2"
-                            >
-                              <span>
-                                <Apple size={16} color="#FFFFFF" />
-                              </span>
-                              <span className="hidden xs:block">App Store</span>
-                            </Button>
-                            <span className="absolute -top-3.5 -right-12 bg-yellow-500 text-xs font-bold text-black px-2 py-1 rounded-full">
-                              Coming Soon
-                            </span>
-                          </div>
-                        </Link>
-                        <Link
-                          href="#"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
+                        > */}
+                        <div className="relative cursor-not-allowed">
                           <Button
                             size={"sm"}
                             variant={"tertiary"}
                             className="w-full flex flex-row items-center gap-2"
+                            disabled
+                          >
+                            <span>
+                              <Apple size={16} color="#FFFFFF" />
+                            </span>
+                            <span className="hidden xs:block">App Store</span>
+                          </Button>
+                          <span className="absolute -top-3.5 -right-2 bg-yellow-500 text-[8px] font-bold text-black px-2 py-1 rounded-full">
+                            Coming Soon
+                          </span>
+                        </div>
+                        {/* </Link> */}
+                        {/* <Link
+                          href="#"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        > */}
+                        <div className="relative cursor-not-allowed">
+                          <Button
+                            size={"sm"}
+                            variant={"tertiary"}
+                            className="w-full flex flex-row items-center gap-2"
+                            disabled
                           >
                             <span>
                               <GooglePlay size={16} color="#FFFFFF" />
                             </span>
                             <span className="hidden xs:block">Google Play</span>
                           </Button>
-                        </Link>
+                          <span className="absolute -top-3.5 -right-2 bg-yellow-500 text-[8px] font-bold text-black px-2 py-1 rounded-full">
+                            Coming Soon
+                          </span>
+                        </div>
+                        {/* </Link> */}
                       </div>
                     </div>
                   </CarouselItem>
@@ -204,7 +211,9 @@ export default function HomePage() {
                           Restaurant List Growing!
                         </p>
                         <p className="text-sm text-gray100">
-                          More restaurants are coming soon
+                          Bitcoin withdrawals are coming.
+                          <br />
+                          Stay tuned!
                         </p>
                       </div>
                       <div className="absolute w-[64px] xs:w-[88px] h-[76px] xs:h-[100px] self-end bottom-0 right-0 z-0">
