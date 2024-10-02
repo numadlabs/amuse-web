@@ -120,8 +120,13 @@ const StackedCard = () => {
                   <APassStripes width={360} height={1000}/>
                 </div>
               </Card>
-              {cards?.data?.cards.length > 0 && (
-              <div className="flex justify-center mt-6">
+          <div>
+          </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+          {cards?.data?.cards.length > 0 && (
+              <div className="flex justify-center relative top-[425px]">
                 <Button
                   variant={"secondary"}
                   onClick={() => router.push("/memberships")}
@@ -130,9 +135,6 @@ const StackedCard = () => {
                 </Button>
               </div>
             )}
-            </motion.div>
-          ))}
-        </AnimatePresence>
       </div>
       {/* <div className="flex justify-center mt-4 h-12" /> */}
     </div>
