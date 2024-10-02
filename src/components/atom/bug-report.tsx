@@ -106,7 +106,7 @@ const BugReportButton = () => {
         <Button
           variant="secondary"
           size="icon"
-          className="fixed bottom-24 sm:bottom-4 right-4 rounded-full z-50 w-12 h-12"
+          className="fixed bottom-28 sm:bottom-4 right-4 rounded-full z-50 w-12 h-12"
         >
           <BugIcon className="h-4 w-4" />
         </Button>
