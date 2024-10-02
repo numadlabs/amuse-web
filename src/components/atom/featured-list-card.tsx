@@ -38,11 +38,11 @@ const FeaturedListCard: React.FC<FeaturedListCardProps> = ({
           className="rounded-xl object-cover"
         />
         <div className="flex flex-col justify-between flex-grow">
-          <div className="flex flex-col gap-1 mt-1">
-            <p className="text-gray-100 font-semibold text-lg">
+          <div className="flex flex-col gap-1 mt-1 w-[80%] xs:w-full">
+            <p className="text-gray-100 font-semibold text-lg truncate">
               {restaurant?.name}
             </p>
-            <p className="text-gray-200 uppercase text-sm">
+            <p className="text-gray-200 uppercase text-sm truncate">
               {restaurant?.categoryName}
             </p>
           </div>
