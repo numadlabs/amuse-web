@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Step } from "@/lib/types/forgot-password-flow-types";
 import {
   useSignUp,
@@ -201,17 +201,47 @@ const Password: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
 
+  // const validatePassword = (password: string) => {
+  //   const result = passwordSchema.safeParse(password);
+  //   if (!result.success) {
+  //     setValidationErrors(result.error.errors.map((err) => err.message));
+  //     return false;
+  //   }
+  //   setValidationErrors([]);
+  //   return true;
+  // };
+
+  const [validationRules, setValidationRules] = useState([
+    { rule: "At least 8 characters", valid: false },
+    { rule: "At least 1 uppercase case letter (A-Z)", valid: false },
+    { rule: "At least 1 lower case letter (a-z)", valid: false },
+    { rule: "At least 1 number (0-9)", valid: false },
+  ]);
+
   const doPasswordsMatch = password === confirmPassword;
 
   const validatePassword = (password: string) => {
-    const result = passwordSchema.safeParse(password);
-    if (!result.success) {
-      setValidationErrors(result.error.errors.map((err) => err.message));
-      return false;
-    }
-    setValidationErrors([]);
-    return true;
+    const newValidationRules = validationRules.map((rule) => {
+      switch (rule.rule) {
+        case "At least 8 characters":
+          return { ...rule, valid: password.length >= 8 };
+        case "At least 1 uppercase case letter (A-Z)":
+          return { ...rule, valid: /[A-Z]/.test(password) };
+        case "At least 1 lower case letter (a-z)":
+          return { ...rule, valid: /[a-z]/.test(password) };
+        case "At least 1 number (0-9)":
+          return { ...rule, valid: /[0-9]/.test(password) };
+        default:
+          return rule;
+      }
+    });
+    setValidationRules(newValidationRules);
+    return newValidationRules.every((rule) => rule.valid);
   };
+
+  useEffect(() => {
+    validatePassword(password);
+  }, [password]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -248,29 +278,35 @@ const Password: React.FC<{ onNext: () => void }> = ({ onNext }) => {
           )}
         </button>
       </div>
-      <Input
-        type={showPassword ? "text" : "password"}
-        placeholder="Confirm Password"
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-        className="mb-4"
-      />
-      {!doPasswordsMatch && (
-        <p className="text-red-500">Passwords do not match</p>
-      )}
-      <div className="text-left">
-        {validationErrors.map((error, index) => (
-          <p key={index} className="flex items-center text-red-500">
-            <Check size={16} className="mr-2" />
-            {error}
-          </p>
-        ))}
-        {validationErrors.length === 0 && (
-          <p className="flex items-center text-systemSuccess">
-            <Check size={16} className="mr-2" />
-            Password meets all requirements
+      <div className="flex flex-col gap-2">
+        <Input
+          type={showPassword ? "text" : "password"}
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+        {!doPasswordsMatch && (
+          <p className="px-4 text-sm text-systemError text-start">
+            Password doesn&apos;t match
           </p>
         )}
+      </div>
+      <div className="text-left flex flex-col gap-1">
+        {validationRules.map((rule, index) => (
+          <p
+            key={index}
+            className={`flex items-center gap-2 text-sm ${
+              rule.valid ? "text-systemSuccess" : "text-gray100"
+            }`}
+          >
+            {rule.valid ? (
+              <Check className="h-5 w-5 mr-2" />
+            ) : (
+              <Check className="h-5 w-5 mr-2" />
+            )}
+            {rule.rule}
+          </p>
+        ))}
       </div>
       <Button
         type="submit"
