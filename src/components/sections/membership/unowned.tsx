@@ -19,12 +19,6 @@ const UnOwned: React.FC<ownedProps> = ({ restaurant }) => {
               {restaurant?.benefits}
             </h2>
           </div>
-          <div className="flex gap-3 w-full">
-            <Check color={"#ffff"} size={20} />
-            <h2 className="font-normal text-lg text-gray50">
-              Complimentary bites along the way
-            </h2>
-          </div>
         </div>
         <div className="flex flex-col gap-4">
           <h1 className="font-bold text-lg text-white">Locations</h1>
