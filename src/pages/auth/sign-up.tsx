@@ -132,6 +132,10 @@ const EmailInput: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       >
         {isLoading ? "Sending..." : "Send code"}
       </Button>
+      <p className="text-gray100 text-sm">
+        For a more seamless experience, we recommend using mainstream email
+        services like Gmail, Yahoo, Outlook.
+      </p>
     </form>
   );
 };

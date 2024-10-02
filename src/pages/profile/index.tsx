@@ -79,7 +79,7 @@ const Profile = () => {
             <h2 className="text-xl font-semibold text-white">
               {user?.user?.nickname}
             </h2>
-            <p className="text-gray100">Tier: {userTierData?.name}</p>
+            
           </div>
         </div>
         <div className="flex flex-row items-center gap-4 p-4">
