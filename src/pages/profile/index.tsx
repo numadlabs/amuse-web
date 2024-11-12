@@ -141,7 +141,7 @@ const Profile = () => {
           asChild
         >
           <Link
-            href="https://www.amusebouche.io/terms-conditions"
+            href="https://www.thelumi.io/terms-conditions"
             target="_blank"
           >
             <span className="flex items-center">
@@ -157,7 +157,7 @@ const Profile = () => {
           asChild
         >
           <Link
-            href="https://www.amusebouche.io/privacy-policy"
+            href="https://www.thelumi.io/privacy-policy"
             target="_blank"
           >
             <span className="flex items-center">

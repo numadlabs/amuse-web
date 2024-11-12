@@ -120,7 +120,7 @@ export default function HomePage() {
                           <ImportIcon />
                         </div>
                         <p className="font-semibold text-md text-gray00">
-                          Download Amuse Bouche app
+                          Download Lumi app
                         </p>
                       </div>
                       <div className="grid grid-cols-2 gap-3">
