@@ -1,7 +1,7 @@
 {
-  "name": "Amuse Bouche - Your Digital Culinary Passport",
-  "short_name": "Amuse Bouche",
-  "description": "Access exclusive rewards, check in at top restaurants, and manage your culinary journey with Amuse Bouche.",
+  "name": "Lumi - Your Digital Culinary Passport",
+  "short_name": "Lumi",
+  "description": "Access exclusive rewards, check in at top restaurants, and manage your culinary journey with Lumi.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

@@ -101,11 +101,11 @@ export default function Login() {
       <Card className="max-w-[480px] w-full bg-gray500 border border-gray400 rounded-[32px]">
         <CardHeader className="text-center">
           <Image
-            src="/img/LogoDark.png"
+            src="/img/og.jpg"
             alt="Logo"
             width={96}
             height={96}
-            className="mx-auto mb-6"
+            className="mx-auto mb-6 rounded-3xl"
           />
           <CardTitle className="font-bold text-white font-aboutUs">
             Welcome
@@ -186,7 +186,7 @@ export default function Login() {
       </Card>
       <div className="relative text-center top-14">
         <p className="text-sm text-center text-gray-400">
-          By continuing, I agree with Amuse-Bouche&apos;s{" "}
+          By continuing, I agree with Lumi&apos;s{" "}
         </p>
         {/* <Button
           variant="ghost"
@@ -196,7 +196,7 @@ export default function Login() {
           Terms and Conditions.
         </Button> */}
         <Link
-          href="https://www.amusebouche.io/terms-conditions"
+          href="https://www.thelumi.io/terms-conditions"
           passHref
           legacyBehavior
         >
@@ -214,24 +214,24 @@ export default function Login() {
             <DialogHeader>
               <DialogTitle className="pb-4 font-bold text-gray00 text-faq text-start">
                 <span className="text-gray00">
-                  Welcome to <br /> Amuse Bouche!
+                  Welcome to <br /> Lumi!
                 </span>
               </DialogTitle>
             </DialogHeader>
             <DialogDescription className="space-y-4 font-normal text-gray100">
               <p>
-                Welcome to Amuse Bouche! We are excited to welcome you to our
+                Welcome to Lumi! We are excited to welcome you to our
                 growing community!
               </p>
               <p>
                 We’re thrilled to have you join our Pilot Program, and we
                 greatly appreciate your participation. This program allows us to
-                refine Amuse Bouche’s features, ensuring it becomes the best
+                refine Lume’s features, ensuring it becomes the best
                 experience possible for our entire community, including you!
               </p>
               <p>
-                Here at Amuse Bouche, we value transparency with our users. So,
-                please note that while using the Amuse Bouche Application,
+                Here at Lumi, we value transparency with our users. So,
+                please note that while using the Lumi Application,
                 certain user data will be collected. To enable account creation
                 and continued user access, it is necessary that user email data
                 is collected. Additionally, user experience is unique to each
@@ -242,7 +242,7 @@ export default function Login() {
                 Aside from user email and location data collection, the rest is
                 up to you! You can opt to allow the collection of data such as
                 your birthday and profile picture. Opting-in allows us here at
-                Amuse Bouche to continue to improve the application so we can
+                Lumito continue to improve the application so we can
                 provide a more seamless and tailored user experience for you.
               </p>
               <p>

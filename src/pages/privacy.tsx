@@ -62,7 +62,7 @@ const Privacy = () => {
         <div className="flex flex-col mx-2 gap-2">
           <p className="text-lg text-gray00 font-bold">Disclaimer</p>
           <p className="text-sm text-gray100">
-            By using the Amuse Bouche application platform platform, you agree
+            By using the Lumi application platform platform, you agree
             to the collection and use of information in accordance with this
             policy.
           </p>

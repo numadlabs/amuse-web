@@ -3,11 +3,11 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 const domain = "https://web.amusebouche.io";
-const logoPath = "/img/og.png";
+const logoPath = "/img/og.jpg";
 
 export default function AmuseWebAppSEO({
-  title = "Amuse Bouche - Your Digital Culinary Passport",
-  description = "Access exclusive rewards, check in at top restaurants, and manage your culinary journey with Amuse Bouche.",
+  title = "Lumi- Your Digital Culinary Passport",
+  description = "Access exclusive rewards, check in at top restaurants, and manage your culinary journey with Lumi.",
   logo = `${domain}${logoPath}`,
 }) {
   const router = useRouter();
@@ -42,10 +42,10 @@ export default function AmuseWebAppSEO({
         href="/apple-touch-icon.png"
       />
       <link rel="manifest" href="/site.webmanifest" />
-      <meta name="application-name" content="Amuse Bouche" />
+      <meta name="application-name" content="Lumi" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-      <meta name="apple-mobile-web-app-title" content="Amuse Bouche" />
+      <meta name="apple-mobile-web-app-title" content="Lumi" />
       <meta name="format-detection" content="telephone=no" />
       <meta name="mobile-web-app-capable" content="yes" />
     </Head>
